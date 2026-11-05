@@ -93,15 +93,17 @@ CONFIG = {
     "flow_period": env_int("DERIV_FLOW_PERIOD", 14),
     "flow_smooth": env_int("DERIV_FLOW_SMOOTH", 3),
     "flow_threshold": env_float("DERIV_FLOW_THRESHOLD", 0.0),
-    "stop_after_losses": env_int("DERIV_STOP_AFTER_LOSSES", 5),
-    "max_daily_loss": env_float("DERIV_MAX_DAILY_LOSS", 50.0),
+    # Martingala
+    "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
+    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 4),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
     "token": env_str("DERIV_TOKEN", ""),
 }
 
 PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"
-TRADING_WS = "wss://api.derivws.com/trading/v1/options/ws/public"
+AUTH_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
+TRADING_WS = None  # Se resuelve desde la respuesta de authorize
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
 WARMUP_TICKS = 40
@@ -227,10 +229,11 @@ class BotState:
     position: Optional[str] = None  # "long" / "short" / None
     open_contract_id: Optional[int] = None
     open_entry_price: float = 0.0
+    open_entry_time: float = 0.0  # unix ts de entrada (para duración fija)
     open_side: Optional[str] = None
-    consec_losses: int = 0
     daily_pnl: float = 0.0
     trades_today: int = 0
+    martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
     last_tick_time: Optional[str] = None
@@ -287,12 +290,12 @@ class HMAFlowBot:
         self.flow_period = int(cfg["flow_period"])
         self.flow_smooth = int(cfg["flow_smooth"])
         self.flow_threshold = float(cfg["flow_threshold"])
-        self.stop_after_losses = int(cfg["stop_after_losses"])
-        self.max_daily_loss = float(cfg["max_daily_loss"])
-
+        self.martingale_multiplier = float(cfg["martingale_multiplier"])
+        self.max_martingale_steps = int(cfg["max_martingale_steps"])
         self.prices: Deque[float] = deque(maxlen=TICK_BUFFER)
         self.public_ws = None
         self.trading_ws = None
+        self.trading_ws_url = None
 
     # ------------------------------------------------------------------
     # Logging helper
@@ -322,14 +325,23 @@ class HMAFlowBot:
         if not self.token:
             self._log("warning", "Sin DERIV_TOKEN — modo PAPER (sin operaciones reales)")
             return
-        self._log("info", "Conectando a WebSocket de trading...")
-        self.trading_ws = await websockets.connect(TRADING_WS)
-        auth = await self._send(self.trading_ws, {"authorize": self.token})
+        self._log("info", "Conectando a WebSocket de autorización...")
+        auth_ws = await websockets.connect(AUTH_WS)
+        auth = await self._send(auth_ws, {"authorize": self.token})
         if "error" in auth:
             self._log("error", f"Authorize falló: {auth['error']}")
-            self.trading_ws = None
+            await auth_ws.close()
             return
         acct = auth.get("authorize", {})
+        trading_ws_url = acct.get("trading_ws")
+        if not trading_ws_url:
+            self._log("error", "Authorize no devolvió trading_ws")
+            await auth_ws.close()
+            return
+        await auth_ws.close()
+        self._log("info", "Conectando a WebSocket de trading...")
+        self.trading_ws = await websockets.connect(trading_ws_url)
+        self.trading_ws_url = trading_ws_url
         self._log("info",
                   f"Autorizado: {acct.get('nickname','?')} "
                   f"(demo={acct.get('is_demo','?')}, cuenta={acct.get('login_id','?')})")
@@ -380,41 +392,67 @@ class HMAFlowBot:
         thr = self.flow_threshold
         now = now_str()
 
-        # ---- Si hay posición abierta, revisar salida ----
+        # ---- Si hay posición abierta, revisar salida (señales + take-profit + tiempo 60 s) ----
         if state.position is not None:
-            exit_long = f < 0.0 or d == -1
-            exit_short = f > 0.0 or d == 1
+            duration_s = int(self.cfg["duration"]) * 60
+            elapsed = time.time() - state.open_entry_time
+            time_exit = elapsed >= duration_s
 
-            if (state.position == "long" and exit_long) or \
-               (state.position == "short" and exit_short):
+            # Señal de salida: HMA cambia de dirección o flow cruza en sentido opuesto
+            signal_exit = False
+            if state.position == "long" and (d == -1 or f < 0.0):
+                signal_exit = True
+            elif state.position == "short" and (d == 1 or f > 0.0):
+                signal_exit = True
+
+            if time_exit or signal_exit:
                 side_txt = "LONG" if state.position == "long" else "SHORT"
+                exit_reason = f"señal (flow={f:.2f} hma_dir={d})" if signal_exit else f"duración={elapsed:.0f}s (1 min)"
                 self._log("info",
-                          f"[{now}] EXIT {side_txt} @ {price:.4f} | "
-                          f"flow={f:.4f} hma_dir={d}")
+                          f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason}")
+                # Simulated PnL in PAPER mode (no real contract placed)
+                pnl = 0.0
+                win = False
+                if state.position == "long":
+                    win = price > state.open_entry_price
+                elif state.position == "short":
+                    win = price < state.open_entry_price
+                current_stake = self.stake * (self.martingale_multiplier ** state.martingale_step)
+                pnl = current_stake * 0.80 if win else -current_stake
+                if state.trades:
+                    t = state.trades[-1]
+                    t.exit_time = now
+                    t.exit_price = price
+                    t.pnl = pnl
+                    t.win = win
+                    save_trade_to_csv(t)
+                if pnl < 0:
+                    # Martingala: aumentar stake x2.4 en la siguiente entrada, con límite de pasos
+                    if state.martingale_step < self.max_martingale_steps:
+                        state.martingale_step += 1
+                        self._log("info",
+                                  f"  [MARTINGALE] siguiente stake x{self.martingale_multiplier} "
+                                  f"(paso {state.martingale_step}/{self.max_martingale_steps})")
+                else:
+                    state.martingale_step = 0  # reset martingala tras ganar
+                self._log("info",
+                          f"  [PAPER PnL] {side_txt} stake={current_stake:.2f} pnl={pnl:+.2f} USD "
+                          f"({'WIN' if win else 'LOSS'})")
                 if state.open_contract_id is not None and self.trading_ws and self.token:
                     asyncio.create_task(self._close_contract(state.open_contract_id))
                 self._close_position()
             return
 
         # ---- Sin posición: buscar entrada ----
+        current_stake = self.stake * (self.martingale_multiplier ** state.martingale_step)
         if d == 1 and f > thr:
-            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL")
+            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", current_stake)
         elif d == -1 and f < -thr:
-            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT")
+            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", current_stake)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
-                contract_type: Optional[str]) -> None:
-        self._log("info", f"[{now}] {action} @ {price:.4f} | {reason}")
-
-        # Circuit breakers
-        if state.consec_losses >= self.stop_after_losses:
-            self._log("warning",
-                      f"[BLOCKED] pérdidas consecutivas límite ({state.consec_losses})")
-            return
-        if state.daily_pnl <= -self.max_daily_loss:
-            self._log("warning",
-                      f"[BLOCKED] pérdida diaria límite ({state.daily_pnl:.2f})")
-            return
+                contract_type: Optional[str], stake: float) -> None:
+        self._log("info", f"[{now}] {action} @ {price:.4f} | stake={stake:.2f} | {reason}")
 
         if contract_type and self.token and self.trading_ws:
             asyncio.create_task(self._place_trade(action, contract_type))
@@ -425,18 +463,20 @@ class HMAFlowBot:
             state.position = "long"
             state.open_side = "CALL"
             state.open_entry_price = price
+            state.open_entry_time = time.time()
             state.trades.append(TradeRecord(
                 entry_time=now, exit_time=None, side="CALL",
-                entry_price=price, exit_price=None, stake=self.stake,
+                entry_price=price, exit_price=None, stake=stake,
                 pnl=None, win=None, contract_id=None,
             ))
         elif action.startswith("SELL"):
             state.position = "short"
             state.open_side = "PUT"
             state.open_entry_price = price
+            state.open_entry_time = time.time()
             state.trades.append(TradeRecord(
                 entry_time=now, exit_time=None, side="PUT",
-                entry_price=price, exit_price=None, stake=self.stake,
+                entry_price=price, exit_price=None, stake=stake,
                 pnl=None, win=None, contract_id=None,
             ))
 
@@ -474,17 +514,12 @@ class HMAFlowBot:
                           f"  [CONTRATO CERRADO] id={contract_id} "
                           f"sell_price={sell_price} profit={profit}")
                 if profit is not None:
-                    state.daily_pnl += float(profit)
                     if state.trades:
                         state.trades[-1].exit_price = float(sell_price) if sell_price else None
                         state.trades[-1].pnl = float(profit)
                         state.trades[-1].win = float(profit) > 0
                         state.trades[-1].exit_time = now_str()
                         save_trade_to_csv(state.trades[-1])
-                    if float(profit) < 0:
-                        state.consec_losses += 1
-                    else:
-                        state.consec_losses = 0
         except Exception as e:
             self._log("error", f"[SELL EXCEPTION] id={contract_id}: {e}")
 
