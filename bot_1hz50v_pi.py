@@ -101,12 +101,12 @@ CONFIG = {
     "token": env_str("DERIV_TOKEN", ""),
 }
 
-PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"
+PUBLIC_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
 AUTH_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
 TRADING_WS = None  # Se resuelve desde la respuesta de authorize
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
-WARMUP_TICKS = 40
+WARMUP_TICKS = 15
 
 
 # ============================================================================
@@ -114,7 +114,7 @@ WARMUP_TICKS = 40
 # ============================================================================
 def setup_logging() -> logging.Logger:
     logger = logging.getLogger("1hz50v_bot")
-    logger.setLevel(getattr(logging, CONFIG["log_level"].upper(), logging.INFO))
+    logger.setLevel(logging.DEBUG)
     logger.handlers.clear()
 
     fmt = logging.Formatter(
@@ -317,9 +317,9 @@ class HMAFlowBot:
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_ticks(self) -> None:
-        req = {"ticks": self.symbol, "subscribe": 1}
+        req = {"candles": self.symbol, "granularity": 60, "subscribe": 1}
         await self._send(self.public_ws, req)
-        self._log("info", f"Suscrito a ticks de {self.symbol}")
+        self._log("info", f"Suscrito a velas de 1 min de {self.symbol}")
 
     async def connect_trading(self) -> None:
         if not self.token:
@@ -387,27 +387,22 @@ class HMAFlowBot:
         d = direction[-1]
         f = flow[-1]
         if d is None or f is None:
+            self._log("debug", f"Warmup: prices={len(self.prices)}, d={d}, f={f}")
             return
 
         thr = self.flow_threshold
         now = now_str()
+        self._log("debug", f"Vela: d={d}, f={f:.4f}, thr={thr}, position={state.position}")
 
-        # ---- Si hay posición abierta, revisar salida (señales + take-profit + tiempo 60 s) ----
+        # ---- Si hay posición abierta, revisar salida (solo tiempo fijo 60 s) ----
         if state.position is not None:
             duration_s = int(self.cfg["duration"]) * 60
             elapsed = time.time() - state.open_entry_time
             time_exit = elapsed >= duration_s
 
-            # Señal de salida: HMA cambia de dirección o flow cruza en sentido opuesto
-            signal_exit = False
-            if state.position == "long" and (d == -1 or f < 0.0):
-                signal_exit = True
-            elif state.position == "short" and (d == 1 or f > 0.0):
-                signal_exit = True
-
-            if time_exit or signal_exit:
+            if time_exit:
                 side_txt = "LONG" if state.position == "long" else "SHORT"
-                exit_reason = f"señal (flow={f:.2f} hma_dir={d})" if signal_exit else f"duración={elapsed:.0f}s (1 min)"
+                exit_reason = f"duración={elapsed:.0f}s (1 min)"
                 self._log("info",
                           f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason}")
                 # Simulated PnL in PAPER mode (no real contract placed)
@@ -547,10 +542,16 @@ class HMAFlowBot:
                     except asyncio.TimeoutError:
                         continue
                     msg = json.loads(raw)
-                    if msg.get("msg_type") == "tick":
-                        tick = msg.get("tick", {})
-                        price = float(tick.get("quote"))
+                    if msg.get("msg_type") == "candle":
+                        candle = msg.get("candle", {})
+                        if not candle.get("is_final"):
+                            continue
+                        price = float(candle.get("close"))
+                        self._log("debug", f"Candle final: close={price}, time={candle.get('epoch')}")
                         self.on_tick(price)
+                    elif msg.get("msg_type") == "tick":
+                        # Ignorar ticks crudos; operamos sobre cierre de vela
+                        continue
                     elif msg.get("msg_type") == "error":
                         self._log("error", f"[public] {msg['error']}")
             except asyncio.CancelledError:
