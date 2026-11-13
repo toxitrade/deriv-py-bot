@@ -181,6 +181,21 @@ async def signals():
     }
 
 
+@app.get("/logs", tags=["status"])
+async def logs(lines: int = 50):
+    """Devuelve las últimas N líneas del archivo de log del bot."""
+    log_file = _build_config().get("log_file", "bot_1hz50v.log")
+    try:
+        with open(log_file, "r", encoding="utf-8") as f:
+            all_lines = f.readlines()
+        tail = all_lines[-lines:] if lines > 0 else all_lines
+        return {"log_file": log_file, "lines": len(tail), "logs": "".join(tail)}
+    except FileNotFoundError:
+        return {"log_file": log_file, "lines": 0, "logs": "Archivo de log no encontrado aún"}
+    except Exception as e:
+        return {"log_file": log_file, "lines": 0, "logs": f"Error leyendo log: {e}"}
+
+
 if __name__ == "__main__":
     import uvicorn
 
