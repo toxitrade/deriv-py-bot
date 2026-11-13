@@ -9,12 +9,12 @@ Parámetros optimizados por sweep sobre 1HZ50V (1-min binary).
 
 Archivos necesarios en la Pi:
   - bot_1hz50v_pi.py          (este archivo)
-  - .env                      (opcional: DERIV_TOKEN=...)
+  - .env                      (opcional: DERIV_TOKEN=..., DERIV_ACCOUNT_ID=..., DERIV_APP_ID=...)
   - requirements_pi.txt       (pip install -r)
 
 Ejecutar:
   python3 bot_1hz50v_pi.py            # PAPER (solo señales, sin token)
-  DERIV_TOKEN=xxx python3 bot_1hz50v_pi.py  # DEMO (coloca contratos)
+  DERIV_TOKEN=xxx DERIV_ACCOUNT_ID=DOTxxxxx python3 bot_1hz50v_pi.py  # DEMO (coloca contratos)
 
 Variables de entorno:
   DERIV_TOKEN        Token de API de Deriv (demo). Sin él va en PAPER.
@@ -27,6 +27,8 @@ Variables de entorno:
   DERIV_LOG_LEVEL    INFO | DEBUG | WARNING (default: INFO)
   DERIV_LOG_FILE     Archivo de log (default: bot_1hz50v.log)
   DERIV_DEMO         true|false (default: true)
+  DERIV_ACCOUNT_ID   ID de cuenta Options Trading (requerido para obtener OTP de trading)
+  DERIV_APP_ID       App ID (default: 1089, requerido para PAT)
 
 IMPORTANT: mladen_flow() es un placeholder. Reemplaza por la fórmula
 real de TradingView antes de operar con dinero.
@@ -43,6 +45,7 @@ import os
 import signal
 import sys
 import time
+import urllib.request
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -96,14 +99,16 @@ CONFIG = {
     # Martingala
     "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
     "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 4),
+    "account_id": env_str("DERIV_ACCOUNT_ID", ""),   # ID de cuenta Options Trading (para OTP)
+    "app_id": env_str("DERIV_APP_ID", "1089"),       # App ID (requerido para PAT)
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
     "token": env_str("DERIV_TOKEN", ""),
 }
 
-PUBLIC_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
-AUTH_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
-TRADING_WS = None  # Se resuelve desde la respuesta de authorize
+PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"  # Datos públicos (ticks/velas), sin auth
+OTP_BASE = "https://api.derivws.com"                              # REST para OTP de trading
+APP_ID = env_str("DERIV_APP_ID", "1089")                          # Requerido para PAT
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
 WARMUP_TICKS = 15
@@ -317,34 +322,53 @@ class HMAFlowBot:
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_ticks(self) -> None:
-        req = {"candles": self.symbol, "granularity": 60, "subscribe": 1}
+        req = {
+            "ticks_history": self.symbol,
+            "adjust_start_time": 1,
+            "end": "latest",
+            "start": 1,
+            "style": "candles",
+            "granularity": 60,
+            "subscribe": 1,
+        }
         await self._send(self.public_ws, req)
-        self._log("info", f"Suscrito a velas de 1 min de {self.symbol}")
+        self._log("info", f"Suscrito a velas de 1 min de {self.symbol} (público)")
 
     async def connect_trading(self) -> None:
         if not self.token:
             self._log("warning", "Sin DERIV_TOKEN — modo PAPER (sin operaciones reales)")
             return
-        self._log("info", "Conectando a WebSocket de autorización...")
-        auth_ws = await websockets.connect(AUTH_WS)
-        auth = await self._send(auth_ws, {"authorize": self.token})
-        if "error" in auth:
-            self._log("error", f"Authorize falló: {auth['error']}")
-            await auth_ws.close()
+        otp_url = self._fetch_otp_url()
+        if not otp_url:
+            self._log("error", "No se pudo obtener URL de trading vía OTP")
             return
-        acct = auth.get("authorize", {})
-        trading_ws_url = acct.get("trading_ws")
-        if not trading_ws_url:
-            self._log("error", "Authorize no devolvió trading_ws")
-            await auth_ws.close()
-            return
-        await auth_ws.close()
-        self._log("info", "Conectando a WebSocket de trading...")
-        self.trading_ws = await websockets.connect(trading_ws_url)
-        self.trading_ws_url = trading_ws_url
-        self._log("info",
-                  f"Autorizado: {acct.get('nickname','?')} "
-                  f"(demo={acct.get('is_demo','?')}, cuenta={acct.get('login_id','?')})")
+        self._log("info", "Conectando a WebSocket de trading (OTP)...")
+        self.trading_ws = await websockets.connect(otp_url)
+        self.trading_ws_url = otp_url
+        self._log("info", "WebSocket de trading autenticado conectado")
+
+    def _fetch_otp_url(self) -> Optional[str]:
+        """Llama a POST /accounts/{accountId}/otp y devuelve la URL WebSocket con OTP."""
+        account_id = self.cfg.get("account_id") or ""
+        if not account_id:
+            self._log("error", "DERIV_ACCOUNT_ID no configurado — no se puede obtener OTP")
+            return None
+        url = f"{OTP_BASE}/trading/v1/options/accounts/{account_id}/otp"
+        headers = {
+            "Authorization": f"Bearer {self.token}",
+            "Content-Type": "application/json",
+        }
+        app_id = self.cfg.get("app_id") or APP_ID
+        if app_id:
+            headers["Deriv-App-ID"] = app_id
+        req = urllib.request.Request(url, method="POST", headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            return data.get("data", {}).get("url")
+        except Exception as e:
+            self._log("error", f"Fallo al obtener OTP: {e}")
+            return None
 
     async def buy_contract(self, contract_type: str) -> dict:
         req = {

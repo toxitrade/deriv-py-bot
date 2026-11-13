@@ -43,6 +43,7 @@ import os
 import signal
 import sys
 import time
+import urllib.request
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -96,12 +97,14 @@ CONFIG = {
     # Martingala
     "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
     "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 4),
+    "account_id": env_str("DERIV_ACCOUNT_ID", ""),
+    "app_id": env_str("DERIV_APP_ID", "1089"),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
     "token": env_str("DERIV_TOKEN", ""),
 }
 
-PUBLIC_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
+PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"
 AUTH_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
 TRADING_WS = None  # Se resuelve desde la respuesta de authorize
 TICK_BUFFER = 500
@@ -317,34 +320,53 @@ class HMAFlowBot:
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_ticks(self) -> None:
-        req = {"candles": self.symbol, "granularity": 60, "subscribe": 1}
+        req = {
+            "ticks_history": self.symbol,
+            "adjust_start_time": 1,
+            "end": "latest",
+            "start": 1,
+            "style": "candles",
+            "granularity": 60,
+            "subscribe": 1,
+        }
         await self._send(self.public_ws, req)
-        self._log("info", f"Suscrito a velas de 1 min de {self.symbol}")
+        self._log("info", f"Suscrito a velas de 1 min de {self.symbol} (público)")
 
     async def connect_trading(self) -> None:
         if not self.token:
             self._log("warning", "Sin DERIV_TOKEN — modo PAPER (sin operaciones reales)")
             return
-        self._log("info", "Conectando a WebSocket de autorización...")
-        auth_ws = await websockets.connect(AUTH_WS)
-        auth = await self._send(auth_ws, {"authorize": self.token})
-        if "error" in auth:
-            self._log("error", f"Authorize falló: {auth['error']}")
-            await auth_ws.close()
+        otp_url = self._fetch_otp_url()
+        if not otp_url:
+            self._log("error", "No se pudo obtener URL de trading vía OTP")
             return
-        acct = auth.get("authorize", {})
-        trading_ws_url = acct.get("trading_ws")
-        if not trading_ws_url:
-            self._log("error", "Authorize no devolvió trading_ws")
-            await auth_ws.close()
-            return
-        await auth_ws.close()
-        self._log("info", "Conectando a WebSocket de trading...")
-        self.trading_ws = await websockets.connect(trading_ws_url)
-        self.trading_ws_url = trading_ws_url
-        self._log("info",
-                  f"Autorizado: {acct.get('nickname','?')} "
-                  f"(demo={acct.get('is_demo','?')}, cuenta={acct.get('login_id','?')})")
+        self._log("info", "Conectando a WebSocket de trading (OTP)...")
+        self.trading_ws = await websockets.connect(otp_url)
+        self.trading_ws_url = otp_url
+        self._log("info", "WebSocket de trading autenticado conectado")
+
+    def _fetch_otp_url(self) -> Optional[str]:
+        """Llama a POST /accounts/{accountId}/otp y devuelve la URL WebSocket con OTP."""
+        account_id = self.cfg.get("account_id") or ""
+        if not account_id:
+            self._log("error", "DERIV_ACCOUNT_ID no configurado — no se puede obtener OTP")
+            return None
+        url = f"{OTP_BASE}/trading/v1/options/accounts/{account_id}/otp"
+        headers = {
+            "Authorization": f"Bearer {self.token}",
+            "Content-Type": "application/json",
+        }
+        app_id = self.cfg.get("app_id") or APP_ID
+        if app_id:
+            headers["Deriv-App-ID"] = app_id
+        req = urllib.request.Request(url, method="POST", headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            return data.get("data", {}).get("url")
+        except Exception as e:
+            self._log("error", f"Fallo al obtener OTP: {e}")
+            return None
 
     async def buy_contract(self, contract_type: str) -> dict:
         req = {
@@ -394,56 +416,67 @@ class HMAFlowBot:
         now = now_str()
         self._log("debug", f"Vela: d={d}, f={f:.4f}, thr={thr}, position={state.position}")
 
-        # ---- Si hay posición abierta, revisar salida (solo tiempo fijo 60 s) ----
+    # ---- Si hay posición abierta, revisar salida (TP/SL/señal) ----
         if state.position is not None:
-            duration_s = int(self.cfg["duration"]) * 60
-            elapsed = time.time() - state.open_entry_time
-            time_exit = elapsed >= duration_s
+            # Calcular PnL actual basado en movimiento de precio
+            if state.position == "long":
+                price_move = (price - state.open_entry_price) / state.open_entry_price
+                signal_exit = (d == -1 or f < 0.0)
+                tp_hit = price_move >= 0.001   # +0.1% → TP 100%
+                sl_hit = price_move <= -0.001  # -0.1% → SL 50%
+            else:  # short
+                price_move = (state.open_entry_price - price) / state.open_entry_price
+                signal_exit = (d == 1 or f > 0.0)
+                tp_hit = price_move >= 0.001   # +0.1% → TP 100%
+                sl_hit = price_move <= -0.001  # -0.1% → SL 50%
 
-            if time_exit:
-                side_txt = "LONG" if state.position == "long" else "SHORT"
-                exit_reason = f"duración={elapsed:.0f}s (1 min)"
-                self._log("info",
-                          f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason}")
-                # Simulated PnL in PAPER mode (no real contract placed)
-                pnl = 0.0
+            if tp_hit:
+                exit_reason = "TP 100%"
+            elif sl_hit:
+                exit_reason = "SL 50%"
+            elif signal_exit:
+                exit_reason = f"señal (flow={f:.2f} hma_dir={d})"
+            else:
+                return  # aún no sale
+
+            side_txt = "LONG" if state.position == "long" else "SHORT"
+            self._log("info",
+                      f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason}")
+            # Simulated PnL in PAPER mode
+            pnl = 0.0
+            win = False
+            if exit_reason == "TP 100%":
+                win = True
+                pnl = self.stake * 1.00  # +100% de la apuesta
+            elif exit_reason == "SL 50%":
                 win = False
-                if state.position == "long":
-                    win = price > state.open_entry_price
-                elif state.position == "short":
-                    win = price < state.open_entry_price
-                current_stake = self.stake * (self.martingale_multiplier ** state.martingale_step)
-                pnl = current_stake * 0.80 if win else -current_stake
-                if state.trades:
-                    t = state.trades[-1]
-                    t.exit_time = now
-                    t.exit_price = price
-                    t.pnl = pnl
-                    t.win = win
-                    save_trade_to_csv(t)
-                if pnl < 0:
-                    # Martingala: aumentar stake x2.4 en la siguiente entrada, con límite de pasos
-                    if state.martingale_step < self.max_martingale_steps:
-                        state.martingale_step += 1
-                        self._log("info",
-                                  f"  [MARTINGALE] siguiente stake x{self.martingale_multiplier} "
-                                  f"(paso {state.martingale_step}/{self.max_martingale_steps})")
-                else:
-                    state.martingale_step = 0  # reset martingala tras ganar
-                self._log("info",
-                          f"  [PAPER PnL] {side_txt} stake={current_stake:.2f} pnl={pnl:+.2f} USD "
-                          f"({'WIN' if win else 'LOSS'})")
-                if state.open_contract_id is not None and self.trading_ws and self.token:
-                    asyncio.create_task(self._close_contract(state.open_contract_id))
-                self._close_position()
+                pnl = -self.stake * 0.50  # -50% de la apuesta
+            elif state.position == "long":
+                win = price > state.open_entry_price
+                pnl = self.stake * 0.80 if win else -self.stake * 0.50
+            else:
+                win = price < state.open_entry_price
+                pnl = self.stake * 0.80 if win else -self.stake * 0.50
+            if state.trades:
+                t = state.trades[-1]
+                t.exit_time = now
+                t.exit_price = price
+                t.pnl = pnl
+                t.win = win
+                save_trade_to_csv(t)
+            self._log("info",
+                      f"  [PAPER PnL] {side_txt} stake={self.stake:.2f} pnl={pnl:+.2f} USD "
+                      f"({'WIN' if win else 'LOSS'})")
+            if state.open_contract_id is not None and self.trading_ws and self.token:
+                asyncio.create_task(self._close_contract(state.open_contract_id))
+            self._close_position()
             return
 
-        # ---- Sin posición: buscar entrada ----
-        current_stake = self.stake * (self.martingale_multiplier ** state.martingale_step)
+        # ---- Sin posición: buscar entrada (sin martingala, stake base) ----
         if d == 1 and f > thr:
-            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", current_stake)
+            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", self.stake)
         elif d == -1 and f < -thr:
-            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", current_stake)
+            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", self.stake)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
                 contract_type: Optional[str], stake: float) -> None:
@@ -542,16 +575,10 @@ class HMAFlowBot:
                     except asyncio.TimeoutError:
                         continue
                     msg = json.loads(raw)
-                    if msg.get("msg_type") == "candle":
-                        candle = msg.get("candle", {})
-                        if not candle.get("is_final"):
-                            continue
-                        price = float(candle.get("close"))
-                        self._log("debug", f"Candle final: close={price}, time={candle.get('epoch')}")
+                    if msg.get("msg_type") == "tick":
+                        tick = msg.get("tick", {})
+                        price = float(tick.get("quote"))
                         self.on_tick(price)
-                    elif msg.get("msg_type") == "tick":
-                        # Ignorar ticks crudos; operamos sobre cierre de vela
-                        continue
                     elif msg.get("msg_type") == "error":
                         self._log("error", f"[public] {msg['error']}")
             except asyncio.CancelledError:
