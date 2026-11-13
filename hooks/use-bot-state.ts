@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import type { DerivWS } from '@deriv/core';
 import { useCandleHistory } from '@/hooks/use-candle-history';
+import { useTickStream, type TickData } from '@/hooks/use-tick-stream';
 import { useIndicatorCalculator } from '@/hooks/use-indicator-calculator';
 import { useSignalEngine } from '@/hooks/use-signal-engine';
 import { useSignalExecution } from '@/hooks/use-signal-execution';
@@ -27,6 +28,7 @@ export interface BotState {
     setSymbol: (s: string) => void;
     granularity: number;
     setGranularity: (g: number) => void;
+    latestTick: TickData | null;
   };
   indicators: ReturnType<typeof useIndicatorCalculator>;
   signal: ReturnType<typeof useSignalEngine>;
@@ -88,6 +90,7 @@ export function useBotState(
   }, []);
 
   const candles = useCandleHistory(ws, symbol, granularity);
+  const tickStream = useTickStream(ws, symbol);
   const indicators = useIndicatorCalculator(candles.dataHistory, indicatorConfig);
   const signal = useSignalEngine({
     strategyId,
@@ -150,7 +153,7 @@ export function useBotState(
 
   return {
     ws: { ws, isConnected, error },
-    candles: { ...candles, symbol, setSymbol, granularity, setGranularity },
+    candles: { ...candles, symbol, setSymbol, granularity, setGranularity, latestTick: tickStream.latestTick },
     indicators,
     signal,
     execution,

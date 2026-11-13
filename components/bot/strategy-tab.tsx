@@ -28,6 +28,7 @@ const STRATEGIES: { id: StrategyId; name: string }[] = [
   { id: 'fast-ema-sma-cross', name: 'EMA/SMA Cross Fast' },
   { id: 'adaptive-confluence', name: 'Adaptive Confluence' },
   { id: 'doji', name: 'Doji' },
+  { id: 'hma-pro-flow', name: 'HMA Pro Flow [Mladen]' },
 ];
 
 export function StrategyTab({

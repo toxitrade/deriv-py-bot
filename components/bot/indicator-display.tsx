@@ -40,6 +40,7 @@ const STRATEGY_NAMES: Record<StrategyId, string> = {
   'fast-ema-sma-cross': 'EMA/SMA Cross Fast',
   'adaptive-confluence': 'Adaptive Confluence',
   doji: 'Doji',
+  'hma-pro-flow': 'HMA Pro Flow [Mladen]',
 };
 
 interface StrategyParam {
@@ -76,7 +77,17 @@ function getStrategyParams(strategyId: StrategyId, config: IndicatorConfig): Str
         { label: 'RSI Range', value: `${config.rsiLow ?? 30}–${config.rsiHigh ?? 70}` },
         { label: 'BB Period', value: String(config.bbPeriod ?? 20) },
       ];
+    case 'hma-pro-flow':
+      return [
+        { label: 'Entry HMA Period', value: '14' },
+        { label: 'Entry HMA Divisor', value: '0.1' },
+        { label: 'Filter HMA Period', value: '300' },
+        { label: 'Filter HMA Divisor', value: '2' },
+        { label: 'Min Score', value: '1' },
+      ];
   }
+
+  return [];
 }
 
 export function IndicatorDisplay({ indicators, isHistoryLoaded, strategyId, indicatorConfig }: IndicatorDisplayProps) {

@@ -6,7 +6,7 @@ import type { IndicatorResults } from '@/hooks/use-indicator-calculator';
 import { getStrategy } from '@/lib/strategies';
 import { analyzeMultiIndicators, detectDojiSignal } from '@/lib/multi-indicators';
 
-export type StrategyId = 'multi-momentum' | 'fast-ema-sma-cross' | 'adaptive-confluence' | 'doji';
+export type StrategyId = 'multi-momentum' | 'fast-ema-sma-cross' | 'adaptive-confluence' | 'doji' | 'hma-pro-flow';
 
 export interface SignalResult {
   signal: 'call' | 'put' | null;
@@ -59,6 +59,15 @@ function buildParams(strategyId: StrategyId, config: IndicatorConfig): Record<st
         bbPeriod: config.bbPeriod ?? 20,
         bbStdDev: config.bbStdDev ?? 2,
         minScore: config.minConfirmations ?? 3,
+      };
+    case 'hma-pro-flow':
+      return {
+        entryPeriod: 14,
+        entryDivisor: 0.1,
+        filterPeriod: 300,
+        filterDivisor: 2,
+        minScore: 1,
+        coolDownCandles: 0,
       };
     default:
       return {};
