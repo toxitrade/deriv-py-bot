@@ -25,10 +25,10 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-# Asegura que se encuentre el paquete bot_python
+# Asegura que se encuentre el paquete bot_python (mismo directorio)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from bot_python import HMAFlowBot, BotState, TradeRecord  # noqa: E402
+from bot_1hz50v import HMAFlowBot, BotState, TradeRecord, state as bot_state  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -113,7 +113,7 @@ async def status():
         return {"running": False, "message": "Bot no iniciado"}
     st: BotState = _bot.state if hasattr(_bot, "state") else None
     # BotState vive en el módulo; accedemos al estado global del paquete
-    from bot_python.bot_1hz50v import state as bot_state
+    from bot_1hz50v import state as bot_state
 
     trades = [
         {
@@ -167,7 +167,7 @@ async def stop_bot():
 
 @app.get("/signals", tags=["status"])
 async def signals():
-    from bot_python.bot_1hz50v import state as bot_state
+    from bot_1hz50v import state as bot_state
 
     if not bot_state.trades:
         return {"signal": None, "message": "Sin trades aún"}
