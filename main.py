@@ -156,6 +156,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
         </div>
       </div>
       <button class="btn secondary" id="btn-save">Guardar configuración</button>
+      <button class="btn secondary" id="btn-clear-local">Borrar config local</button>
     </div>
   </div>
 
@@ -304,6 +305,22 @@ function escapeHtml(s){
 }
 
 async function loadConfig(){
+  // Primero intenta cargar desde localStorage (configuración del usuario)
+  const saved = localStorage.getItem('bot_config');
+  if (saved){
+    try{
+      const c = JSON.parse(saved);
+      $('sel-mode').value = c.mode || 'binary';
+      $('sel-symbol').value = c.symbol || '1HZ50V';
+      $('sel-stake').value = c.stake || 10;
+      $('mode-badge').textContent = (c.mode === 'multiplier' ? 'Multiplier' : 'Binary');
+      setAlert('Configuración cargada desde tu navegador (localStorage)');
+      return;
+    }catch(e){
+      // Ignorar errores de parseo y continuar con el servidor
+    }
+  }
+  // Fallback: cargar desde el servidor
   const c = await api('/config');
   $('sel-mode').value = c.mode || 'binary';
   $('sel-symbol').value = c.symbol || '1HZ50V';
@@ -318,8 +335,16 @@ async function saveConfig(){
     stake: parseFloat($('sel-stake').value) || 10,
   };
   await api('/config', 'POST', payload);
-  setAlert('Configuración guardada');
+  // Guardar también en localStorage del navegador
+  localStorage.setItem('bot_config', JSON.stringify(payload));
+  setAlert('Configuración guardada en servidor y en tu navegador');
   await loadStatus();
+}
+
+async function clearLocalConfig(){
+  localStorage.removeItem('bot_config');
+  setAlert('Configuración local borrada. Se usará la del servidor.');
+  await loadConfig();
 }
 
 async function startBot(){
@@ -353,6 +378,7 @@ $('btn-start').onclick = startBot;
 $('btn-stop').onclick = stopBot;
 $('btn-save').onclick = saveConfig;
 $('btn-refresh-log').onclick = loadLog;
+$('btn-clear-local').onclick = clearLocalConfig;
 </script>
 </body>
 </html>"""
