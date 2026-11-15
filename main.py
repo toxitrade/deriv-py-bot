@@ -155,14 +155,6 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
           <input id="sel-stake" type="number" value="10" step="0.1" />
         </div>
       </div>
-      <div class="form-group">
-        <label>Account ID (DOTxxxxx)</label>
-        <input id="sel-account" placeholder="DOT90023260" />
-      </div>
-      <div class="form-group">
-        <label>App ID</label>
-        <input id="sel-appid" value="1089" />
-      </div>
       <button class="btn secondary" id="btn-save">Guardar configuración</button>
     </div>
   </div>
@@ -316,8 +308,6 @@ async function loadConfig(){
   $('sel-mode').value = c.mode || 'binary';
   $('sel-symbol').value = c.symbol || '1HZ50V';
   $('sel-stake').value = c.stake || 10;
-  $('sel-account').value = c.account_id || '';
-  $('sel-appid').value = c.app_id || '1089';
   $('mode-badge').textContent = (c.mode === 'multiplier' ? 'Multiplier' : 'Binary');
 }
 
@@ -326,8 +316,6 @@ async function saveConfig(){
     mode: $('sel-mode').value,
     symbol: $('sel-symbol').value,
     stake: parseFloat($('sel-stake').value) || 10,
-    account_id: $('sel-account').value,
-    app_id: $('sel-appid').value,
   };
   await api('/config', 'POST', payload);
   setAlert('Configuración guardada');
@@ -425,7 +413,7 @@ def _build_config() -> dict:
         "flow_period": int(_get_env("DERIV_FLOW_PERIOD", "14")),
         "flow_smooth": int(_get_env("DERIV_FLOW_SMOOTH", "3")),
         "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.0")),
-        "account_id": _get_env("DERIV_ACCOUNT_ID", ""),
+        "account_id": os.environ.get("DERIV_ACCOUNT_ID", ""),
         "app_id": os.environ.get("DERIV_APP_ID", "1089"),
         "log_level": os.environ.get("DERIV_LOG_LEVEL", "INFO"),
         "log_file": _get_env(
@@ -538,8 +526,8 @@ async def get_config():
         "symbol": cfg["symbol"],
         "stake": cfg["stake"],
         "demo": cfg["demo"],
-        "account_id": cfg["account_id"],
-        "app_id": cfg["app_id"],
+        "account_id": "",
+        "app_id": "",
         "hma_period": cfg["hma_period"],
         "flow_period": cfg["flow_period"],
         "flow_smooth": cfg["flow_smooth"],
@@ -569,8 +557,6 @@ async def set_config(updates: dict):
         "mode",
         "symbol",
         "stake",
-        "account_id",
-        "app_id",
         "hma_period",
         "flow_period",
         "flow_smooth",
