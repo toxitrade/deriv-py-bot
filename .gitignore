@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+.env*.local
+progress.log
+*.log
+*.csv
+__pycache__/
+bot_python/.env
