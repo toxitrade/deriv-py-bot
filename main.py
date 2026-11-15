@@ -512,6 +512,41 @@ async def api_root():
     }
 
 
+@app.get("/printenv", tags=["status"])
+async def print_env():
+    """Imprime en el log del servidor las variables de entorno relevantes
+    (valores secretos enmascarados) y devuelve un resumen seguro."""
+    import os as _os
+
+    secret_keys = {
+        "DERIV_TOKEN",
+        "DERIV_ACCOUNT_ID",
+        "DERIV_APP_ID",
+    }
+
+    env_summary = {}
+    for key, value in _os.environ.items():
+        if key.startswith("DERIV_"):
+            if key in secret_keys:
+                # Mostrar valor real pero reemplazar los últimos 2 caracteres por "xx"
+                if value and len(value) > 2:
+                    masked = value[:-2] + "xx"
+                else:
+                    masked = value
+                env_summary[key] = masked
+                print(f"[ENV] {key}={masked}")
+            else:
+                env_summary[key] = value
+                print(f"[ENV] {key}={value}")
+
+    print(f"[ENV] Total DERIV_ variables: {len(env_summary)}")
+    return {
+        "env_count": len(env_summary),
+        "env": env_summary,
+        "note": "Las variables secretas (DERIV_TOKEN, DERIV_ACCOUNT_ID, DERIV_APP_ID) muestran los últimos 2 caracteres reemplazados por 'xx'.",
+    }
+
+
 @app.get("/health", tags=["status"])
 async def health():
     return {"status": "ok", "running": _bot_running, "mode": BOT_MODE}
