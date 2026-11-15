@@ -20,7 +20,7 @@ Exposición:
 
 Variables de entorno (solo para DERIV_TOKEN y secretos, se setean en Render):
   DERIV_TOKEN           Token de API de Deriv (demo). Sin él va en PAPER.
-  DERIV_APP_ID          App ID (default: 1089, requerido para PAT)
+  DERIV_APP_ID          App ID (requerido para PAT, tu propio ID de aplicación Deriv)
   DERIV_LOG_LEVEL       INFO | DEBUG | WARNING (default: INFO)
 
 Configurables desde el sitio (se guardan en config.json):
@@ -414,7 +414,7 @@ def _build_config() -> dict:
         "flow_smooth": int(_get_env("DERIV_FLOW_SMOOTH", "3")),
         "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.0")),
         "account_id": os.environ.get("DERIV_ACCOUNT_ID", ""),
-        "app_id": os.environ.get("DERIV_APP_ID", "1089"),
+        "app_id": os.environ.get("DERIV_APP_ID", ""),
         "log_level": os.environ.get("DERIV_LOG_LEVEL", "INFO"),
         "log_file": _get_env(
             "DERIV_LOG_FILE",

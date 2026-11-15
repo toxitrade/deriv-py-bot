@@ -90,7 +90,7 @@ CONFIG = {
     "tp_pct": env_float("DERIV_TP_PCT", 0.001),   # +0.1% → TP 100% del stake
     "sl_pct": env_float("DERIV_SL_PCT", 0.001),   # -0.1% → SL 50% del stake
     "account_id": env_str("DERIV_ACCOUNT_ID", ""),   # ID de cuenta Options Trading (para OTP)
-    "app_id": env_str("DERIV_APP_ID", "1089"),       # App ID (requerido para PAT)
+    "app_id": env_str("DERIV_APP_ID", ""),       # App ID (requerido para PAT)
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "multiplier_bot.log"),
     "token": env_str("DERIV_TOKEN", ""),
@@ -98,7 +98,7 @@ CONFIG = {
 
 PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"  # Datos públicos (ticks/velas), sin auth
 OTP_BASE = "https://api.derivws.com"                              # REST para OTP de trading
-APP_ID = env_str("DERIV_APP_ID", "1089")                          # Requerido para PAT
+APP_ID = env_str("DERIV_APP_ID", "")                          # Requerido para PAT
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5
 WARMUP_TICKS = 40

@@ -28,7 +28,7 @@ Variables de entorno:
   DERIV_LOG_FILE     Archivo de log (default: bot_1hz50v.log)
   DERIV_DEMO         true|false (default: true)
   DERIV_ACCOUNT_ID   ID de cuenta Options Trading (requerido para obtener OTP de trading)
-  DERIV_APP_ID       App ID (default: 1089, requerido para PAT)
+  DERIV_APP_ID       App ID (requerido para PAT, tu propio ID de aplicación Deriv)
 
 IMPORTANT: mladen_flow() es un placeholder. Reemplaza por la fórmula
 real de TradingView antes de operar con dinero.
@@ -100,7 +100,7 @@ CONFIG = {
     "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
     "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 4),
     "account_id": env_str("DERIV_ACCOUNT_ID", ""),   # ID de cuenta Options Trading (para OTP)
-    "app_id": env_str("DERIV_APP_ID", "1089"),       # App ID (requerido para PAT)
+    "app_id": env_str("DERIV_APP_ID", ""),       # App ID (requerido para PAT)
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
     "token": env_str("DERIV_TOKEN", ""),
@@ -108,7 +108,7 @@ CONFIG = {
 
 PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"  # Datos públicos (ticks/velas), sin auth
 OTP_BASE = "https://api.derivws.com"                              # REST para OTP de trading
-APP_ID = env_str("DERIV_APP_ID", "1089")                          # Requerido para PAT
+APP_ID = env_str("DERIV_APP_ID", "")
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
 WARMUP_TICKS = 15

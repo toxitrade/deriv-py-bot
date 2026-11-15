@@ -98,15 +98,13 @@ CONFIG = {
     "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
     "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 4),
     "account_id": env_str("DERIV_ACCOUNT_ID", ""),
-    "app_id": env_str("DERIV_APP_ID", "1089"),
+    "app_id": env_str("DERIV_APP_ID", ""),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
     "token": env_str("DERIV_TOKEN", ""),
 }
 
 PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"
-AUTH_WS = "wss://ws.binaryws.com/websockets/v3?app_id=1089"
-TRADING_WS = None  # Se resuelve desde la respuesta de authorize
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
 WARMUP_TICKS = 15
