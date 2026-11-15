@@ -105,6 +105,8 @@ CONFIG = {
 }
 
 PUBLIC_WS = "wss://api.derivws.com/trading/v1/options/ws/public"
+OTP_BASE = "https://api.derivws.com"                              # REST para OTP de trading
+APP_ID = env_str("DERIV_APP_ID", "")                             # Requerido para PAT
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
 WARMUP_TICKS = 15
