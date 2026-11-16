@@ -321,17 +321,36 @@ class HMAFlowBot:
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_ticks(self) -> None:
-        req = {
+        # 1) Cargar historial de ticks individuales para warmup inmediato
+        hist_req = {
             "ticks_history": self.symbol,
             "adjust_start_time": 1,
             "end": "latest",
             "start": 1,
-            "style": "candles",
-            "granularity": 60,
+            "style": "ticks",
+            "count": WARMUP_TICKS + 5,
+        }
+        resp = await self._send(self.public_ws, hist_req)
+        candles = resp.get("candles") or resp.get("history") or {}
+        prices = candles.get("prices", [])
+        if prices:
+            for p in prices[-WARMUP_TICKS:]:
+                self.prices.append(float(p))
+            self._log(
+                "info",
+                f"Historial cargado: {len(self.prices)} precios de {self.symbol} "
+                f"(último={self.prices[-1]:.4f})",
+            )
+        else:
+            self._log("warn", "No se pudo cargar historial de precios")
+
+        # 2) Suscribirse a ticks en tiempo real
+        req = {
+            "ticks": self.symbol,
             "subscribe": 1,
         }
         await self._send(self.public_ws, req)
-        self._log("info", f"Suscrito a velas de 1 min de {self.symbol} (público)")
+        self._log("info", f"Suscrito a ticks en tiempo real de {self.symbol}")
 
     async def connect_trading(self) -> None:
         if not self.token:
