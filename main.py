@@ -488,9 +488,14 @@ async def _run_bot_loop() -> None:
     _bot = HMAFlowBot(cfg)
     _bot_running = True
     try:
-        await _bot.run()
-    except asyncio.CancelledError:
-        pass
+        while _bot_running:
+            try:
+                await _bot.run()
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                print(f"[BOT] Error en run(): {e}. Reiniciando en 5s...")
+                await asyncio.sleep(5)
     finally:
         _bot_running = False
 
