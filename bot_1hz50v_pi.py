@@ -103,7 +103,7 @@ CONFIG = {
     "app_id": env_str("DERIV_APP_ID", ""),       # App ID (requerido para PAT)
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
-    "token": env_str("DERIV_TOKEN", ""),
+    "token": env_str("DERIV_TOKEN", "").strip(),
 }
 
 PUBLIC_WS = f"wss://ws.binaryws.com/websockets/v3?app_id={APP_ID or '1089'}"  # Datos públicos (ticks/velas), sin auth

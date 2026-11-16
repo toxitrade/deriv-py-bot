@@ -101,7 +101,7 @@ CONFIG = {
     "app_id": env_str("DERIV_APP_ID", ""),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
     "log_file": env_str("DERIV_LOG_FILE", "bot_1hz50v.log"),
-    "token": env_str("DERIV_TOKEN", ""),
+    "token": env_str("DERIV_TOKEN", "").strip(),
 }
 
 PUBLIC_WS = None  # Se construye dinámicamente en connect_public() con DERIV_APP_ID
