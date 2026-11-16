@@ -104,7 +104,7 @@ CONFIG = {
     "token": env_str("DERIV_TOKEN", ""),
 }
 
-PUBLIC_WS = f"wss://ws.binaryws.com/websockets/v3?app_id={APP_ID or '1089'}"
+PUBLIC_WS = None  # Se construye dinámicamente en connect_public() con DERIV_APP_ID
 OTP_BASE = "https://api.derivws.com"                              # REST para OTP de trading
 APP_ID = env_str("DERIV_APP_ID", "")                             # Requerido para PAT
 TICK_BUFFER = 500
@@ -315,8 +315,12 @@ class HMAFlowBot:
         return json.loads(raw)
 
     async def connect_public(self) -> None:
-        self._log("info", f"Conectando a WebSocket público ({PUBLIC_WS})...")
-        self.public_ws = await websockets.connect(PUBLIC_WS)
+        app_id = os.environ.get("DERIV_APP_ID")
+        if not app_id:
+            raise RuntimeError("DERIV_APP_ID no configurado — imposible conectar al WS de Deriv")
+        public_ws_url = f"wss://ws.binaryws.com/websockets/v3?app_id={app_id}"
+        self._log("info", f"Conectando a WebSocket público ({public_ws_url})...")
+        self.public_ws = await websockets.connect(public_ws_url)
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_ticks(self) -> None:
