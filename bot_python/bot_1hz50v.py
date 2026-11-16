@@ -399,7 +399,7 @@ class HMAFlowBot:
                 "currency": "USD",
                 "duration": self.duration,
                 "duration_unit": self.duration_unit,
-                "symbol": self.symbol,
+                "underlying_symbol": self.symbol,
             },
         }
         resp = await self._send(self.trading_ws, req)
