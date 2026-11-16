@@ -390,7 +390,7 @@ class HMAFlowBot:
 
     async def buy_contract(self, contract_type: str) -> dict:
         req = {
-            "buy": 1,
+            "buy": "1",
             "price": self.stake,
             "parameters": {
                 "amount": self.stake,
