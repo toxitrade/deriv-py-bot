@@ -748,6 +748,7 @@ async def signals():
         return {"signal": None, "message": "Sin trades aún", "mode": BOT_MODE}
     last = bot_state.trades[-1]
     return {
+        "signal": last.side.lower(),
         "side": last.side,
         "entry_price": last.entry_price,
         "entry_time": last.entry_time,
