@@ -828,61 +828,70 @@ async def set_config(updates: dict):
 @app.get("/status", tags=["status"])
 async def status():
     # Usar _bot_running (consistente con /health)
-    if not _bot_running:
+    try:
+        if not _bot_running:
+            return {
+                "running": False,
+                "message": "Bot no iniciado",
+                "mode": BOT_MODE,
+            }
+
+        trades = []
+        try:
+            for t in bot_state.trades:
+                trades.append({
+                    "entry_time": getattr(t, 'entry_time', None),
+                    "exit_time": getattr(t, 'exit_time', None),
+                    "side": getattr(t, 'side', None),
+                    "entry_price": getattr(t, 'entry_price', None),
+                    "exit_price": getattr(t, 'exit_price', None),
+                    "stake": getattr(t, 'stake', None),
+                    "pnl": getattr(t, 'pnl', None),
+                    "win": getattr(t, 'win', None),
+                    "contract_id": getattr(t, 'contract_id', None),
+                })
+        except Exception:
+            trades = []
+
+        base = {
+            "running": _bot_running,
+            "mode": BOT_MODE,
+            "position": getattr(bot_state, 'position', None),
+            "open_side": getattr(bot_state, 'open_side', None),
+            "open_entry_price": getattr(bot_state, 'open_entry_price', None),
+            "trades_today": getattr(bot_state, 'trades_today', 0),
+            "ticks_received": getattr(bot_state, 'ticks_received', 0),
+            "balance": getattr(bot_state, 'balance', 0),
+            "daily_pnl": getattr(bot_state, 'daily_pnl', 0),
+            "last_price": getattr(bot_state, 'last_price', None),
+            "last_hma": getattr(bot_state, 'last_hma', None),
+            "last_flow": getattr(bot_state, 'last_flow', None),
+            "last_direction": getattr(bot_state, 'last_direction', None),
+            "trades": trades,
+        }
+
+        if BOT_MODE == "binary":
+            base.update(
+                {
+                    "martingale_step": getattr(bot_state, 'martingale_step', 0),
+                    "daily_pnl": getattr(bot_state, 'daily_pnl', 0),
+                }
+            )
+        else:
+            base.update(
+                {
+                    "multiplier": getattr(bot_state, 'multiplier', 0),
+                    "daily_pnl": getattr(bot_state, 'daily_pnl', 0),
+                }
+            )
+
+        return base
+    except Exception as e:
         return {
             "running": False,
-            "message": "Bot no iniciado",
+            "message": f"Error: {str(e)}",
             "mode": BOT_MODE,
         }
-
-    trades = [
-        {
-            "entry_time": t.entry_time,
-            "exit_time": t.exit_time,
-            "side": t.side,
-            "entry_price": t.entry_price,
-            "exit_price": t.exit_price,
-            "stake": t.stake,
-            "pnl": t.pnl,
-            "win": t.win,
-            "contract_id": t.contract_id,
-        }
-        for t in bot_state.trades
-    ]
-
-    base = {
-        "running": _bot_running,
-        "mode": BOT_MODE,
-        "position": bot_state.position,
-        "open_side": bot_state.open_side,
-        "open_entry_price": bot_state.open_entry_price,
-        "trades_today": bot_state.trades_today,
-        "ticks_received": bot_state.ticks_received,
-        "balance": bot_state.balance,
-        "daily_pnl": bot_state.daily_pnl,
-        "last_price": bot_state.last_price,
-        "last_hma": bot_state.last_hma,
-        "last_flow": bot_state.last_flow,
-        "last_direction": bot_state.last_direction,
-        "trades": trades,
-    }
-
-    if BOT_MODE == "binary":
-        base.update(
-            {
-                "martingale_step": bot_state.martingale_step,
-                "daily_pnl": bot_state.daily_pnl,
-            }
-        )
-    else:
-        base.update(
-            {
-                "multiplier": bot_state.multiplier,
-                "daily_pnl": bot_state.daily_pnl,
-            }
-        )
-
-    return base
 
 
 @app.post("/start", tags=["control"])
