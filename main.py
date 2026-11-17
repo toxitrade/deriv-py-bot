@@ -96,6 +96,8 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .form-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 4px; font-weight: 600; }
   .form-group input { width: 100%; padding: 8px 10px; border: 1px solid #334155; border-radius: 6px; font-size: 14px; background: #0f172a; color: #fff; }
   .form-group input:focus { outline: none; border-color: #3b82f6; }
+  .form-group select { width: 100%; padding: 8px 10px; border: 1px solid #334155; border-radius: 6px; font-size: 14px; background: #0f172a; color: #fff; }
+  .form-group select:focus { outline: none; border-color: #3b82f6; }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .log { background: #0f172a; color: #cbd5e1; border-radius: 8px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; max-height: 400px; overflow-y: auto; margin-top: 12px; border: 1px solid #334155; }
   .log .line { white-space: pre-wrap; margin: 2px 0; }
@@ -123,6 +125,8 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .indicator-down { color: #f87171; }
   .indicator-neutral { color: #94a3b8; }
   .signal-box { padding: 20px; border-radius: 8px; text-align: center; }
+  .hidden { display: none !important; }
+  .multiplier-config { background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 12px; margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -197,6 +201,29 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
         <div class="form-group">
           <label>Stake (USD)</label>
           <input id="sel-stake" type="number" value="10" step="0.1" />
+        </div>
+      </div>
+      <div class="multiplier-config" id="multiplier-config">
+        <div class="row">
+          <div class="form-group">
+            <label>Multiplicador</label>
+            <select id="sel-multiplier" style="width:100%;padding:8px 10px;border:1px solid #334155;border-radius:6px;font-size:14px;background:#0f172a;color:#fff;">
+              <option value="10">x10</option>
+              <option value="50">x50</option>
+              <option value="100" selected>x100</option>
+              <option value="200">x200</option>
+              <option value="400">x400</option>
+              <option value="1000">x1000</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Take Profit %</label>
+            <input id="sel-tp-pct" type="number" value="0.001" step="0.0001" />
+          </div>
+          <div class="form-group">
+            <label>Stop Loss %</label>
+            <input id="sel-sl-pct" type="number" value="0.001" step="0.0001" />
+          </div>
         </div>
       </div>
       <button class="btn secondary" id="btn-save">Guardar configuración</button>
@@ -414,7 +441,11 @@ async function loadConfig(){
       $('sel-mode').value = c.mode || 'binary';
       $('sel-symbol').value = c.symbol || '1HZ50V';
       $('sel-stake').value = c.stake || 10;
+      if (c.multiplier !== undefined) $('sel-multiplier').value = c.multiplier;
+      if (c.tp_pct !== undefined) $('sel-tp-pct').value = c.tp_pct;
+      if (c.sl_pct !== undefined) $('sel-sl-pct').value = c.sl_pct;
       $('mode-badge').textContent = (c.mode === 'multiplier' ? 'Multiplier' : 'Binary');
+      toggleMultiplierConfig(c.mode);
       setAlert('Configuración cargada desde tu navegador (localStorage)');
       return;
     }catch(e){}
@@ -423,7 +454,20 @@ async function loadConfig(){
   $('sel-mode').value = c.mode || 'binary';
   $('sel-symbol').value = c.symbol || '1HZ50V';
   $('sel-stake').value = c.stake || 10;
+  if (c.multiplier !== undefined) $('sel-multiplier').value = c.multiplier;
+  if (c.tp_pct !== undefined) $('sel-tp-pct').value = c.tp_pct;
+  if (c.sl_pct !== undefined) $('sel-sl-pct').value = c.sl_pct;
   $('mode-badge').textContent = (c.mode === 'multiplier' ? 'Multiplier' : 'Binary');
+  toggleMultiplierConfig(c.mode);
+}
+
+function toggleMultiplierConfig(mode){
+  const config = $('multiplier-config');
+  if (mode === 'multiplier'){
+    config.classList.remove('hidden');
+  } else {
+    config.classList.add('hidden');
+  }
 }
 
 async function saveConfig(){
@@ -432,6 +476,16 @@ async function saveConfig(){
     symbol: $('sel-symbol').value,
     stake: parseFloat($('sel-stake').value) || 10,
   };
+  if ($('sel-mode').value === 'multiplier'){
+    payload.multiplier = parseInt($('sel-multiplier').value) || 100;
+    payload.tp_pct = parseFloat($('sel-tp-pct').value) || 0.001;
+    payload.sl_pct = parseFloat($('sel-sl-pct').value) || 0.001;
+  } else {
+    payload.duration = 1;
+    payload.duration_unit = 'm';
+    payload.martingale_multiplier = 2.4;
+    payload.max_martingale_steps = 10;
+  }
   await api('/config', 'POST', payload);
   localStorage.setItem('bot_config', JSON.stringify(payload));
   setAlert('Configuración guardada en servidor y en tu navegador');
@@ -459,6 +513,10 @@ async function stopBot(){
   setAlert('Bot detenido');
   await loadStatus();
 }
+
+$('sel-mode').addEventListener('change', function(){
+  toggleMultiplierConfig(this.value);
+});
 
 loadStatus();
 loadSignal();
