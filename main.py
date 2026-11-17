@@ -69,48 +69,60 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <title>Deriv Bot — HMA + Mladen Flow</title>
 <style>
   * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; background: #f5f7fa; color: #1a1a1a; }
-  .container { max-width: 900px; margin: 0 auto; padding: 24px; }
-  header { background: #0f172a; color: #fff; padding: 16px 24px; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; background: #0f172a; color: #f1f5f9; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  header { background: #1e293b; color: #fff; padding: 16px 24px; border-radius: 8px 8px 0 0; margin-bottom: 20px; border-bottom: 2px solid #334155; }
   header h1 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 10px; }
   header .badge { font-size: 11px; background: #22c55e; color: #fff; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px; }
-  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-  .card h2 { font-size: 14px; margin: 0 0 12px 0; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  .card h2 { font-size: 13px; margin: 0 0 12px 0; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
   .status { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; background: #94a3b8; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #64748b; }
   .dot.running { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
   .dot.stopped { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
   .big { font-size: 28px; font-weight: 700; margin: 8px 0; }
-  .small { font-size: 13px; color: #64748b; }
-  .btn { background: #0f172a; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; margin: 4px 4px 4px 0; }
-  .btn:hover { background: #1e293b; }
+  .small { font-size: 13px; color: #94a3b8; }
+  .btn { background: #334155; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; margin: 4px 4px 4px 0; transition: background 0.2s; }
+  .btn:hover { background: #475569; }
   .btn.start { background: #22c55e; }
   .btn.start:hover { background: #16a34a; }
   .btn.stop { background: #ef4444; }
   .btn.stop:hover { background: #dc2626; }
-  .btn.secondary { background: #f1f5f9; color: #334155; }
-  .btn.secondary:hover { background: #e2e8f0; }
+  .btn.secondary { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; }
+  .btn.secondary:hover { background: #334155; }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .form-group { margin-bottom: 12px; }
-  .form-group label { display: block; font-size: 12px; color: #64748b; margin-bottom: 4px; font-weight: 600; }
-  .form-group input { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: #fff; }
+  .form-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 4px; font-weight: 600; }
+  .form-group input { width: 100%; padding: 8px 10px; border: 1px solid #334155; border-radius: 6px; font-size: 14px; background: #0f172a; color: #fff; }
   .form-group input:focus { outline: none; border-color: #3b82f6; }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .log { background: #0f172a; color: #cbd5e1; border-radius: 8px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; max-height: 400px; overflow-y: auto; margin-top: 12px; }
+  .log { background: #0f172a; color: #cbd5e1; border-radius: 8px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; max-height: 400px; overflow-y: auto; margin-top: 12px; border: 1px solid #334155; }
   .log .line { white-space: pre-wrap; margin: 2px 0; }
   .log .error { color: #f87171; }
   .log .info { color: #34d399; }
   .log .warn { color: #fbbf24; }
   .alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; }
-  .alert.info { background: #dbeafe; color: #1e40af; border-left: 4px solid #3b82f6; }
-  .alert.warn { background: #fef3c7; color: #92400e; border-left: 4px solid #f59e0b; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
-  th { text-align: left; color: #64748b; font-size: 11px; text-transform: uppercase; padding: 8px; border-bottom: 2px solid #e2e8f0; }
-  td { padding: 8px; border-bottom: 1px solid #f1f5f9; }
-  tr:nth-child(even) td { background: #f8fafc; }
-  .win { color: #16a34a; font-weight: 700; }
-  .lose { color: #dc2626; font-weight: 700; }
+  .alert.info { background: #1e3a8a; color: #bfdbfe; border-left: 4px solid #3b82f6; }
+  .alert.warn { background: #7c2d12; color: #fedaa6; border-left: 4px solid #ea580c; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; border: 1px solid #334155; }
+  th { text-align: left; color: #94a3b8; font-size: 11px; text-transform: uppercase; padding: 8px; border-bottom: 1px solid #334155; background: #0f172a; }
+  td { padding: 8px; border-bottom: 1px solid #1e293b; }
+  tr:nth-child(even) td { background: #0f172a; }
+  .win { color: #34d399; font-weight: 700; }
+  .lose { color: #f87171; font-weight: 700; }
+  .kpi-value { font-size: 20px; font-weight: 700; color: #f1f5f9; }
+  .kpi-positive { color: #34d399; }
+  .kpi-negative { color: #f87171; }
+  .kpi-neutral { color: #94a3b8; }
+  .indicators-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 8px; }
+  .indicator-card { background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; text-align: center; }
+  .indicator-label { font-size: 11px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase; }
+  .indicator-value { font-size: 16px; font-weight: 700; font-family: ui-monospace; color: #cbd5e1; }
+  .indicator-up { color: #34d399; }
+  .indicator-down { color: #f87171; }
+  .indicator-neutral { color: #94a3b8; }
+  .signal-box { padding: 20px; border-radius: 8px; text-align: center; }
 </style>
 </head>
 <body>
@@ -137,10 +149,42 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
     </div>
 
     <div class="card">
+      <h2>💰 Saldo</h2>
+      <div class="kpi-value kpi-neutral" id="balance-text">$0.00</div>
+      <div class="small" id="daily-pnl-text">PnL diario: $0.00</div>
+    </div>
+
+    <div class="card">
+      <h2>⚙️ Indicadores</h2>
+      <div class="indicators-row">
+        <div class="indicator-card">
+          <div class="indicator-label">Precio</div>
+          <div class="indicator-value kpi-neutral" id="price-value">—</div>
+        </div>
+        <div class="indicator-card">
+          <div class="indicator-label">HMA</div>
+          <div class="indicator-value indicator-neutral" id="hma-value">—</div>
+        </div>
+        <div class="indicator-card">
+          <div class="indicator-label">Flow</div>
+          <div class="indicator-value indicator-neutral" id="flow-value">—</div>
+        </div>
+        <div class="indicator-card">
+          <div class="indicator-label">Dirección</div>
+          <div class="indicator-value indicator-neutral" id="direction-value">—</div>
+        </div>
+        <div class="indicator-card">
+          <div class="indicator-label">Martingala</div>
+          <div class="indicator-value indicator-neutral" id="martingale-value">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Configuración rápida</h2>
       <div class="form-group">
         <label>Modo</label>
-        <select id="sel-mode" style="width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;">
+        <select id="sel-mode" style="width:100%;padding:8px 10px;border:1px solid #334155;border-radius:6px;font-size:14px;background:#0f172a;color:#fff;">
           <option value="binary">Binary (CALL/PUT)</option>
           <option value="multiplier">Multiplier (leverage)</option>
         </select>
@@ -162,14 +206,14 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 
   <div class="card">
     <h2>Señal actual</h2>
-    <div id="signal-box" style="padding:16px; border-radius:8px; background:#f8fafc; border:1px solid #e2e8f0; text-align:center;">
+    <div id="signal-box" class="signal-box" style="background:#1e293b; border:1px solid #334155;">
       <div class="small">Esperando datos...</div>
       <div style="font-size:32px; font-weight:800; margin-top:8px;" id="signal-value">—</div>
       <div class="small" id="signal-reason"></div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" style="margin-top:20px;">
     <h2>Últimos trades</h2>
     <table id="trades-table">
       <thead><tr><th>Hora</th><th>Tipo</th><th>Entrada</th><th>Salida</th><th>Stake</th><th>PnL</th><th>Resultado</th></tr></thead>
@@ -238,6 +282,62 @@ async function loadStatus(){
   $('mode-text').textContent = (s.mode === 'multiplier' ? 'Multiplier' : 'Binary') + (s.trade_mode ? ' · ' + s.trade_mode : '');
   $('trade-mode').textContent = 'Modo: ' + (s.trade_mode || 'DEMO');
 
+  // Balance y PnL
+  const bal = s.balance !== undefined ? s.balance : 0;
+  const balEl = $('balance-text');
+  balEl.textContent = '$' + bal.toFixed(2);
+  balEl.className = 'kpi-value ' + (bal >= 0 ? 'kpi-positive' : 'kpi-negative');
+  const dp = s.daily_pnl !== undefined ? s.daily_pnl : 0;
+  const dpEl = $('daily-pnl-text');
+  dpEl.textContent = 'PnL diario: $' + dp.toFixed(2) + ' (' + (dp >= 0 ? '+' : '') + dp.toFixed(2) + ')';
+  dpEl.className = 'small ' + (dp >= 0 ? 'kpi-positive' : dp < 0 ? 'kpi-negative' : 'kpi-neutral');
+
+  // Indicadores
+  const priceEl = $('price-value');
+  if (s.last_price !== undefined && s.last_price !== null){
+    priceEl.textContent = s.last_price.toFixed(4);
+    priceEl.className = 'indicator-value';
+  } else {
+    priceEl.textContent = '—';
+    priceEl.className = 'indicator-value indicator-neutral';
+  }
+
+  const hmaEl = $('hma-value');
+  if (s.last_hma !== undefined && s.last_hma !== null){
+    hmaEl.textContent = s.last_hma.toFixed(4);
+    hmaEl.className = 'indicator-value ' + (s.last_direction === 1 ? 'indicator-up' : s.last_direction === -1 ? 'indicator-down' : 'indicator-neutral');
+  } else {
+    hmaEl.textContent = '—';
+    hmaEl.className = 'indicator-value indicator-neutral';
+  }
+
+  const flowEl = $('flow-value');
+  if (s.last_flow !== undefined && s.last_flow !== null){
+    flowEl.textContent = s.last_flow.toFixed(4);
+    flowEl.className = 'indicator-value ' + (s.last_flow > 0 ? 'indicator-up' : s.last_flow < 0 ? 'indicator-down' : 'indicator-neutral');
+  } else {
+    flowEl.textContent = '—';
+    flowEl.className = 'indicator-value indicator-neutral';
+  }
+
+  const dirEl = $('direction-value');
+  if (s.last_direction !== undefined && s.last_direction !== null){
+    dirEl.textContent = s.last_direction === 1 ? 'ALCISTA ▲' : s.last_direction === -1 ? 'BAJISTA ▼' : 'NEUTRO —';
+    dirEl.className = 'indicator-value ' + (s.last_direction === 1 ? 'indicator-up' : s.last_direction === -1 ? 'indicator-down' : 'indicator-neutral');
+  } else {
+    dirEl.textContent = '—';
+    dirEl.className = 'indicator-value indicator-neutral';
+  }
+
+  const martEl = $('martingale-value');
+  if (s.martingale_step !== undefined){
+    martEl.textContent = 'Paso ' + s.martingale_step;
+    martEl.className = 'indicator-value ' + (s.martingale_step > 0 ? 'indicator-up' : 'indicator-neutral');
+  } else {
+    martEl.textContent = '0';
+    martEl.className = 'indicator-value indicator-neutral';
+  }
+
   const tbody = $('trades-body');
   tbody.innerHTML = '';
   if (!s.trades || s.trades.length === 0){
@@ -248,13 +348,14 @@ async function loadStatus(){
       const winCls = t.win ? 'win' : 'lose';
       const winTxt = t.win ? 'WIN' : 'LOSE';
       const pnl = t.pnl !== null && t.pnl !== undefined ? t.pnl.toFixed(2) : '-';
+      const pnlCls = t.win ? 'win' : (t.pnl !== null && t.pnl < 0 ? 'lose' : '');
       const tr = document.createElement('tr');
       tr.innerHTML = `<td>${formatTime(t.entry_time)}</td>
                       <td>${t.side}</td>
-                      <td>${t.entry_price !== null ? t.entry_price.toFixed(2) : '-'}</td>
-                      <td>${t.exit_price !== null ? t.exit_price.toFixed(2) : '-'}</td>
+                      <td>${t.entry_price !== null ? t.entry_price.toFixed(4) : '-'}</td>
+                      <td>${t.exit_price !== null ? t.exit_price.toFixed(4) : '-'}</td>
                       <td>${t.stake !== null ? t.stake.toFixed(2) : '-'}</td>
-                      <td>${pnl}</td>
+                      <td class="${pnlCls}">${pnl}</td>
                       <td class="${winCls}">${winTxt}</td>`;
       tbody.appendChild(tr);
     });
@@ -267,20 +368,21 @@ async function loadSignal(){
   const val = $('signal-value');
   const reason = $('signal-reason');
   if (!s.signal){
-    box.style.background = '#f8fafc';
-    box.style.borderColor = '#e2e8f0';
+    box.style.background = '#1e293b';
+    box.style.borderColor = '#334155';
     val.textContent = '—';
-    val.style.color = '#64748b';
+    val.style.color = '#94a3b8';
     reason.textContent = s.message || 'Esperando señal...';
     reason.style.color = '#94a3b8';
   } else {
     const isCall = s.signal === 'call';
-    box.style.background = isCall ? '#dcfce7' : '#fee2e2';
-    box.style.borderColor = isCall ? '#86efac' : '#fca5a5';
+    box.style.background = isCall ? '#064e3b' : '#450a0a';
+    box.style.borderColor = isCall ? '#34d399' : '#f87171';
     val.textContent = s.signal.toUpperCase();
-    val.style.color = isCall ? '#16a34a' : '#dc2626';
-    reason.textContent = (s.position ? 'Posición: ' + s.position.toUpperCase() + ' · ' : '') + (s.reason || '');
-    reason.style.color = '#475569';
+    val.style.color = isCall ? '#34d399' : '#f87171';
+    const dirLabel = s.last_direction === 1 ? 'HMA alcista' : s.last_direction === -1 ? 'HMA bajista' : 'HMA neutro';
+    reason.textContent = (s.position ? 'Posición: ' + s.position.toUpperCase() + ' · ' : '') + dirLabel + ' · HMA: ' + (s.last_hma !== undefined ? s.last_hma.toFixed(4) : '—') + ' · Flow: ' + (s.last_flow !== undefined ? s.last_flow.toFixed(4) : '—') + ' · Saldo: $' + (s.balance !== undefined ? s.balance.toFixed(2) : '0.00');
+    reason.style.color = '#cbd5e1';
   }
 }
 
@@ -305,7 +407,6 @@ function escapeHtml(s){
 }
 
 async function loadConfig(){
-  // Primero intenta cargar desde localStorage (configuración del usuario)
   const saved = localStorage.getItem('bot_config');
   if (saved){
     try{
@@ -316,11 +417,8 @@ async function loadConfig(){
       $('mode-badge').textContent = (c.mode === 'multiplier' ? 'Multiplier' : 'Binary');
       setAlert('Configuración cargada desde tu navegador (localStorage)');
       return;
-    }catch(e){
-      // Ignorar errores de parseo y continuar con el servidor
-    }
+    }catch(e){}
   }
-  // Fallback: cargar desde el servidor
   const c = await api('/config');
   $('sel-mode').value = c.mode || 'binary';
   $('sel-symbol').value = c.symbol || '1HZ50V';
@@ -335,7 +433,6 @@ async function saveConfig(){
     stake: parseFloat($('sel-stake').value) || 10,
   };
   await api('/config', 'POST', payload);
-  // Guardar también en localStorage del navegador
   localStorage.setItem('bot_config', JSON.stringify(payload));
   setAlert('Configuración guardada en servidor y en tu navegador');
   await loadStatus();
@@ -693,6 +790,12 @@ async def status():
         "open_entry_price": bot_state.open_entry_price,
         "trades_today": bot_state.trades_today,
         "ticks_received": bot_state.ticks_received,
+        "balance": bot_state.balance,
+        "daily_pnl": bot_state.daily_pnl,
+        "last_price": bot_state.last_price,
+        "last_hma": bot_state.last_hma,
+        "last_flow": bot_state.last_flow,
+        "last_direction": bot_state.last_direction,
         "trades": trades,
     }
 
