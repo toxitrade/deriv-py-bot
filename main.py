@@ -466,7 +466,7 @@ def _build_config() -> dict:
                     _get_env("DERIV_MARTINGALE_MULT", "2.4")
                 ),
                 "max_martingale_steps": int(
-                    _get_env("DERIV_MAX_MARTINGALE_STEPS", "999")
+                    _get_env("DERIV_MAX_MARTINGALE_STEPS", "10")
                 ),
             }
         )

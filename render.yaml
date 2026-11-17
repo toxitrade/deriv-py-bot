@@ -27,7 +27,7 @@ services:
       - key: DERIV_MARTINGALE_MULT
         value: 2.4
       - key: DERIV_MAX_MARTINGALE_STEPS
-        value: 999
+        value: 10
       - key: DERIV_MULTIPLIER
         value: 100
       - key: DERIV_TP_PCT

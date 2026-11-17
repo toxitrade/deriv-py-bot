@@ -96,7 +96,7 @@ CONFIG = {
     "flow_threshold": env_float("DERIV_FLOW_THRESHOLD", 0.0),
     # Martingala
     "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
-    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 4),
+    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 10),
     "account_id": env_str("DERIV_ACCOUNT_ID", ""),
     "app_id": env_str("DERIV_APP_ID", ""),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
