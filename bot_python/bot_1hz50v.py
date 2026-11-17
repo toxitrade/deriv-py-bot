@@ -235,11 +235,16 @@ class BotState:
     open_entry_time: float = 0.0  # unix ts de entrada (para duración fija)
     open_side: Optional[str] = None
     daily_pnl: float = 0.0
+    balance: float = 10000.0  # saldo virtual inicial (modo demo)
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
     last_tick_time: Optional[str] = None
+    last_hma: Optional[float] = None  # valor HMA último tick
+    last_flow: Optional[float] = None  # valor Flow último tick
+    last_price: Optional[float] = None  # último precio recibido
+    last_direction: Optional[int] = None  # dirección HMA última vela
 
 
 state = BotState()
@@ -417,6 +422,7 @@ class HMAFlowBot:
         self.prices.append(price)
         state.ticks_received += 1
         state.last_tick_time = now_str()
+        state.last_price = price
 
         if len(self.prices) < WARMUP_TICKS:
             return
@@ -432,9 +438,14 @@ class HMAFlowBot:
             self._log("debug", f"Warmup: prices={len(self.prices)}, d={d}, f={f}")
             return
 
+        state.last_hma = hma_series[-1]
+        state.last_flow = f
+        state.last_direction = d
+
         thr = self.flow_threshold
         now = now_str()
-        self._log("debug", f"Vela: d={d}, f={f:.4f}, thr={thr}, position={state.position}")
+        sys.stdout.write(".")
+        sys.stdout.flush()
 
     # ---- Si hay posición abierta, revisar salida (TP/SL/señal) ----
         if state.position is not None:
@@ -452,13 +463,9 @@ class HMAFlowBot:
             # Simulated PnL in PAPER mode
             pnl = 0.0
             win = False
-            if exit_reason == "TP 100%":
-                win = True
-                pnl = self.stake * 1.00  # +100% de la apuesta
-            elif exit_reason == "SL 50%":
-                win = False
-                pnl = -self.stake * 0.50  # -50% de la apuesta
-            elif state.position == "long":
+            # En modo binary solo sale por duración, no hay TP ni SL
+            win = False
+            if state.position == "long":
                 win = price > state.open_entry_price
                 pnl = self.stake * 0.80 if win else -self.stake * 0.50
             else:
@@ -474,6 +481,8 @@ class HMAFlowBot:
             self._log("info",
                       f"  [PAPER PnL] {side_txt} stake={self.stake:.2f} pnl={pnl:+.2f} USD "
                       f"({'WIN' if win else 'LOSS'})")
+            state.balance += pnl
+            state.daily_pnl += pnl
             # ---- Martingala: subir paso si LOSE, resetear si WIN ----
             if win:
                 state.martingale_step = 0
