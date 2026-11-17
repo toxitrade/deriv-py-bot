@@ -662,7 +662,8 @@ async def set_config(updates: dict):
 
 @app.get("/status", tags=["status"])
 async def status():
-    if _bot is None:
+    # Usar _bot_running (consistente con /health) en lugar de _bot is None
+    if not _bot_running:
         return {
             "running": False,
             "message": "Bot no iniciado",
