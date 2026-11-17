@@ -487,16 +487,30 @@ class HMAFlowBot:
             self._log("info",
                       f"  [PAPER PnL] {side_txt} stake={self.stake:.2f} pnl={pnl:+.2f} USD "
                       f"({'WIN' if win else 'LOSS'})")
+            # ---- Martingala: subir paso si LOSE, resetear si WIN ----
+            if win:
+                state.martingale_step = 0
+                self._log("info", "  [MARTINGALA] Reset a paso 0 (WIN)")
+            else:
+                state.martingale_step += 1
+                if state.martingale_step >= self.max_martingale_steps:
+                    state.martingale_step = 0
+                    self._log("info", "  [MARTINGALA] Max steps alcanzado, reset a 0")
+                else:
+                    self._log("info",
+                              f"  [MARTINGALA] Paso {state.martingale_step}, "
+                              f"stake x{self.martingale_multiplier}")
             if state.open_contract_id is not None and self.trading_ws and self.token:
                 asyncio.create_task(self._close_contract(state.open_contract_id))
             self._close_position()
             return
 
-        # ---- Sin posición: buscar entrada (sin martingala, stake base) ----
+        # ---- Sin posición: buscar entrada (con martingala) ----
+        stake_efectivo = self.stake * (self.martingale_multiplier ** state.martingale_step)
         if d == 1 and f > thr:
-            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", self.stake)
+            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", stake_efectivo)
         elif d == -1 and f < -thr:
-            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", self.stake)
+            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", stake_efectivo)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
                 contract_type: Optional[str], stake: float) -> None:
