@@ -196,7 +196,17 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
       <div class="row">
         <div class="form-group">
           <label>Símbolo</label>
-          <input id="sel-symbol" value="1HZ50V" />
+          <select id="sel-symbol" style="width:100%;padding:8px 10px;border:1px solid #334155;border-radius:6px;font-size:14px;background:#0f172a;color:#fff;">
+            <option value="1HZ50V">1HZ50V (Volatility 50)</option>
+            <option value="R_50">R_50 (Volatility 50 Index)</option>
+            <option value="R_100">R_100 (Volatility 100 Index)</option>
+            <option value="R_25">R_25 (Volatility 25 Index)</option>
+            <option value="R_10">R_10 (Volatility 10 Index)</option>
+            <option value="1HZ10V">1HZ10V</option>
+            <option value="1HZ100V">1HZ100V</option>
+            <option value="1HZ25V">1HZ25V</option>
+            <option value="1HZ75V">1HZ75V</option>
+          </select>
         </div>
         <div class="form-group">
           <label>Stake (USD)</label>
@@ -319,50 +329,40 @@ async function loadStatus(){
   dpEl.textContent = 'PnL diario: $' + dp.toFixed(2) + ' (' + (dp >= 0 ? '+' : '') + dp.toFixed(2) + ')';
   dpEl.className = 'small ' + (dp >= 0 ? 'kpi-positive' : dp < 0 ? 'kpi-negative' : 'kpi-neutral');
 
-  // Indicadores
+  // Indicadores (solo valores, sin debug)
   const priceEl = $('price-value');
   if (s.last_price !== undefined && s.last_price !== null){
     priceEl.textContent = s.last_price.toFixed(4);
-    priceEl.className = 'indicator-value';
   } else {
     priceEl.textContent = '—';
-    priceEl.className = 'indicator-value indicator-neutral';
   }
 
   const hmaEl = $('hma-value');
   if (s.last_hma !== undefined && s.last_hma !== null){
     hmaEl.textContent = s.last_hma.toFixed(4);
-    hmaEl.className = 'indicator-value ' + (s.last_direction === 1 ? 'indicator-up' : s.last_direction === -1 ? 'indicator-down' : 'indicator-neutral');
   } else {
     hmaEl.textContent = '—';
-    hmaEl.className = 'indicator-value indicator-neutral';
   }
 
   const flowEl = $('flow-value');
   if (s.last_flow !== undefined && s.last_flow !== null){
     flowEl.textContent = s.last_flow.toFixed(4);
-    flowEl.className = 'indicator-value ' + (s.last_flow > 0 ? 'indicator-up' : s.last_flow < 0 ? 'indicator-down' : 'indicator-neutral');
   } else {
     flowEl.textContent = '—';
-    flowEl.className = 'indicator-value indicator-neutral';
   }
 
   const dirEl = $('direction-value');
   if (s.last_direction !== undefined && s.last_direction !== null){
-    dirEl.textContent = s.last_direction === 1 ? 'ALCISTA ▲' : s.last_direction === -1 ? 'BAJISTA ▼' : 'NEUTRO —';
-    dirEl.className = 'indicator-value ' + (s.last_direction === 1 ? 'indicator-up' : s.last_direction === -1 ? 'indicator-down' : 'indicator-neutral');
+    dirEl.textContent = s.last_direction === 1 ? '▲' : s.last_direction === -1 ? '▼' : '—';
   } else {
     dirEl.textContent = '—';
-    dirEl.className = 'indicator-value indicator-neutral';
   }
 
   const martEl = $('martingale-value');
   if (s.martingale_step !== undefined){
-    martEl.textContent = 'Paso ' + s.martingale_step;
-    martEl.className = 'indicator-value ' + (s.martingale_step > 0 ? 'indicator-up' : 'indicator-neutral');
+    martEl.textContent = s.martingale_step;
   } else {
     martEl.textContent = '0';
-    martEl.className = 'indicator-value indicator-neutral';
   }
 
   const tbody = $('trades-body');
@@ -483,8 +483,8 @@ async function saveConfig(){
   } else {
     payload.duration = 1;
     payload.duration_unit = 'm';
-    payload.martingale_multiplier = 2.4;
-    payload.max_martingale_steps = 10;
+    payload.martingale_multiplier = parseFloat($('sel-martingale-mult').value) || 2.4;
+    payload.max_martingale_steps = parseInt($('sel-max-martingale').value) || 10;
   }
   await api('/config', 'POST', payload);
   localStorage.setItem('bot_config', JSON.stringify(payload));
@@ -516,7 +516,17 @@ async function stopBot(){
 
 $('sel-mode').addEventListener('change', function(){
   toggleMultiplierConfig(this.value);
+  toggleBinaryConfig(this.value);
 });
+
+function toggleBinaryConfig(mode){
+  const config = $('binary-config');
+  if (mode === 'binary'){
+    config.classList.remove('hidden');
+  } else {
+    config.classList.add('hidden');
+  }
+}
 
 loadStatus();
 loadSignal();
@@ -817,7 +827,7 @@ async def set_config(updates: dict):
 
 @app.get("/status", tags=["status"])
 async def status():
-    # Usar _bot_running (consistente con /health) en lugar de _bot is None
+    # Usar _bot_running (consistente con /health)
     if not _bot_running:
         return {
             "running": False,
