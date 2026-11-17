@@ -439,25 +439,12 @@ class HMAFlowBot:
     # ---- Si hay posición abierta, revisar salida (TP/SL/señal) ----
         if state.position is not None:
             # Calcular PnL actual basado en movimiento de precio
-            if state.position == "long":
-                price_move = (price - state.open_entry_price) / state.open_entry_price
-                signal_exit = (d == -1 or f < 0.0)
-                tp_hit = price_move >= 0.001   # +0.1% → TP 100%
-                sl_hit = price_move <= -0.001  # -0.1% → SL 50%
-            else:  # short
-                price_move = (state.open_entry_price - price) / state.open_entry_price
-                signal_exit = (d == 1 or f > 0.0)
-                tp_hit = price_move >= 0.001   # +0.1% → TP 100%
-                sl_hit = price_move <= -0.001  # -0.1% → SL 50%
-
-            if tp_hit:
-                exit_reason = "TP 100%"
-            elif sl_hit:
-                exit_reason = "SL 50%"
-            elif signal_exit:
-                exit_reason = f"señal (flow={f:.2f} hma_dir={d})"
-            else:
-                return  # aún no sale
+            # Salir solo por duración fija (1 min), sin salir por señal ni TP/SL
+            elapsed = time.time() - state.open_entry_time
+            duration_seconds = self.duration * 60 if self.duration_unit == "m" else self.duration
+            if elapsed < duration_seconds:
+                return  # aún no sale, espera a completar 1 min
+            exit_reason = f"duración {self.duration}{self.duration_unit} completada"
 
             side_txt = "LONG" if state.position == "long" else "SHORT"
             self._log("info",
