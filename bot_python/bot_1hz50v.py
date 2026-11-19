@@ -96,7 +96,7 @@ CONFIG = {
     "flow_threshold": env_float("DERIV_FLOW_THRESHOLD", 0.0),
     # Martingala
     "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
-    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 10),
+    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 5),
     "account_id": env_str("DERIV_ACCOUNT_ID", ""),
     "app_id": env_str("DERIV_APP_ID", ""),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
@@ -238,6 +238,7 @@ class BotState:
     balance: float = 10000.0  # saldo virtual inicial (modo demo)
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
+    win_streak: int = 0  # racha de victorias consecutivas para reset martingala
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
     last_tick_time: Optional[str] = None
@@ -483,15 +484,21 @@ class HMAFlowBot:
                       f"({'WIN' if win else 'LOSS'})")
             state.balance += pnl
             state.daily_pnl += pnl
-            # ---- Martingala: subir paso si LOSE, resetear si WIN ----
+            # ---- Martingala: subir paso si LOSE, resetear si WIN o max steps ----
             if win:
+                state.win_streak += 1
                 state.martingale_step = 0
-                self._log("info", "  [MARTINGALA] Reset a paso 0 (WIN)")
+                if state.win_streak >= 8:
+                    state.win_streak = 0
+                    self._log("info", "  [MARTINGALA] Reset: 8 wins seguidas, paso 0")
+                else:
+                    self._log("info", f"  [MARTINGALA] Win #{state.win_streak}, paso 0")
             else:
+                state.win_streak = 0
                 state.martingale_step += 1
                 if state.martingale_step >= self.max_martingale_steps:
                     state.martingale_step = 0
-                    self._log("info", "  [MARTINGALA] Max steps alcanzado, reset a 0")
+                    self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}) alcanzado, reset a 0")
                 else:
                     self._log("info",
                               f"  [MARTINGALA] Paso {state.martingale_step}, "
