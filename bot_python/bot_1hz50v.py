@@ -239,6 +239,7 @@ class BotState:
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
     win_streak: int = 0  # racha de victorias consecutivas para reset martingala
+    loss_acumulado: float = 0.0  # pérdida acumulada de la racha actual para martingala
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
     last_tick_time: Optional[str] = None
@@ -484,35 +485,43 @@ class HMAFlowBot:
                       f"({'WIN' if win else 'LOSS'})")
             state.balance += pnl
             state.daily_pnl += pnl
-            # ---- Martingala: subir paso si LOSE, resetear si WIN o max steps ----
+            # ---- Martingala: calcular stake para recuperar pérdida ----
+            # Payout real: gana 80% (0.8), pierde 50% (0.5) por cada 10 apostado
+            # Para recuperar pérdida L y ganar el stake base: S = (L + 10) / 0.8
             if win:
                 state.win_streak += 1
                 state.martingale_step = 0
+                state.loss_acumulado = 0.0  # Reset pérdida acumulada en WIN
                 if state.win_streak >= 8:
                     state.win_streak = 0
                     self._log("info", "  [MARTINGALA] Reset: 8 wins seguidas, paso 0")
                 else:
-                    self._log("info", f"  [MARTINGALA] Win #{state.win_streak}, paso 0")
+                    self._log("info", f"  [MARTINGALA] Win #{state.win_streak}, pérdida acumulada resetada")
             else:
                 state.win_streak = 0
                 state.martingale_step += 1
+                state.loss_acumulado += abs(pnl)  # Acumular pérdida real
                 if state.martingale_step >= self.max_martingale_steps:
                     state.martingale_step = 0
+                    state.loss_acumulado = 0.0  # Reset al llegar al máximo
                     self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}) alcanzado, reset a 0")
                 else:
                     self._log("info",
                               f"  [MARTINGALA] Paso {state.martingale_step}, "
-                              f"stake x{self.martingale_multiplier}")
+                              f"pérdida acum: {state.loss_acumulado:.2f}")
             if state.open_contract_id is not None and self.trading_ws and self.token:
                 asyncio.create_task(self._close_contract(state.open_contract_id))
             self._close_position()
             return
 
-        # ---- Sin posición: buscar entrada (con martingala) ----
+        # ---- Sin posición: buscar entrada (con martingala de recuperación) ----
         # NO abrir nuevo trade si ya hay uno abierto
         if state.position is not None:
             return
-        stake_efectivo = self.stake * (self.martingale_multiplier ** state.martingale_step)
+        # Stake = (pérdida_acumulada + stake_base) / 0.8 (payout del 80%)
+        stake_efectivo = (state.loss_acumulado + self.stake) / 0.8
+        # Redondear a 2 decimales
+        stake_efectivo = round(stake_efectivo, 2)
         if d == 1 and f > thr:
             self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", stake_efectivo)
         elif d == -1 and f < -thr:
