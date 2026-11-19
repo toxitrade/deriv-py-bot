@@ -238,7 +238,6 @@ class BotState:
     balance: float = 10000.0  # saldo virtual inicial (modo demo)
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
-    win_streak: int = 0  # racha de victorias consecutivas para reset martingala
     loss_acumulado: float = 0.0  # pérdida acumulada de la racha actual para martingala
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
@@ -489,16 +488,10 @@ class HMAFlowBot:
             # Payout real: gana 80% (0.8), pierde 50% (0.5) por cada 10 apostado
             # Para recuperar pérdida L y ganar el stake base: S = (L + 10) / 0.8
             if win:
-                state.win_streak += 1
                 state.martingale_step = 0
                 state.loss_acumulado = 0.0  # Reset pérdida acumulada en WIN
-                if state.win_streak >= 8:
-                    state.win_streak = 0
-                    self._log("info", "  [MARTINGALA] Reset: 8 wins seguidas, paso 0")
-                else:
-                    self._log("info", f"  [MARTINGALA] Win #{state.win_streak}, pérdida acumulada resetada")
+                self._log("info", "  [MARTINGALA] Win, paso resetado a 0")
             else:
-                state.win_streak = 0
                 state.martingale_step += 1
                 state.loss_acumulado += abs(pnl)  # Acumular pérdida real
                 if state.martingale_step >= self.max_martingale_steps:
