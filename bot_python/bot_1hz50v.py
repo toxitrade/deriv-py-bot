@@ -235,7 +235,7 @@ class BotState:
     open_entry_time: float = 0.0  # unix ts de entrada (para duración fija)
     open_side: Optional[str] = None
     daily_pnl: float = 0.0
-    balance: float = 10000.0  # saldo virtual inicial (modo demo)
+    balance: float = 0.0  # saldo obtenido de la cuenta de Deriv
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
     loss_acumulado: float = 0.0  # pérdida acumulada de la racha actual para martingala
@@ -370,6 +370,25 @@ class HMAFlowBot:
         self.trading_ws = await websockets.connect(otp_url)
         self.trading_ws_url = otp_url
         self._log("info", "WebSocket de trading autenticado conectado")
+        await self.fetch_balance()
+
+    async def fetch_balance(self) -> None:
+        """Obtiene el saldo real de la cuenta de Deriv."""
+        if not self.trading_ws:
+            return
+        try:
+            req = {"balance": 1}
+            resp = await self._send(self.trading_ws, req)
+            balance_data = resp.get("balance", {})
+            if balance_data:
+                balance = balance_data.get("balance", 0)
+                currency = balance_data.get("currency", "USD")
+                state.balance = float(balance)
+                self._log("info", f"Saldo de cuenta obtenido: {balance} {currency}")
+            else:
+                self._log("warning", "No se pudo obtener saldo de la cuenta")
+        except Exception as e:
+            self._log("error", f"Error obteniendo saldo: {e}")
 
     def _fetch_otp_url(self) -> Optional[str]:
         """Llama a POST /accounts/{accountId}/otp y devuelve la URL WebSocket con OTP."""
