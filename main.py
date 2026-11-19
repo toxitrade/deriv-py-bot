@@ -805,9 +805,30 @@ async def set_config(updates: dict):
         "sl_pct",
     }
 
+    # Mapear claves del frontend a claves de entorno
+    key_map = {
+        "mode": "DERIV_BOT_MODE",
+        "symbol": "DERIV_SYMBOL",
+        "stake": "DERIV_STAKE",
+        "account_id": "DERIV_ACCOUNT_ID",
+        "app_id": "DERIV_APP_ID",
+        "hma_period": "DERIV_HMA_PERIOD",
+        "flow_period": "DERIV_FLOW_PERIOD",
+        "flow_smooth": "DERIV_FLOW_SMOOTH",
+        "flow_threshold": "DERIV_FLOW_THRESHOLD",
+        "duration": "DERIV_DURATION",
+        "duration_unit": "DERIV_DURATION_UNIT",
+        "martingale_multiplier": "DERIV_MARTINGALE_MULT",
+        "max_martingale_steps": "DERIV_MAX_MARTINGALE_STEPS",
+        "multiplier": "DERIV_MULTIPLIER",
+        "tp_pct": "DERIV_TP_PCT",
+        "sl_pct": "DERIV_SL_PCT",
+    }
+
     for key, value in updates.items():
-        if key in allowed:
-            PERSISTENT_CFG[key] = value
+        env_key = key_map.get(key, key)
+        if env_key in allowed:
+            PERSISTENT_CFG[env_key] = value
 
     _save_persistent_config(PERSISTENT_CFG)
 
@@ -914,15 +935,15 @@ async def start_bot():
 @app.post("/stop", tags=["control"])
 async def stop_bot():
     global _bot_task, _bot_running
-    if not _bot_running:
-        return {"status": "not_running", "mode": BOT_MODE}
+    _bot_running = False
     if _bot_task and not _bot_task.done():
         _bot_task.cancel()
         try:
             await _bot_task
         except asyncio.CancelledError:
             pass
-    _bot_running = False
+    _bot_task = None
+    _bot = None
     return {"status": "stopped", "mode": BOT_MODE}
 
 
