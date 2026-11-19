@@ -239,6 +239,7 @@ class BotState:
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
     loss_acumulado: float = 0.0  # pérdida acumulada de la racha actual para martingala
+    open_stake: float = 0.0  # stake real de la operación abierta
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
     last_tick_time: Optional[str] = None
@@ -485,12 +486,13 @@ class HMAFlowBot:
             win = False
             # En modo binary solo sale por duración, no hay TP ni SL
             win = False
+            stake_real = state.open_stake if state.open_stake > 0 else self.stake
             if state.position == "long":
                 win = price > state.open_entry_price
-                pnl = self.stake * 0.80 if win else -self.stake * 0.50
+                pnl = stake_real * 0.80 if win else -stake_real * 0.50
             else:
                 win = price < state.open_entry_price
-                pnl = self.stake * 0.80 if win else -self.stake * 0.50
+                pnl = stake_real * 0.80 if win else -stake_real * 0.50
             if state.trades:
                 t = state.trades[-1]
                 t.exit_time = now
@@ -499,7 +501,7 @@ class HMAFlowBot:
                 t.win = win
                 save_trade_to_csv(t)
             self._log("info",
-                      f"  [PAPER PnL] {side_txt} stake={self.stake:.2f} pnl={pnl:+.2f} USD "
+                      f"  [PAPER PnL] {side_txt} stake={stake_real:.2f} pnl={pnl:+.2f} USD "
                       f"({'WIN' if win else 'LOSS'})")
             state.balance += pnl
             state.daily_pnl += pnl
@@ -553,6 +555,7 @@ class HMAFlowBot:
             state.open_side = "CALL"
             state.open_entry_price = price
             state.open_entry_time = time.time()
+            state.open_stake = stake  # Guardar stake real
             state.trades.append(TradeRecord(
                 entry_time=now, exit_time=None, side="CALL",
                 entry_price=price, exit_price=None, stake=stake,
@@ -563,6 +566,7 @@ class HMAFlowBot:
             state.open_side = "PUT"
             state.open_entry_price = price
             state.open_entry_time = time.time()
+            state.open_stake = stake  # Guardar stake real
             state.trades.append(TradeRecord(
                 entry_time=now, exit_time=None, side="PUT",
                 entry_price=price, exit_price=None, stake=stake,
