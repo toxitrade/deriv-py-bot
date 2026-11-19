@@ -38,7 +38,7 @@ services:
       - key: DERIV_LOG_LEVEL
         value: INFO
       - key: DERIV_BOT_MODE
-        value: binary
+        value: multiplier
       # Secretos - configúralos en el dashboard de Render (no se suben a git):
       - key: DERIV_TOKEN
         sync: false
