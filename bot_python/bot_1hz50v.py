@@ -502,6 +502,9 @@ class HMAFlowBot:
             return
 
         # ---- Sin posición: buscar entrada (con martingala) ----
+        # NO abrir nuevo trade si ya hay uno abierto
+        if state.position is not None:
+            return
         stake_efectivo = self.stake * (self.martingale_multiplier ** state.martingale_step)
         if d == 1 and f > thr:
             self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", stake_efectivo)
