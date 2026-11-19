@@ -847,6 +847,21 @@ async def set_config(updates: dict):
                 state as bot_state,
             )
 
+    # Si cambió el modo, recargar la clase del bot
+    new_mode = str(PERSISTENT_CFG.get("DERIV_BOT_MODE", BOT_MODE)).lower()
+    if new_mode != BOT_MODE:
+        BOT_MODE = new_mode
+        if BOT_MODE == "multiplier":
+            from bot_python.multiplier_bot import (  # noqa: E402
+                MultiplierBot as HMAFlowBot,
+                state as bot_state,
+            )
+        else:
+            from bot_python.bot_1hz50v import (  # noqa: E402
+                HMAFlowBot,
+                state as bot_state,
+            )
+
     return {"status": "saved", "mode": BOT_MODE, "config": await get_config()}
 
 
