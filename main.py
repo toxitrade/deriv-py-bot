@@ -573,11 +573,15 @@ PERSISTENT_CFG = _load_persistent_config()
 
 
 def _get_env(name: str, default: str) -> str:
-    """Prioridad: variable de entorno > config.json > default."""
+    """Prioridad: config.json (guardado desde sitio) > variable de entorno > default."""
+    # Primero verificar config.json (lo que el usuario guarda desde el sitio)
+    if name in PERSISTENT_CFG and PERSISTENT_CFG[name] not in (None, ""):
+        return str(PERSISTENT_CFG[name])
+    # Luego variable de entorno
     env_val = os.environ.get(name)
     if env_val is not None and env_val != "":
         return env_val
-    return str(PERSISTENT_CFG.get(name, default))
+    return default
 
 
 BOT_MODE = _get_env("DERIV_BOT_MODE", "binary").lower()
