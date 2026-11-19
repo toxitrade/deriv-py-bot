@@ -1,3 +1,4 @@
 {
-  "mode": "multiplier"
+  "mode": "multiplier",
+  "DERIV_SYMBOL": "1HZ50V"
 }
