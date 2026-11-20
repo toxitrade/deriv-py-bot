@@ -993,23 +993,30 @@ async def status():
 
 @app.post("/start", tags=["control"])
 async def start_bot():
-    """Marca el bot como corriendo (el worker lee config.json)."""
-    global _bot_running
-    _bot_running = True
-    # El worker recarga config automáticamente
+    """Asegura que el bot esté corriendo."""
+    global _bot_task, _bot_running
+    if _bot_running:
+        return {"status": "already_running", "mode": BOT_MODE}
+    _bot_task = asyncio.create_task(_run_bot_loop())
     return {
         "status": "started",
         "mode": BOT_MODE,
         "trade_mode": "DEMO",
-        "note": "El bot corre en background worker. Revisa logs del worker."
     }
 
 
 @app.post("/stop", tags=["control"])
 async def stop_bot():
-    """Marca el bot como detenido (el worker lee config.json)."""
-    global _bot_running
+    """Detiene el bot."""
+    global _bot_task, _bot_running
     _bot_running = False
+    if _bot_task and not _bot_task.done():
+        _bot_task.cancel()
+        try:
+            await _bot_task
+        except asyncio.CancelledError:
+            pass
+    _bot_task = None
     return {"status": "stopped", "mode": BOT_MODE}
 
 
