@@ -462,49 +462,26 @@ class MultiplierBot:
         thr = self.flow_threshold
         now = now_str()
 
-        # ---- Si hay posición abierta, revisar salida (TP / SL / señal) ----
+        # ---- Si hay posición abierta, revisar salida solo por señal (cambio HMA/Flow) ----
         if state.position is not None:
             if state.position == "long":
                 price_move = (price - state.open_entry_price) / state.open_entry_price
-                signal_exit = (d == -1 or f < 0.0)
-                tp_hit = price_move >= self.tp_pct
-                sl_hit = price_move <= -self.sl_pct
+                signal_exit = (d == -1 or f < 0.0)  # HMA bajista o Flow negativo
             else:  # short
                 price_move = (state.open_entry_price - price) / state.open_entry_price
-                signal_exit = (d == 1 or f > 0.0)
-                tp_hit = price_move >= self.tp_pct
-                sl_hit = price_move <= -self.sl_pct
+                signal_exit = (d == 1 or f > 0.0)   # HMA alcista o Flow positivo
 
-            if tp_hit:
-                exit_reason = "TP"
-            elif sl_hit:
-                exit_reason = "SL"
-            elif signal_exit:
-                exit_reason = f"señal (flow={f:.2f} hma_dir={d})"
-            else:
-                return  # aún no sale
+            if not signal_exit:
+                return  # aún no sale, esperar señal de cambio
 
+            exit_reason = f"señal (flow={f:.2f} hma_dir={d})"
             side_txt = "LONG" if state.position == "long" else "SHORT"
             self._log("info",
                       f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason}")
 
-            # Cálculo de PnL para multiplier
-            pnl = 0.0
-            win = False
-            if exit_reason == "TP":
-                win = True
-                # Ganancia aproximada: stake * multiplicador * tp_pct (simplificado)
-                pnl = self.stake * self.multiplier * self.tp_pct
-            elif exit_reason == "SL":
-                win = False
-                pnl = -self.stake * self.multiplier * self.sl_pct
-            elif state.position == "long":
-                win = price > state.open_entry_price
-                # PnL aproximado proporcional al movimiento de precio * multiplicador
-                pnl = self.stake * self.multiplier * price_move
-            else:
-                win = price < state.open_entry_price
-                pnl = self.stake * self.multiplier * price_move
+            # Cálculo de PnL para multiplier: stake * multiplier * movimiento %
+            win = price > state.open_entry_price if state.position == "long" else price < state.open_entry_price
+            pnl = self.stake * self.multiplier * price_move
 
             if state.trades:
                 t = state.trades[-1]
@@ -525,11 +502,16 @@ class MultiplierBot:
             self._close_position()
             return
 
-        # ---- Sin posición: buscar entrada ----
-        if d == 1 and f > thr:
-            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", price)
-        elif d == -1 and f < -thr:
-            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", price)
+        # ---- Sin posición: buscar entrada (más selectiva) ----
+        # Confirmación precio vs HMA
+        hma_current = hma_series[-1]
+        price_above_hma = price > hma_current
+        price_below_hma = price < hma_current
+        
+        if d == 1 and f > thr and price_above_hma:
+            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow fuerte + precio > HMA", "CALL", price)
+        elif d == -1 and f < -thr and price_below_hma:
+            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow fuerte + precio < HMA", "PUT", price)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
                 contract_type: str, barrier: float) -> None:
