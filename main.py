@@ -841,6 +841,8 @@ async def set_config(updates: dict):
     new_mode = str(PERSISTENT_CFG.get("DERIV_BOT_MODE", BOT_MODE)).lower()
     if new_mode != BOT_MODE:
         BOT_MODE = new_mode
+        # Guardar estado de running antes de cancelar
+        was_running = _bot_running
         # Reiniciar bot task si está corriendo
         if _bot_task and not _bot_task.done():
             _bot_running = False
@@ -861,7 +863,7 @@ async def set_config(updates: dict):
                 state as bot_state,
             )
         # Reiniciar bot automáticamente si estaba corriendo
-        if _bot_running:
+        if was_running:
             _bot_task = asyncio.create_task(_run_bot_loop())
 
     return {"status": "saved", "mode": BOT_MODE, "config": await get_config()}
