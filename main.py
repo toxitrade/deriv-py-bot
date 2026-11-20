@@ -586,16 +586,10 @@ def _get_env(name: str, default: str) -> str:
 
 BOT_MODE = _get_env("DERIV_BOT_MODE", "binary").lower()
 
-if BOT_MODE == "multiplier":
-    from bot_python.multiplier_bot import (  # noqa: E402
-        MultiplierBot as HMAFlowBot,
-        state as bot_state,
-    )
-else:
-    from bot_python.bot_1hz50v import (  # noqa: E402
-        HMAFlowBot,
-        state as bot_state,
-    )
+# HMAFlowBot y bot_state se importan dinámicamente en _run_bot_loop según BOT_MODE
+# Para status endpoints, usamos getattr en el módulo correspondiente
+HMAFlowBot = None
+bot_state = None
 
 
 def _build_config() -> dict:
@@ -652,9 +646,14 @@ _bot_running = False
 
 
 async def _run_bot_loop() -> None:
-    global _bot_running
+    global _bot_running, _bot
     cfg = _build_config()
-    _bot = HMAFlowBot(cfg)
+    # Importar la clase correcta basada en BOT_MODE actual
+    if BOT_MODE == "multiplier":
+        from bot_python.multiplier_bot import MultiplierBot as BotClass
+    else:
+        from bot_python.bot_1hz50v import HMAFlowBot as BotClass
+    _bot = BotClass(cfg)
     _bot_running = True
     try:
         while _bot_running:
@@ -869,6 +868,16 @@ async def set_config(updates: dict):
     return {"status": "saved", "mode": BOT_MODE, "config": await get_config()}
 
 
+def _get_bot_state():
+    """Obtiene el state del módulo correcto según BOT_MODE."""
+    if BOT_MODE == "multiplier":
+        from bot_python.multiplier_bot import state as multiplier_state
+        return multiplier_state
+    else:
+        from bot_python.bot_1hz50v import state as binary_state
+        return binary_state
+
+
 @app.get("/status", tags=["status"])
 async def status():
     # Usar _bot_running (consistente con /health)
@@ -969,16 +978,17 @@ async def stop_bot():
 
 @app.get("/signals", tags=["status"])
 async def signals():
-    if not bot_state.trades:
+    state = _get_bot_state()
+    if not state.trades:
         return {"signal": None, "message": "Sin trades aún", "mode": BOT_MODE}
-    last = bot_state.trades[-1]
+    last = state.trades[-1]
     return {
         "signal": last.side.lower(),
         "side": last.side,
-        "symbol": bot_state.current_symbol,
+        "symbol": getattr(state, 'current_symbol', ''),
         "entry_price": last.entry_price,
         "entry_time": last.entry_time,
-        "position": bot_state.position,
+        "position": getattr(state, 'position', None),
         "mode": BOT_MODE,
     }
 
