@@ -45,3 +45,48 @@ services:
         sync: false
       - key: DERIV_APP_ID
         sync: false
+
+  - type: worker
+    name: deriv-bot-worker
+    env: python
+    region: ohio
+    buildCommand: "pip install -r requirements.txt && pip install -r requirements_web.txt"
+    startCommand: "python bot_worker.py"
+    envVars:
+      - key: DERIV_STAKE
+        value: 10.0
+      - key: DERIV_DEMO
+        value: true
+      - key: DERIV_HMA_PERIOD
+        value: 30
+      - key: DERIV_FLOW_PERIOD
+        value: 14
+      - key: DERIV_FLOW_SMOOTH
+        value: 3
+      - key: DERIV_FLOW_THRESHOLD
+        value: 0.3
+      - key: DERIV_DURATION
+        value: 1
+      - key: DERIV_DURATION_UNIT
+        value: m
+      - key: DERIV_MARTINGALE_MULT
+        value: 2.4
+      - key: DERIV_MAX_MARTINGALE_STEPS
+        value: 10
+      - key: DERIV_MULTIPLIER
+        value: 100
+      - key: DERIV_TP_PCT
+        value: 0.001
+      - key: DERIV_SL_PCT
+        value: 0.001
+      - key: DERIV_LOG_LEVEL
+        value: INFO
+      - key: DERIV_BOT_MODE
+        value: binary
+      # Secretos - configúralos en el dashboard de Render (no se suben a git):
+      - key: DERIV_TOKEN
+        sync: false
+      - key: DERIV_ACCOUNT_ID
+        sync: false
+      - key: DERIV_APP_ID
+        sync: false
