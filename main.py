@@ -43,6 +43,7 @@ Configurables desde el sitio (se guardan en config.json):
 """
 
 import asyncio
+import fcntl
 import json
 import os
 import sys
