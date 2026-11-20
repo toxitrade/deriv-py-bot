@@ -8,6 +8,14 @@ services:
     healthCheckPath: /health
     autoDeploy: "no"
     envVars:
+
+  - type: worker
+    name: deriv-bot-worker
+    env: python
+    region: ohio
+    buildCommand: "pip install -r requirements.txt && pip install -r requirements_web.txt"
+    startCommand: "python bot_worker.py"
+    envVars:
       - key: DERIV_STAKE
         value: 10.0
       - key: DERIV_DEMO
