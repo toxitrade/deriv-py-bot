@@ -670,7 +670,9 @@ async def _run_bot_loop() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # No cancelar el bot al hacer shutdown - dejarlo correr
     yield
+    # Solo cleanup al final real
     global _bot_task, _bot_running
     if _bot_task and not _bot_task.done():
         _bot_task.cancel()
