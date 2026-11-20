@@ -293,6 +293,7 @@ class HMAFlowBot:
         self.token = cfg["token"]
         self.symbol = cfg["symbol"]
         self.stake = float(cfg["stake"])
+        state.current_symbol = self.symbol  # Sincronizar símbolo actual al estado
         self.demo = bool(cfg["demo"])
         self.duration = int(cfg["duration"])
         self.duration_unit = cfg["duration_unit"]
@@ -390,6 +391,16 @@ class HMAFlowBot:
                 self._log("warning", "No se pudo obtener saldo de la cuenta")
         except Exception as e:
             self._log("error", f"Error obteniendo saldo: {e}")
+
+    def reload_config(self) -> None:
+        """Recarga la configuración desde variables de entorno / config.json."""
+        import os
+        old_symbol = self.symbol
+        new_symbol = os.environ.get("DERIV_SYMBOL", "1HZ50V")
+        if new_symbol != old_symbol:
+            self.symbol = new_symbol
+            state.current_symbol = new_symbol
+            self._log("info", f"Símbolo actualizado: {old_symbol} -> {new_symbol}")
 
     def _fetch_otp_url(self) -> Optional[str]:
         """Llama a POST /accounts/{accountId}/otp y devuelve la URL WebSocket con OTP."""
