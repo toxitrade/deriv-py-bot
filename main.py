@@ -22,10 +22,17 @@ Exposición:
 
 import asyncio
 import json
+import math
 import os
 import sys
 from contextlib import asynccontextmanager
 from typing import Any, Optional
+
+def _sanitize(v: Any) -> Any:
+    """Convierte NaN/Inf a None para JSON válido."""
+    if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+        return None
+    return v
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -399,10 +406,17 @@ async def lifespan(app: FastAPI):
 # ===========================================================================
 import asyncio
 import json
+import math
 import os
 import sys
 from contextlib import asynccontextmanager
 from typing import Any, Optional
+
+def _sanitize(v: Any) -> Any:
+    """Convierte NaN/Inf a None para JSON válido."""
+    if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+        return None
+    return v
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -645,9 +659,9 @@ async def status():
         "ticks_received": getattr(state, 'ticks_received', 0),
         "balance": getattr(state, 'balance', 0),
         "daily_pnl": getattr(state, 'daily_pnl', 0),
-        "last_price": getattr(state, 'last_price', None),
-        "last_hma": getattr(state, 'last_hma', None),
-        "last_flow": getattr(state, 'last_flow', None),
+        "last_price": _sanitize(getattr(state, 'last_price', None)),
+        "last_hma": _sanitize(getattr(state, 'last_hma', None)),
+        "last_flow": _sanitize(getattr(state, 'last_flow', None)),
         "last_direction": getattr(state, 'last_direction', None),
         "trades": trades,
     }
