@@ -393,14 +393,36 @@ class HMAFlowBot:
             self._log("error", f"Error obteniendo saldo: {e}")
 
     def reload_config(self) -> None:
-        """Recarga la configuración desde variables de entorno / config.json."""
+        """Recarga la configuración desde config.json."""
+        import json
         import os
+        config_path = os.path.join(os.path.dirname(__file__), '..', '..', 'config.json')
         old_symbol = self.symbol
-        new_symbol = os.environ.get("DERIV_SYMBOL", "1HZ50V")
+        try:
+            with open(config_path, 'r') as f:
+                cfg = json.load(f)
+            new_symbol = cfg.get("DERIV_SYMBOL", "1HZ50V")
+        except Exception:
+            new_symbol = os.environ.get("DERIV_SYMBOL", "1HZ50V")
         if new_symbol != old_symbol:
             self.symbol = new_symbol
             state.current_symbol = new_symbol
             self._log("info", f"Símbolo actualizado: {old_symbol} -> {new_symbol}")
+            # Resuscribir a ticks del nuevo símbolo
+            asyncio.create_task(self.resubscribe_symbol())
+
+    async def resubscribe_symbol(self) -> None:
+        """Reconecta y suscribe al nuevo símbolo."""
+        try:
+            # Cerrar WS público actual
+            if self.public_ws:
+                await self.public_ws.close()
+            # Conectar al nuevo símbolo
+            await self.connect_public()
+            await self.subscribe_ticks()
+            self._log("info", f"Reconectado y suscrito a {self.symbol}")
+        except Exception as e:
+            self._log("error", f"Error resuscribiendo a {self.symbol}: {e}")
 
     def _fetch_otp_url(self) -> Optional[str]:
         """Llama a POST /accounts/{accountId}/otp y devuelve la URL WebSocket con OTP."""
