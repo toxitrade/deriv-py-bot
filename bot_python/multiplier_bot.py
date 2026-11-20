@@ -96,9 +96,9 @@ CONFIG = {
     "token": env_str("DERIV_TOKEN", "").strip(),
 }
 
+APP_ID = env_str("DERIV_APP_ID", "")                          # Requerido para PAT
 PUBLIC_WS = f"wss://ws.binaryws.com/websockets/v3?app_id={APP_ID or '1089'}"  # Datos públicos (ticks/velas), sin auth
 OTP_BASE = "https://api.derivws.com"                              # REST para OTP de trading
-APP_ID = env_str("DERIV_APP_ID", "")                          # Requerido para PAT
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5
 WARMUP_TICKS = 40
