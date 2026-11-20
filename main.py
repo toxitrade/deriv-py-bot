@@ -748,6 +748,7 @@ async def print_env():
     }
 
 
+@app.head("/", tags=["status"])
 @app.get("/health", tags=["status"])
 async def health():
     return {"status": "ok", "running": _bot_running, "mode": BOT_MODE}
