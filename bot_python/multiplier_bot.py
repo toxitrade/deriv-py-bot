@@ -279,6 +279,7 @@ class MultiplierBot:
         self.token = cfg["token"]
         self.symbol = cfg["symbol"]
         self.stake = float(cfg["stake"])
+        state.current_symbol = self.symbol  # Sincronizar símbolo actual al estado
         self.multiplier = int(cfg["multiplier"])
         self.demo = bool(cfg["demo"])
         self.hma_period = int(cfg["hma_period"])
@@ -338,6 +339,54 @@ class MultiplierBot:
         self.trading_ws = await websockets.connect(otp_url)
         self.trading_ws_url = otp_url
         self._log("info", "WebSocket de trading autenticado conectado")
+        await self.fetch_balance()
+
+    async def fetch_balance(self) -> None:
+        """Obtiene el saldo real de la cuenta de Deriv."""
+        if not self.trading_ws:
+            return
+        try:
+            req = {"balance": 1}
+            resp = await self._send(self.trading_ws, req)
+            balance_data = resp.get("balance", {})
+            if balance_data:
+                balance = balance_data.get("balance", 0)
+                currency = balance_data.get("currency", "USD")
+                state.balance = float(balance)
+                self._log("info", f"Saldo de cuenta obtenido: {balance} {currency}")
+            else:
+                self._log("warning", "No se pudo obtener saldo de la cuenta")
+        except Exception as e:
+            self._log("error", f"Error obteniendo saldo: {e}")
+
+    def reload_config(self) -> None:
+        """Recarga la configuración desde config.json."""
+        import json
+        import os
+        config_path = os.path.join(os.path.dirname(__file__), '..', '..', 'config.json')
+        old_symbol = self.symbol
+        try:
+            with open(config_path, 'r') as f:
+                cfg = json.load(f)
+            new_symbol = cfg.get("DERIV_SYMBOL", "1HZ50V")
+        except Exception:
+            new_symbol = os.environ.get("DERIV_SYMBOL", "1HZ50V")
+        if new_symbol != old_symbol:
+            self.symbol = new_symbol
+            state.current_symbol = new_symbol
+            self._log("info", f"Símbolo actualizado: {old_symbol} -> {new_symbol}")
+            asyncio.create_task(self.resubscribe_symbol())
+
+    async def resubscribe_symbol(self) -> None:
+        """Reconecta y suscribe al nuevo símbolo."""
+        try:
+            if self.public_ws:
+                await self.public_ws.close()
+            await self.connect_public()
+            await self.subscribe_candles()
+            self._log("info", f"Reconectado y suscrito a {self.symbol}")
+        except Exception as e:
+            self._log("error", f"Error resuscribiendo a {self.symbol}: {e}")
 
     def _fetch_otp_url(self) -> Optional[str]:
         """Llama a POST /accounts/{accountId}/otp y devuelve la URL WebSocket con OTP."""
