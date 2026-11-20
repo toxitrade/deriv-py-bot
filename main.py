@@ -833,7 +833,7 @@ async def set_config(updates: dict):
     _save_persistent_config(PERSISTENT_CFG)
 
     # Recargar configuración en el bot si está corriendo
-    global _bot
+    global _bot_task, _bot_running, _bot
     if _bot is not None and hasattr(_bot, 'reload_config'):
         _bot.reload_config()
 
@@ -842,7 +842,6 @@ async def set_config(updates: dict):
     if new_mode != BOT_MODE:
         BOT_MODE = new_mode
         # Reiniciar bot task si está corriendo
-        global _bot_task, _bot_running, _bot
         if _bot_task and not _bot_task.done():
             _bot_running = False
             _bot_task.cancel()
