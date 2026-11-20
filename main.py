@@ -589,12 +589,11 @@ async def set_config(updates: dict):
     _save_persistent_config(PERSISTENT_CFG)
     
     # Si cambió el modo, recargar la clase del bot
+    global BOT_MODE, _bot_task, _bot_running
     new_mode = str(PERSISTENT_CFG.get("DERIV_BOT_MODE", BOT_MODE)).lower()
-    global BOT_MODE
     if new_mode != BOT_MODE:
         BOT_MODE = new_mode
         # Reiniciar bot task
-        global _bot_task, _bot_running
         _bot_running = False
         if _bot_task and not _bot_task.done():
             _bot_task.cancel()
