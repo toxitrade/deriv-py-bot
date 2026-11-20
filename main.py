@@ -955,6 +955,7 @@ async def signals():
     return {
         "signal": last.side.lower(),
         "side": last.side,
+        "symbol": bot_state.current_symbol,
         "entry_price": last.entry_price,
         "entry_time": last.entry_time,
         "position": bot_state.position,
