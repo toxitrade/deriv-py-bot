@@ -645,8 +645,45 @@ _bot_task: Optional[asyncio.Task] = None
 _bot_running = False
 
 
+# Lock file para evitar múltiples instancias del bot
+_BOT_LOCK_FILE = "/tmp/deriv_bot.lock"
+_bot_lock_fd = None
+
+def _acquire_bot_lock() -> bool:
+    """Intenta adquirir lock exclusivo para el bot."""
+    global _bot_lock_fd
+    try:
+        _bot_lock_fd = open(_BOT_LOCK_FILE, "w")
+        fcntl.flock(_bot_lock_fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        _bot_lock_fd.write(str(os.getpid()))
+        _bot_lock_fd.flush()
+        return True
+    except (IOError, OSError):
+        return False
+
+def _release_bot_lock() -> None:
+    """Libera el lock del bot."""
+    global _bot_lock_fd
+    if _bot_lock_fd:
+        try:
+            fcntl.flock(_bot_lock_fd.fileno(), fcntl.LOCK_UN)
+            _bot_lock_fd.close()
+        except:
+            pass
+        _bot_lock_fd = None
+    try:
+        os.unlink(_BOT_LOCK_FILE)
+    except:
+        pass
+
 async def _run_bot_loop() -> None:
     global _bot_running, _bot
+    # Intentar adquirir lock - si falla, otra instancia ya está corriendo
+    if not _acquire_bot_lock():
+        print("[BOT] Otra instancia ya está corriendo, saliendo")
+        _bot_running = False
+        return
+    
     cfg = _build_config()
     # Importar la clase correcta basada en BOT_MODE actual
     if BOT_MODE == "multiplier":
@@ -666,13 +703,14 @@ async def _run_bot_loop() -> None:
                 await asyncio.sleep(5)
     finally:
         _bot_running = False
+        _release_bot_lock()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # No cancelar el bot al hacer shutdown - dejarlo correr
     yield
-    # Solo cleanup al final real
+    # No cancelar el bot - dejarlo correr persistentemente
+    # Solo cleanup al final real de la aplicación
     global _bot_task, _bot_running
     if _bot_task and not _bot_task.done():
         _bot_task.cancel()
@@ -681,6 +719,7 @@ async def lifespan(app: FastAPI):
         except asyncio.CancelledError:
             pass
     _bot_running = False
+    _release_bot_lock()
 
 
 app = FastAPI(
