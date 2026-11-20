@@ -886,6 +886,7 @@ async def status():
         base = {
             "running": _bot_running,
             "mode": BOT_MODE,
+            "symbol": getattr(bot_state, 'current_symbol', ''),
             "position": getattr(bot_state, 'position', None),
             "open_side": getattr(bot_state, 'open_side', None),
             "open_entry_price": getattr(bot_state, 'open_entry_price', None),
