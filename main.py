@@ -837,10 +837,20 @@ async def set_config(updates: dict):
     if _bot is not None and hasattr(_bot, 'reload_config'):
         _bot.reload_config()
 
-    # Si cambió el modo, recargar la clase del bot
+    # Si cambió el modo, reiniciar el bot completamente
     new_mode = str(PERSISTENT_CFG.get("DERIV_BOT_MODE", BOT_MODE)).lower()
     if new_mode != BOT_MODE:
         BOT_MODE = new_mode
+        # Reiniciar bot task si está corriendo
+        global _bot_task, _bot_running, _bot
+        if _bot_task and not _bot_task.done():
+            _bot_running = False
+            _bot_task.cancel()
+            try:
+                await _bot_task
+            except asyncio.CancelledError:
+                pass
+        # Recargar la clase del bot
         if BOT_MODE == "multiplier":
             from bot_python.multiplier_bot import (  # noqa: E402
                 MultiplierBot as HMAFlowBot,
@@ -851,6 +861,9 @@ async def set_config(updates: dict):
                 HMAFlowBot,
                 state as bot_state,
             )
+        # Reiniciar bot automáticamente si estaba corriendo
+        if _bot_running:
+            _bot_task = asyncio.create_task(_run_bot_loop())
 
     return {"status": "saved", "mode": BOT_MODE, "config": await get_config()}
 
