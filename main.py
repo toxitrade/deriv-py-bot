@@ -604,10 +604,10 @@ def _build_config() -> dict:
         "stake": float(_get_env("DERIV_STAKE", "10.0")),
         # Siempre DEMO — no se permite trade real desde el sitio
         "demo": True,
-        "hma_period": int(_get_env("DERIV_HMA_PERIOD", "20")),
+        "hma_period": int(_get_env("DERIV_HMA_PERIOD", "30")),
         "flow_period": int(_get_env("DERIV_FLOW_PERIOD", "14")),
         "flow_smooth": int(_get_env("DERIV_FLOW_SMOOTH", "3")),
-        "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.0")),
+        "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.3")),
         "account_id": os.environ.get("DERIV_ACCOUNT_ID", ""),
         "app_id": os.environ.get("DERIV_APP_ID", ""),
         "log_level": os.environ.get("DERIV_LOG_LEVEL", "INFO"),

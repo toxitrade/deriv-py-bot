@@ -565,14 +565,24 @@ class HMAFlowBot:
         # NO abrir nuevo trade si ya hay uno abierto
         if state.position is not None:
             return
+        
+        # Filtro adicional: precio debe confirmar la dirección del HMA
+        # Para CALL: precio > HMA (tendencia alcista confirmada)
+        # Para PUT: precio < HMA (tendencia bajista confirmada)
+        hma_current = hma_series[-1]
+        price_above_hma = price > hma_current
+        price_below_hma = price < hma_current
+        
         # Stake = (pérdida_acumulada + stake_base) / 0.8 (payout del 80%)
         stake_efectivo = (state.loss_acumulado + self.stake) / 0.8
         # Redondear a 2 decimales
         stake_efectivo = round(stake_efectivo, 2)
-        if d == 1 and f > thr:
-            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow cruza arriba", "CALL", stake_efectivo)
-        elif d == -1 and f < -thr:
-            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow cruza abajo", "PUT", stake_efectivo)
+        
+        # Señal más selectiva: HMA + Flow + Confirmación precio vs HMA
+        if d == 1 and f > thr and price_above_hma:
+            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow fuerte + precio > HMA", "CALL", stake_efectivo)
+        elif d == -1 and f < -thr and price_below_hma:
+            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow fuerte + precio < HMA", "PUT", stake_efectivo)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
                 contract_type: Optional[str], stake: float) -> None:
