@@ -669,10 +669,12 @@ class HMAFlowBot:
             # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
             balance_before = state.balance
+            self._log("debug", f"EXIT: llamando get_contract_profit contract_id={state.open_contract_id} balance_before={balance_before}")
             await self.fetch_balance()
             
             # Obtener profit real del contrato que acaba de expirar via profit_table
             pnl_real = await self.get_contract_profit(state.open_contract_id, balance_before)
+            self._log("debug", f"EXIT: pnl_real={pnl_real}")
             
             # Actualizar el último trade con PnL REAL del contrato
             if state.trades:
