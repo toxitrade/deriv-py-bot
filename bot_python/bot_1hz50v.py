@@ -402,57 +402,15 @@ class HMAFlowBot:
             self._log("error", f"Error obteniendo saldo: {e}")
 
     async def fetch_real_trades(self) -> None:
-        """Obtiene trades reales via profit_table usando el trading_ws existente."""
+        """Solo sincroniza balance real. Los trades se cierran solos en Deriv al vencer (1 min)."""
         if not self.trading_ws or not self.token:
-            self._log("debug", "fetch_real_trades: no trading_ws or token")
             return
         try:
-            # Usar lock para serializar acceso al trading_ws
-            async with self._ws_lock:
-                req = {
-                    "profit_table": 1,
-                    "description": 1,
-                    "limit": 20,
-                    "sort": "DESC"
-                }
-                self._log("debug", "fetch_real_trades: enviando profit_table request")
-                resp = await self._send(self.trading_ws, {
-                    "profit_table": 1,
-                    "description": 1,
-                    "limit": 20,
-                    "sort": "DESC"
-                })
-                self._log("debug", f"fetch_real_trades: respuesta completa: {resp}")
-                profit_data = resp.get("profit_table", {})
-                transactions = profit_data.get("transactions", [])
-                self._log("debug", f"fetch_real_trades: {len(transactions)} transacciones recibidas")
-                
-                updated = 0
-                for tx in transactions:
-                    contract_id = tx.get("contract_id")
-                    profit = tx.get("profit")
-                    sell_price = tx.get("sell_price")
-                    buy_price = tx.get("buy_price")
-                    self._log("debug", f"fetch_real_trades: tx contract_id={contract_id}, profit={profit}, sell_price={sell_price}, buy_price={buy_price}")
-                    
-                    # Buscar trade en nuestro registro
-                    for t in reversed(state.trades):
-                        if t.contract_id == contract_id and t.pnl is None:
-                            t.exit_price = float(sell_price) if sell_price else None
-                            t.pnl = float(profit) if profit is not None else 0.0
-                            t.win = float(profit) > 0 if profit is not None else False
-                            t.exit_time = now_str()
-                            save_trade_to_csv(t)
-                            updated += 1
-                            self._log("info", f"Trade actualizado: contract_id={contract_id}, pnl={t.pnl}, win={t.win}")
-                            break
-                
-                # Sincronizar balance real
-                await self.fetch_balance()
-                if updated:
-                    self._log("info", f"Trades reales sincronizados: {updated}")
+            # Solo sync balance - los trades expiran solos en Deriv
+            await self.fetch_balance()
+            self._log("debug", "Balance sincronizado via fetch_real_trades")
         except Exception as e:
-            self._log("error", f"Error sincronizando trades reales: {e}")
+            self._log("error", f"Error sincronizando balance: {e}")
 
     def reload_config(self) -> None:
         """Recarga la configuración desde config.json."""
