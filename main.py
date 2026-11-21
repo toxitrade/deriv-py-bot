@@ -468,8 +468,10 @@ def _build_config() -> dict:
         common.update({
             "duration": int(_get_env("DERIV_DURATION", "1")),
             "duration_unit": _get_env("DERIV_DURATION_UNIT", "m"),
-            "martingale_multiplier": float(_get_env("DERIV_MARTINGALE_MULT", "2.4")),
-            "max_martingale_steps": int(_get_env("DERIV_MAX_MARTINGALE_STEPS", "10")),
+            "martingale_multiplier": float(_get_env("DERIV_MARTINGALE_MULT", "2.0")),
+            "max_martingale_steps": int(_get_env("DERIV_MAX_MARTINGALE_STEPS", "5")),
+            "max_stake": float(_get_env("DERIV_MAX_STAKE", "100.0")),
+            "cooldown_seconds": int(_get_env("DERIV_COOLDOWN_SECONDS", "30")),
         })
     return common
 
@@ -605,8 +607,10 @@ def _build_config() -> dict:
         common.update({
             "duration": int(_get_env("DERIV_DURATION", "1")),
             "duration_unit": _get_env("DERIV_DURATION_UNIT", "m"),
-            "martingale_multiplier": float(_get_env("DERIV_MARTINGALE_MULT", "2.4")),
-            "max_martingale_steps": int(_get_env("DERIV_MAX_MARTINGALE_STEPS", "10")),
+            "martingale_multiplier": float(_get_env("DERIV_MARTINGALE_MULT", "2.0")),
+            "max_martingale_steps": int(_get_env("DERIV_MAX_MARTINGALE_STEPS", "5")),
+            "max_stake": float(_get_env("DERIV_MAX_STAKE", "100.0")),
+            "cooldown_seconds": int(_get_env("DERIV_COOLDOWN_SECONDS", "30")),
         })
     return common
 
