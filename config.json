@@ -1,4 +1,17 @@
 {
-  "mode": "multiplier",
-  "DERIV_SYMBOL": "1HZ50V"
+  "mode": "binary",
+  "token": "config_from_env",
+  "symbol": "1HZ50V",
+  "stake": 10.0,
+  "demo": true,
+  "duration": 1,
+  "duration_unit": "m",
+  "hma_period": 30,
+  "flow_period": 14,
+  "flow_smooth": 3,
+  "flow_threshold": 0.3,
+  "martingale_multiplier": 2.0,
+  "max_martingale_steps": 5,
+  "max_stake": 100.0,
+  "cooldown_seconds": 30
 }
