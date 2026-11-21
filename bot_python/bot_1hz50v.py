@@ -539,14 +539,49 @@ class HMAFlowBot:
             self._log("info",
                       f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason} (esperando resultado real)")
 
+            # Guardar balance antes de sincronizar para calcular PnL real
+            balance_antes = state.balance
+            
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
-            # NO calcular PnL PAPER - esperar resultado real
-            # Sincronizar balance y trades reales en cada EXIT
+            # Sincronizar balance real y calcular PnL del cambio
             state.trades_today += 1
-            asyncio.create_task(self.fetch_balance())
-            asyncio.create_task(self.fetch_real_trades())
+            await self.fetch_balance()
+            await self.fetch_real_trades()
+            
+            # Calcular PnL real del cambio de balance
+            pnl_real = state.balance - balance_antes
+            
+            # Actualizar el último trade con PnL real
+            if state.trades:
+                last_trade = state.trades[-1]
+                if last_trade.pnl is None:  # Solo si no se actualizó aún
+                    last_trade.exit_time = now
+                    last_trade.exit_price = price
+                    last_trade.pnl = pnl_real
+                    last_trade.win = pnl_real > 0
+                    save_trade_to_csv(last_trade)
+                    self._log("info", 
+                        f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} "
+                        f"pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
+                    
+                    # ---- Martingala: usar PnL real ----
+                    if pnl_real > 0:
+                        state.martingale_step = 0
+                        state.loss_acumulado = 0.0
+                        self._log("info", "  [MARTINGALA] Win, paso resetado a 0")
+                    else:
+                        state.martingale_step += 1
+                        state.loss_acumulado += abs(pnl_real)
+                        if state.martingale_step >= self.max_martingale_steps:
+                            state.martingale_step = 0
+                            state.loss_acumulado = 0.0
+                            self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}) alcanzado, reset a 0")
+                        else:
+                            self._log("info",
+                                f"  [MARTINGALA] Paso {state.martingale_step}, "
+                                f"pérdida acum: {state.loss_acumulado:.2f}")
 
-            # Reset posición - el contrato expirará solo
+            # Reset posición - el contrato expiró
             self._close_position()
             return
 
