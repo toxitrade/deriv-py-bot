@@ -169,6 +169,14 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
     <button id="btn-stop" class="btn-danger" onclick="stopBot()">Detener Bot</button>
   </div>
   
+  <!-- Stats principales en el mismo card -->
+  <div class="grid" id="stats" style="margin-top:1rem">
+    <div class="stat"><div class="label">Saldo</div><div class="value" id="stat-balance">--</div></div>
+    <div class="stat"><div class="label">PnL Diario</div><div class="value" id="stat-pnl">--</div></div>
+    <div class="stat"><div class="label">Trades Hoy</div><div class="value" id="stat-trades">--</div></div>
+    <div class="stat"><div class="label">Ticks</div><div class="value" id="stat-ticks">--</div></div>
+  </div>
+  
   <!-- Info de sesión debajo de botones -->
   <div class="grid" id="session-info" style="margin-top:1rem;display:none">
     <div class="stat"><div class="label">Inicio del Bot</div><div class="value" id="session-start">--</div></div>
@@ -178,13 +186,6 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
     <div class="stat"><div class="label">Max Win in Row</div><div class="value" id="session-maxwin">--</div></div>
     <div class="stat"><div class="label">Max Drawdown</div><div class="value" id="session-maxdd">$--</div></div>
   </div>
-</div>
-
-<div class="grid" id="stats">
-  <div class="stat"><div class="label">Saldo</div><div class="value" id="stat-balance">--</div></div>
-  <div class="stat"><div class="label">PnL Diario</div><div class="value" id="stat-pnl">--</div></div>
-  <div class="stat"><div class="label">Trades Hoy</div><div class="value" id="stat-trades">--</div></div>
-  <div class="stat"><div class="label">Ticks</div><div class="value" id="stat-ticks">--</div></div>
 </div>
 
 <div class="card">
