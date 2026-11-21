@@ -546,16 +546,13 @@ class HMAFlowBot:
             # Sincronizar balance real y calcular PnL del cambio
             state.trades_today += 1
             await self.fetch_balance()
-            await self.fetch_real_trades()
             
             # Calcular PnL real del cambio de balance
             pnl_real = state.balance - balance_antes
-            self._log("debug", f"EXIT: balance_antes={balance_antes}, balance_despues={state.balance}, pnl_real={pnl_real}, trades_count={len(state.trades)}")
             
             # Actualizar el último trade con PnL real
             if state.trades:
                 last_trade = state.trades[-1]
-                self._log("debug", f"EXIT: last_trade pnl={last_trade.pnl}, win={last_trade.win}")
                 if last_trade.pnl is None:  # Solo si no se actualizó aún
                     last_trade.exit_time = now
                     last_trade.exit_price = price
