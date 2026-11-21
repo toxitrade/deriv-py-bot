@@ -393,32 +393,27 @@ class HMAFlowBot:
             self._log("error", f"Error obteniendo saldo: {e}")
 
     async def fetch_real_trades(self) -> None:
-        """Obtiene trades reales via profit_table usando cliente HTTP separado."""
-        if not self.token:
+        """Obtiene trades reales via profit_table usando el trading_ws existente."""
+        if not self.trading_ws or not self.token:
             return
         try:
-            # Usar cliente HTTP separado para evitar concurrencia en WS
-            import httpx
-            async with httpx.AsyncClient(timeout=10) as c:
-                # Obtener OTP URL para trading
-                otp_url = self._fetch_otp_url()
-                if not otp_url:
-                    return
-                # Conectar WS temporal para profit_table
-                async with websockets.connect(otp_url) as ws:
-                    req = {
-                        "profit_table": 1,
-                        "description": 1,
-                        "limit": 20,
-                        "sort": "DESC"
-                    }
-                    await ws.send(json.dumps(req))
-                    raw = await ws.recv()
-                    resp = json.loads(raw)
-            
+            # Usar el trading_ws existente para evitar problemas de concurrencia
+            req = {
+                "profit_table": 1,
+                "description": 1,
+                "limit": 20,
+                "sort": "DESC"
+            }
+            resp = await self._send(self.trading_ws, {
+                "profit_table": 1,
+                "description": 1,
+                "limit": 20,
+                "sort": "DESC"
+            })
             profit_data = resp.get("profit_table", {})
             transactions = profit_data.get("transactions", [])
             
+            updated = 0
             for tx in transactions:
                 contract_id = tx.get("contract_id")
                 profit = tx.get("profit")
@@ -432,11 +427,13 @@ class HMAFlowBot:
                         t.win = float(profit) > 0 if profit is not None else False
                         t.exit_time = now_str()
                         save_trade_to_csv(t)
+                        updated += 1
                         break
             
             # Sincronizar balance real
             await self.fetch_balance()
-            self._log("info", f"Trades reales sincronizados: {len(transactions)}")
+            if updated:
+                self._log("info", f"Trades reales sincronizados: {updated}")
         except Exception as e:
             self._log("error", f"Error sincronizando trades reales: {e}")
 
