@@ -319,6 +319,7 @@ class HMAFlowBot:
         self.max_stake = float(cfg["max_stake"])
         self.cooldown_seconds = int(cfg["cooldown_seconds"])
         self.last_trade_time = 0  # timestamp del último trade cerrado
+        self.consecutive_losses = 0  # pérdidas consecutivas para pausa
         self.prices: Deque[float] = deque(maxlen=TICK_BUFFER)
         self.public_ws = None
         self.trading_ws = None
@@ -646,9 +647,11 @@ class HMAFlowBot:
                     # ---- Martingala simple: base x2 on LOSS, reset on WIN ----
                     if pnl_real > 0:
                         state.martingale_step = 0
+                        self.consecutive_losses = 0  # Reset pérdidas consecutivas
                         self._log("info", "  [MARTINGALA] Win, reset a stake base")
                     else:
                         state.martingale_step += 1
+                        self.consecutive_losses += 1
                         if state.martingale_step >= self.max_martingale_steps:
                             state.martingale_step = 0
                             self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}), reset a stake base")
@@ -659,6 +662,10 @@ class HMAFlowBot:
             state.daily_pnl += pnl_real
             state.last_trade_exit_time = time.time()
             self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
+            
+            # Pausa protectora si 3 losses seguidas
+            if self.consecutive_losses >= 3:
+                self._log("warning", f"  [PAUSA] {self.consecutive_losses} losses consecutivas - pausando 5 min")
 
             # Reset posición - el contrato expiró
             self._close_position()
@@ -675,6 +682,13 @@ class HMAFlowBot:
         # COOLDOWN: esperar entre trades (solo si ya hubo trades)
         if state.trades_today > 0 and time.time() - state.last_trade_exit_time < self.cooldown_seconds:
             return
+        
+        # PAUSA PROTECTORA: si 3 losses consecutivas, pausa 5 min
+        if self.consecutive_losses >= 3:
+            if time.time() - state.last_trade_exit_time < 300:  # 5 min
+                return
+            else:
+                self.consecutive_losses = 0  # Reset tras pausa
 
         # Filtros de precisión (menos trades, más calidad)
         # 1. HMA dirección clara
@@ -686,21 +700,25 @@ class HMAFlowBot:
         price_above_hma = price > hma_current
         price_below_hma = price < hma_current
         
-        # 3. Flow fuerte (threshold más permisivo para que opere)
-        flow_strong_up = f > (thr * 0.5) and hma_slope >= 0
-        flow_strong_down = f < -(thr * 0.5) and hma_slope <= 0
+        # 3. Flow fuerte (threshold estricto para precisión)
+        flow_strong_up = f > thr and hma_slope > 0
+        flow_strong_down = f < -thr and hma_slope < 0
         
         # 4. Volatilidad: evitar operar en laterales (HMA plano)
-        hma_flat = abs(hma_slope) < (price * 0.00005)  # slope < 0.005%
+        hma_flat = abs(hma_slope) < (price * 0.0001)  # slope < 0.01%
+        
+        # 5. Filtro adicional: precio debe estar lejos del HMA (no en zona neutral)
+        price_hma_dist = abs(price - hma_current) / price
+        price_too_close_hma = price_hma_dist < 0.0002  # < 0.02%
         
         # Martingala simple: stake = base * 2^step, limitado a max_stake
         stake_efectivo = round(min(self.stake * (2 ** state.martingale_step), self.max_stake), 2)
         
-        # Señal de alta precisión: Flow + HMA slope + Precio vs HMA
-        if d == 1 and flow_strong_up and price_above_hma and not hma_flat:
-            self._signal(now, price, "BUY (CALL)", "HMA↑ Flow↑ Precio>HMA", "CALL", stake_efectivo)
-        elif d == -1 and flow_strong_down and price_below_hma and not hma_flat:
-            self._signal(now, price, "SELL (PUT)", "HMA↓ Flow↓ Precio<HMA", "PUT", stake_efectivo)
+        # Señal de alta precisión: Flow + HMA slope + Precio vs HMA + distancia HMA
+        if d == 1 and flow_strong_up and price_above_hma and not hma_flat and not price_too_close_hma:
+            self._signal(now, price, "BUY (CALL)", "HMA↑ Flow↑ Precio>HMA Dist>0.02%", "CALL", stake_efectivo)
+        elif d == -1 and flow_strong_down and price_below_hma and not hma_flat and not price_too_close_hma:
+            self._signal(now, price, "SELL (PUT)", "HMA↓ Flow↓ Precio<HMA Dist>0.02%", "PUT", stake_efectivo)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
                 contract_type: Optional[str], stake: float) -> None:
