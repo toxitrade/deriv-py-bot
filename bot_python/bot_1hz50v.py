@@ -601,8 +601,8 @@ class HMAFlowBot:
         if state.position is not None:
             return
         
-        # COOLDOWN: esperar entre trades
-        if time.time() - state.last_trade_exit_time < self.cooldown_seconds:
+        # COOLDOWN: esperar entre trades (solo si ya hubo trades)
+        if state.trades_today > 0 and time.time() - state.last_trade_exit_time < self.cooldown_seconds:
             return
 
         # Filtros de precisión (menos trades, más calidad)
@@ -615,12 +615,12 @@ class HMAFlowBot:
         price_above_hma = price > hma_current
         price_below_hma = price < hma_current
         
-        # 3. Flow fuerte Y pendiente HMA confirma
-        flow_strong_up = f > thr and hma_slope > 0
-        flow_strong_down = f < -thr and hma_slope < 0
+        # 3. Flow fuerte (threshold más permisivo para que opere)
+        flow_strong_up = f > (thr * 0.5) and hma_slope >= 0
+        flow_strong_down = f < -(thr * 0.5) and hma_slope <= 0
         
         # 4. Volatilidad: evitar operar en laterales (HMA plano)
-        hma_flat = abs(hma_slope) < (price * 0.0001)  # slope < 0.01%
+        hma_flat = abs(hma_slope) < (price * 0.00005)  # slope < 0.005%
         
         # Martingala simple: stake = base * 2^step, limitado a max_stake
         stake_efectivo = round(min(self.stake * (2 ** state.martingale_step), self.max_stake), 2)
