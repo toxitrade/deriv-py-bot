@@ -238,7 +238,7 @@ class BotState:
     balance: float = 0.0  # saldo obtenido de la cuenta de Deriv
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
-    loss_acumulado: float = 0.0  # pérdida acumulada de la racha actual para martingala
+    # Martingala simple: stake base, LOSS x2, WIN reset
     open_stake: float = 0.0  # stake real de la operación abierta
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
@@ -572,22 +572,17 @@ class HMAFlowBot:
                         f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} "
                         f"pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
                     
-                    # ---- Martingala: usar PnL real ----
+                    # ---- Martingala simple: base x2 on LOSS, reset on WIN ----
                     if pnl_real > 0:
                         state.martingale_step = 0
-                        state.loss_acumulado = 0.0
-                        self._log("info", "  [MARTINGALA] Win, paso resetado a 0")
+                        self._log("info", "  [MARTINGALA] Win, reset a stake base")
                     else:
                         state.martingale_step += 1
-                        state.loss_acumulado += abs(pnl_real)
                         if state.martingale_step >= self.max_martingale_steps:
                             state.martingale_step = 0
-                            state.loss_acumulado = 0.0
-                            self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}) alcanzado, reset a 0")
+                            self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}), reset a stake base")
                         else:
-                            self._log("info",
-                                f"  [MARTINGALA] Paso {state.martingale_step}, "
-                                f"pérdida acum: {state.loss_acumulado:.2f}")
+                            self._log("info", f"  [MARTINGALA] Paso {state.martingale_step}, stake x{2**state.martingale_step:.0f}")
 
             # Reset posición - el contrato expiró
             self._close_position()
@@ -608,10 +603,8 @@ class HMAFlowBot:
         price_above_hma = price > hma_current
         price_below_hma = price < hma_current
         
-        # Stake = (pérdida_acumulada + stake_base) / 0.8 (payout del 80%)
-        stake_efectivo = (state.loss_acumulado + self.stake) / 0.8
-        # Redondear a 2 decimales
-        stake_efectivo = round(stake_efectivo, 2)
+        # Martingala simple: stake = base * 2^step
+        stake_efectivo = round(self.stake * (2 ** state.martingale_step), 2)
         
         # Señal más selectiva: HMA + Flow + Confirmación precio vs HMA
         if d == 1 and f > thr and price_above_hma:
