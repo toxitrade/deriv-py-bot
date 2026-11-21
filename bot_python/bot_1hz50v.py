@@ -446,19 +446,24 @@ class HMAFlowBot:
                 req = {
                     "profit_table": 1,
                     "description": 1,
-                    "limit": 10,
+                    "limit": 20,
                     "sort": "DESC"
                 }
                 resp = await self._send(self.trading_ws, req)
                 profit_data = resp.get("profit_table", {})
                 transactions = profit_data.get("transactions", [])
+                self._log("debug", f"profit_table: {len(transactions)} transacciones, buscando contract_id={contract_id}")
                 
                 for tx in transactions:
-                    if tx.get("contract_id") == contract_id:
-                        profit = tx.get("profit")
+                    tx_id = tx.get("contract_id")
+                    profit = tx.get("profit")
+                    if tx_id == contract_id:
+                        self._log("debug", f"Contrato encontrado: profit={profit}")
                         if profit is not None:
                             return float(profit)
                         break
+                
+                self._log("warning", f"Contrato {contract_id} NO encontrado en profit_table ({len(transactions)} txs)")
         except Exception as e:
             self._log("error", f"Error obteniendo profit de contrato {contract_id}: {e}")
         return 0.0
