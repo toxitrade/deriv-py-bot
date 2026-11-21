@@ -270,8 +270,8 @@ async function api(path, method='GET', body=null){
   return r.json();
 }
 function setAlert(msg, type='info'){ const box = $('alert-box'); box.textContent = msg; box.className = 'alert ' + type; box.style.display = 'block'; setTimeout(()=>{ box.style.display='none'; }, 5000); }
-function formatTime(ts){ if (!ts) return '-'; const d = new Date(new Date(ts).getTime() - 3*60*60*1000); return d.toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
-function formatDate(ts){ if (!ts) return '-'; const d = new Date(new Date(ts).getTime() - 3*60*60*1000); return d.toLocaleString('es-AR', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
+function formatTime(ts){ if (!ts) return '-'; const d = new Date(ts); return d.toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
+function formatDate(ts){ if (!ts) return '-'; const d = new Date(ts); return d.toLocaleString('es-AR', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
 
 async function loadStatus(){
   const s = await api('/status');
