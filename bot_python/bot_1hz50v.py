@@ -437,6 +437,32 @@ class HMAFlowBot:
         except Exception as e:
             self._log("error", f"Error sincronizando balance: {e}")
 
+    async def get_contract_profit(self, contract_id: int) -> float:
+        """Obtiene el profit real de un contrato específico via profit_table."""
+        if not self.trading_ws or not self.token or not contract_id:
+            return 0.0
+        try:
+            async with self._ws_lock:
+                req = {
+                    "profit_table": 1,
+                    "description": 1,
+                    "limit": 10,
+                    "sort": "DESC"
+                }
+                resp = await self._send(self.trading_ws, req)
+                profit_data = resp.get("profit_table", {})
+                transactions = profit_data.get("transactions", [])
+                
+                for tx in transactions:
+                    if tx.get("contract_id") == contract_id:
+                        profit = tx.get("profit")
+                        if profit is not None:
+                            return float(profit)
+                        break
+        except Exception as e:
+            self._log("error", f"Error obteniendo profit de contrato {contract_id}: {e}")
+        return 0.0
+
     def reload_config(self) -> None:
         """Recarga la configuración desde config.json."""
         import json
@@ -626,18 +652,15 @@ class HMAFlowBot:
             self._log("info",
                       f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason} (esperando resultado real)")
 
-            # Guardar balance antes de sincronizar para calcular PnL real
-            balance_antes = state.balance
-            
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
-            # Sincronizar balance real y calcular PnL del cambio
+            # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
             await self.fetch_balance()
             
-            # Calcular PnL real del cambio de balance
-            pnl_real = state.balance - balance_antes
+            # Obtener profit real del contrato que acaba de expirar via profit_table
+            pnl_real = await self.get_contract_profit(state.open_contract_id)
             
-            # Actualizar el último trade con PnL real
+            # Actualizar el último trade con PnL REAL del contrato
             if state.trades:
                 last_trade = state.trades[-1]
                 if last_trade.pnl is None:  # Solo si no se actualizó aún
@@ -664,7 +687,7 @@ class HMAFlowBot:
                         else:
                             self._log("info", f"  [MARTINGALA] Paso {state.martingale_step}, stake x{2**state.martingale_step:.0f}")
 
-            # Acumular daily_pnl
+            # Acumular daily_pnl con profit REAL del contrato
             state.daily_pnl += pnl_real
             state.last_trade_exit_time = time.time()
             self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
