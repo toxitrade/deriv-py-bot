@@ -395,6 +395,7 @@ class HMAFlowBot:
     async def fetch_real_trades(self) -> None:
         """Obtiene trades reales via profit_table usando el trading_ws existente."""
         if not self.trading_ws or not self.token:
+            self._log("debug", "fetch_real_trades: no trading_ws or token")
             return
         try:
             # Usar el trading_ws existente para evitar problemas de concurrencia
@@ -404,20 +405,24 @@ class HMAFlowBot:
                 "limit": 20,
                 "sort": "DESC"
             }
+            self._log("debug", "fetch_real_trades: enviando profit_table request")
             resp = await self._send(self.trading_ws, {
                 "profit_table": 1,
                 "description": 1,
                 "limit": 20,
                 "sort": "DESC"
             })
+            self._log("debug", f"fetch_real_trades: respuesta recibida: {resp.get('msg_type', 'unknown')}")
             profit_data = resp.get("profit_table", {})
             transactions = profit_data.get("transactions", [])
+            self._log("debug", f"fetch_real_trades: {len(transactions)} transacciones recibidas")
             
             updated = 0
             for tx in transactions:
                 contract_id = tx.get("contract_id")
                 profit = tx.get("profit")
                 sell_price = tx.get("sell_price")
+                self._log("debug", f"fetch_real_trades: tx contract_id={contract_id}, profit={profit}, sell_price={sell_price}")
                 
                 # Buscar trade en nuestro registro
                 for t in reversed(state.trades):
