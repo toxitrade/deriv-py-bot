@@ -437,8 +437,9 @@ class HMAFlowBot:
         except Exception as e:
             self._log("error", f"Error sincronizando balance: {e}")
 
-    async def get_contract_profit(self, contract_id: int) -> float:
-        """Obtiene el profit real de un contrato específico via profit_table."""
+    async def get_contract_profit(self, contract_id: int, balance_before: float = None) -> float:
+        """Obtiene el profit real de un contrato específico via profit_table.
+        Si no se encuentra, usa diferencia de balance como fallback."""
         if not self.trading_ws or not self.token or not contract_id:
             return 0.0
         try:
@@ -466,6 +467,13 @@ class HMAFlowBot:
                 self._log("warning", f"Contrato {contract_id} NO encontrado en profit_table ({len(transactions)} txs)")
         except Exception as e:
             self._log("error", f"Error obteniendo profit de contrato {contract_id}: {e}")
+        
+        # Fallback: usar diferencia de balance si está disponible
+        if balance_before is not None:
+            current_balance = state.balance
+            pnl_fallback = current_balance - balance_before
+            self._log("info", f"  [FALLBACK PnL] balance diff: {pnl_fallback:+.2f} USD")
+            return pnl_fallback
         return 0.0
 
     def reload_config(self) -> None:
@@ -660,10 +668,11 @@ class HMAFlowBot:
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
             # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
+            balance_before = state.balance
             await self.fetch_balance()
             
             # Obtener profit real del contrato que acaba de expirar via profit_table
-            pnl_real = await self.get_contract_profit(state.open_contract_id)
+            pnl_real = await self.get_contract_profit(state.open_contract_id, balance_before)
             
             # Actualizar el último trade con PnL REAL del contrato
             if state.trades:
