@@ -496,7 +496,7 @@ class HMAFlowBot:
     # ------------------------------------------------------------------
     # Strategy: on_tick
     # ------------------------------------------------------------------
-    def on_tick(self, price: float) -> None:
+    async def on_tick(self, price: float) -> None:
         self.prices.append(price)
         state.ticks_received += 1
         state.last_tick_time = now_str()
@@ -525,7 +525,7 @@ class HMAFlowBot:
         sys.stdout.write(".")
         sys.stdout.flush()
 
-    # ---- Si hay posición abierta, revisar salida por duración ----
+        # ---- Si hay posición abierta, revisar salida por duración ----
         if state.position is not None:
             # Salir solo por duración fija (1 min), NO cerrar manualmente
             # Dejar que Deriv cierre el contrato al vencer naturalmente
@@ -550,10 +550,12 @@ class HMAFlowBot:
             
             # Calcular PnL real del cambio de balance
             pnl_real = state.balance - balance_antes
+            self._log("debug", f"EXIT: balance_antes={balance_antes}, balance_despues={state.balance}, pnl_real={pnl_real}, trades_count={len(state.trades)}")
             
             # Actualizar el último trade con PnL real
             if state.trades:
                 last_trade = state.trades[-1]
+                self._log("debug", f"EXIT: last_trade pnl={last_trade.pnl}, win={last_trade.win}")
                 if last_trade.pnl is None:  # Solo si no se actualizó aún
                     last_trade.exit_time = now
                     last_trade.exit_price = price
@@ -713,7 +715,7 @@ class HMAFlowBot:
                     if msg.get("msg_type") == "tick":
                         tick = msg.get("tick", {})
                         price = float(tick.get("quote"))
-                        self.on_tick(price)
+                        await self.on_tick(price)
                     elif msg.get("msg_type") == "error":
                         self._log("error", f"[public] {msg['error']}")
             except asyncio.CancelledError:
