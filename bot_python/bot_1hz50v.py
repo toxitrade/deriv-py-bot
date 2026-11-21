@@ -297,6 +297,7 @@ class HMAFlowBot:
         self.demo = bool(cfg["demo"])
         self.duration = int(cfg["duration"])
         self.duration_unit = cfg["duration_unit"]
+        self._ws_lock = asyncio.Lock()  # Lock para serializar acceso a trading_ws
         self.hma_period = int(cfg["hma_period"])
         self.flow_period = int(cfg["flow_period"])
         self.flow_smooth = int(cfg["flow_smooth"])
@@ -398,47 +399,48 @@ class HMAFlowBot:
             self._log("debug", "fetch_real_trades: no trading_ws or token")
             return
         try:
-            # Usar el trading_ws existente para evitar problemas de concurrencia
-            req = {
-                "profit_table": 1,
-                "description": 1,
-                "limit": 20,
-                "sort": "DESC"
-            }
-            self._log("debug", "fetch_real_trades: enviando profit_table request")
-            resp = await self._send(self.trading_ws, {
-                "profit_table": 1,
-                "description": 1,
-                "limit": 20,
-                "sort": "DESC"
-            })
-            self._log("debug", f"fetch_real_trades: respuesta recibida: {resp.get('msg_type', 'unknown')}")
-            profit_data = resp.get("profit_table", {})
-            transactions = profit_data.get("transactions", [])
-            self._log("debug", f"fetch_real_trades: {len(transactions)} transacciones recibidas")
-            
-            updated = 0
-            for tx in transactions:
-                contract_id = tx.get("contract_id")
-                profit = tx.get("profit")
-                sell_price = tx.get("sell_price")
-                self._log("debug", f"fetch_real_trades: tx contract_id={contract_id}, profit={profit}, sell_price={sell_price}")
+            # Usar lock para serializar acceso al trading_ws
+            async with self._ws_lock:
+                req = {
+                    "profit_table": 1,
+                    "description": 1,
+                    "limit": 20,
+                    "sort": "DESC"
+                }
+                self._log("debug", "fetch_real_trades: enviando profit_table request")
+                resp = await self._send(self.trading_ws, {
+                    "profit_table": 1,
+                    "description": 1,
+                    "limit": 20,
+                    "sort": "DESC"
+                })
+                self._log("debug", f"fetch_real_trades: respuesta recibida: {resp.get('msg_type', 'unknown')}")
+                profit_data = resp.get("profit_table", {})
+                transactions = profit_data.get("transactions", [])
+                self._log("debug", f"fetch_real_trades: {len(transactions)} transacciones recibidas")
                 
-                # Buscar trade en nuestro registro
-                for t in reversed(state.trades):
-                    if t.contract_id == contract_id and t.pnl is None:
-                        t.exit_price = float(sell_price) if sell_price else None
-                        t.pnl = float(profit) if profit is not None else 0.0
-                        t.win = float(profit) > 0 if profit is not None else False
-                        t.exit_time = now_str()
-                        save_trade_to_csv(t)
-                        updated += 1
-                        break
-            
-            # Sincronizar balance real
-            await self.fetch_balance()
-            if updated:
-                self._log("info", f"Trades reales sincronizados: {updated}")
+                updated = 0
+                for tx in transactions:
+                    contract_id = tx.get("contract_id")
+                    profit = tx.get("profit")
+                    sell_price = tx.get("sell_price")
+                    self._log("debug", f"fetch_real_trades: tx contract_id={contract_id}, profit={profit}, sell_price={sell_price}")
+                    
+                    # Buscar trade en nuestro registro
+                    for t in reversed(state.trades):
+                        if t.contract_id == contract_id and t.pnl is None:
+                            t.exit_price = float(sell_price) if sell_price else None
+                            t.pnl = float(profit) if profit is not None else 0.0
+                            t.win = float(profit) > 0 if profit is not None else False
+                            t.exit_time = now_str()
+                            save_trade_to_csv(t)
+                            updated += 1
+                            break
+                
+                # Sincronizar balance real
+                await self.fetch_balance()
+                if updated:
+                    self._log("info", f"Trades reales sincronizados: {updated}")
         except Exception as e:
             self._log("error", f"Error sincronizando trades reales: {e}")
 
