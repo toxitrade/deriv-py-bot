@@ -440,7 +440,9 @@ class HMAFlowBot:
     async def get_contract_profit(self, contract_id: int, balance_before: float = None) -> float:
         """Obtiene el profit real de un contrato específico via profit_table.
         Si no se encuentra, usa diferencia de balance como fallback."""
+        self._log("debug", f"get_contract_profit INICIO: contract_id={contract_id}, balance_before={balance_before}, ws={self.trading_ws is not None}, token={self.token is not None}")
         if not self.trading_ws or not self.token or not contract_id:
+            self._log("debug", "get_contract_profit RETORNO 0: validación inicial falló")
             return 0.0
         try:
             async with self._ws_lock:
