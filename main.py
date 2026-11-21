@@ -58,8 +58,9 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <title>1HZ50V HMA + Mladen Flow Bot</title>
 <style>
 :root{--bg:#0b0f14;--card:#111827;--text:#e5e7eb;--muted:#9ca3af;--accent:#22c55e;--accent2:#3b82f6;--danger:#ef4444;--border:#1f2937}
-*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:20px;max-width:900px;margin:0 auto}
-h1{font-size:1.5rem;margin:0 0 1rem}h2{font-size:1.1rem;margin:1.5rem 0 .5rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:16px;max-width:1000px;margin:0 auto}
+h1{font-size:1.4rem;margin:0 0 .8rem}h2{font-size:1rem;margin:1.2rem 0 .4rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}
 .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem}
 .row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
 .row > *{flex:1;min-width:140px}
@@ -69,13 +70,13 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
 .btn-primary{background:var(--accent);color:#000}
 .btn-danger{background:var(--danger);color:#fff}
 .btn-secondary{background:var(--accent2);color:#fff}
-.status-row{display:flex;align-items:center;gap:1rem}
+.status-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .dot{width:12px;height:12px;border-radius:50%;background:#6b7280}
 .dot.running{background:var(--accent);box-shadow:0 0 8px var(--accent)}
 .dot.stopped{background:var(--danger)}
-.muted{color:var(--muted);font-size:.9rem}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th,td{padding:.4rem .6rem;text-align:left;border-bottom:1px solid var(--border)}
+.muted{color:var(--muted);font-size:.85rem}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th,td{padding:.35rem .5rem;text-align:left;border-bottom:1px solid var(--border)}
 th{color:var(--muted);font-weight:600}
 tr.win td{color:var(--accent)}tr.loss td{color:var(--danger)}
 .badge{display:inline-block;padding:.1rem .4rem;border-radius:9999px;font-size:.7rem;font-weight:700}
@@ -85,11 +86,68 @@ tr.win td{color:var(--accent)}tr.loss td{color:var(--danger)}
 .alert.info{background:#1e3a5f;border:1px solid #3b82f6}
 .alert.success{background:#14532d;border:1px solid #22c55e}
 .alert.error{background:#7f1d1d;border:1px solid #ef4444}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem}
-.stat .label{color:var(--muted);font-size:.75rem}
-.stat .value{font-size:1.5rem;font-weight:700;margin-top:.25rem}
-.log-box{font-family:monospace;font-size:.75rem;background:#0b0f14;border:1px solid var(--border);border-radius:4px;padding:.5rem;max-height:200px;overflow:auto;white-space:pre-wrap}
+.stat .label{color:var(--muted);font-size:.7rem}
+.stat .value{font-size:1.4rem;font-weight:700;margin-top:.2rem}
+
+/* Frames con altura controlada y scroll */
+.frame{background:#0b0f14;border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+.frame-header{background:#111827;border-bottom:1px solid var(--border);padding:.6rem 1rem;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.frame-body{overflow:auto;flex:1;min-height:0}
+.frame-body table{width:100%;border-collapse:collapse;font-size:.8rem}
+.frame-body th,.frame-body td{padding:.35rem .5rem;text-align:left;border-bottom:1px solid var(--border)}
+.frame-body th{color:var(--muted);font-weight:600;position:sticky;top:0;background:#0b0f14;z-index:1}
+.frame-body tr.win td{color:var(--accent)}
+.frame-body tr.loss td{color:var(--danger)}
+
+/* Alturas máximas */
+#trades-frame{max-height:55vh}
+#log-frame{max-height:40vh}
+
+.log-box{font-family:monospace;font-size:.7rem;background:#0b0f14;padding:.5rem;white-space:pre-wrap;font-family:monospace}
+.muted{color:var(--muted);font-size:.85rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem}
+.stat .label{color:var(--muted);font-size:.7rem}
+.stat .value{font-size:1.4rem;font-weight:700;margin-top:.2rem}
+.badge{display:inline-block;padding:.1rem .4rem;border-radius:9999px;font-size:.7rem;font-weight:700}
+.badge-binary{background:#3b82f620;color:#3b82f6}
+.badge-multiplier{background:#a855f720;color:#a855f7}
+.alert{padding:.75rem;border-radius:4px;margin-bottom:1rem;display:none}
+.alert.info{background:#1e3a5f;border:1px solid #3b82f6}
+.alert.success{background:#14532d;border:1px solid #22c55e}
+.alert.error{background:#7f1d1d;border:1px solid #ef4444}
+.row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
+.row > *{flex:1;min-width:140px}
+label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.2rem}
+select,input{width:100%;background:#0b0f14;border:1px solid var(--border);color:var(--text);padding:.5rem;border-radius:4px}
+button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weight:600}
+.btn-primary{background:var(--accent);color:#000}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-secondary{background:var(--accent2);color:#fff}
+.status-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.dot{width:12px;height:12px;border-radius:50%;background:#6b7280}
+.dot.running{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.dot.stopped{background:var(--danger)}
+.muted{color:var(--muted);font-size:.85rem}
+
+*[box-sizing:border-box]body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:16px;max-width:1000px;margin:0 auto}
+h1{font-size:1.4rem;margin:0 0 .8rem}h2{font-size:1rem;margin:1.2rem 0 .4rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem}
+.row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
+.row > *{flex:1;min-width:140px}
+label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.2rem}
+select,input{width:100%;background:#0b0f14;border:1px solid var(--border);color:var(--text);padding:.5rem;border-radius:4px}
+button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weight:600}
+.btn-primary{background:var(--accent);color:#000}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-secondary{background:var(--accent2);color:#fff}
+.status-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.dot{width:12px;height:12px;border-radius:50%;background:#6b7280}
+.dot.running{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.dot.stopped{background:var(--danger)}
+.muted{color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
@@ -109,6 +167,16 @@ tr.win td{color:var(--accent)}tr.loss td{color:var(--danger)}
   <div class="row">
     <button id="btn-start" class="btn-primary" onclick="startBot()">Iniciar Bot</button>
     <button id="btn-stop" class="btn-danger" onclick="stopBot()">Detener Bot</button>
+  </div>
+  
+  <!-- Info de sesión debajo de botones -->
+  <div class="grid" id="session-info" style="margin-top:1rem;display:none">
+    <div class="stat"><div class="label">Inicio del Bot</div><div class="value" id="session-start">--</div></div>
+    <div class="stat"><div class="label">Wins / Losses</div><div class="value" id="session-wl">-- / --</div></div>
+    <div class="stat"><div class="label">Win Rate</div><div class="value" id="session-wr">--%</div></div>
+    <div class="stat"><div class="label">Max Loss in Row</div><div class="value" id="session-maxloss">--</div></div>
+    <div class="stat"><div class="label">Max Win in Row</div><div class="value" id="session-maxwin">--</div></div>
+    <div class="stat"><div class="label">Max Drawdown</div><div class="value" id="session-maxdd">$--</div></div>
   </div>
 </div>
 
@@ -165,15 +233,29 @@ tr.win td{color:var(--accent)}tr.loss td{color:var(--danger)}
   </div>
 </div>
 
-<div class="card">
-  <h2>Trades</h2>
-  <table id="trades-table"><thead><tr><th>Hora</th><th>Tipo</th><th>Entrada</th><th>Salida</th><th>Stake</th><th>PnL</th><th>Resultado</th></tr></thead><tbody></tbody></table>
+<!-- Trades con scroll y últimas 20 -->
+<div class="card frame" id="trades-frame">
+  <div class="frame-header">
+    <span>Trades (últimas 20)</span>
+    <span class="muted" id="trades-count">0 trades</span>
+  </div>
+  <div class="frame-body">
+    <table id="trades-table"><thead><tr><th>Hora</th><th>Tipo</th><th>Entrada</th><th>Salida</th><th>Stake</th><th>PnL</th><th>Resultado</th></tr></thead><tbody></tbody></table>
+  </div>
 </div>
 
-<div class="card" style="margin-top:20px;">
-  <h2>Log</h2>
-  <div class="log" id="log-box"><div class="line">Cargando log...</div></div>
-  <div style="margin-top:8px;"><button class="btn secondary" id="btn-refresh-log">Actualizar log</button><span class="muted">Se actualiza automáticamente cada 10s</span></div>
+<!-- Log con scroll -->
+<div class="card frame" id="log-frame">
+  <div class="frame-header">
+    <span>Log del Bot</span>
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <button class="btn-secondary" id="btn-refresh-log" style="padding:.3rem .6rem;font-size:.75rem">Actualizar</button>
+      <span class="muted">Auto-refresh 10s</span>
+    </div>
+  </div>
+  <div class="frame-body">
+    <pre class="log-box" id="log-box">Cargando log...</pre>
+  </div>
 </div>
 
 <script>
@@ -197,9 +279,11 @@ async function loadStatus(){
   if (s.running){
     dot.className = 'dot running'; txt.textContent = 'Ejecutándose';
     btnStart.disabled = true; btnStop.disabled = false;
+    $('session-info').style.display = 'grid';
   } else {
     dot.className = 'dot stopped'; txt.textContent = s.message || 'Detenido';
     btnStart.disabled = false; btnStop.disabled = true;
+    $('session-info').style.display = 'none';
   }
   $('mode-text').textContent = (s.mode === 'multiplier' ? 'Multiplier' : 'Binary') + (s.trade_mode ? ' · ' + s.trade_mode : '');
   $('stat-balance').textContent = typeof s.balance === 'number' ? '$' + s.balance.toFixed(2) : '--';
@@ -213,9 +297,42 @@ async function loadStatus(){
   $('ind-mart').textContent = s.martingale_step !== undefined ? s.martingale_step : (s.multiplier !== undefined ? 'x' + s.multiplier : '--');
   $('ind-symbol').textContent = s.symbol || '--';
 
+  // Calcular stats de sesión
+  const trades = s.trades || [];
+  const closed = trades.filter(t => t.win !== null && t.win !== undefined);
+  const wins = closed.filter(t => t.win === true).length;
+  const losses = closed.filter(t => t.win === false).length;
+  const total = wins + losses;
+  const wr = total > 0 ? ((wins / total) * 100).toFixed(1) : '--';
+  
+  // Max loss/win in a row
+  let maxLossRow = 0, maxWinRow = 0, currLossRow = 0, currWinRow = 0;
+  let maxDD = 0, peak = 0, runningPnL = 0;
+  closed.forEach(t => {
+    if (t.win === true) { currWinRow++; currLossRow = 0; maxWinRow = Math.max(maxWinRow, currWinRow); }
+    else { currLossRow++; currWinRow = 0; maxLossRow = Math.max(maxLossRow, currLossRow); }
+    runningPnL += t.pnl || 0;
+    peak = Math.max(peak, runningPnL);
+    maxDD = Math.max(maxDD, peak - runningPnL);
+  });
+  
+  // Hora de inicio (primer trade)
+  const firstTrade = trades.length > 0 ? trades[0] : null;
+  const startTime = firstTrade ? formatDate(firstTrade.entry_time) : '--';
+  
+  $('session-start').textContent = startTime;
+  $('session-wl').textContent = `${wins} / ${losses}`;
+  $('session-wr').textContent = `${wr}%`;
+  $('session-maxloss').textContent = maxLossRow;
+  $('session-maxwin').textContent = maxWinRow;
+  $('session-maxdd').textContent = '$' + maxDD.toFixed(2);
+
+  // Trades: últimas 20 con scroll
   const tbody = document.querySelector('#trades-table tbody');
   tbody.innerHTML = '';
-  (s.trades || []).forEach(t => {
+  const last20 = [...trades].reverse().slice(0, 20);
+  $('trades-count').textContent = `${trades.length} trades (mostrando ${last20.length})`;
+  last20.forEach(t => {
     const tr = document.createElement('tr');
     if (t.win === true) tr.className = 'win';
     else if (t.win === false) tr.className = 'loss';
