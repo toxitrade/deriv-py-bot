@@ -281,8 +281,17 @@ def save_trade_to_csv(trade: TradeRecord) -> None:
         ])
 
 
+# Zona horaria Argentina (GMT-3, sin DST)
+try:
+    import zoneinfo
+    ARG_TZ = zoneinfo.ZoneInfo("America/Argentina/Buenos_Aires")
+except Exception:
+    # Fallback si no hay zoneinfo
+    from datetime import timezone, timedelta
+    ARG_TZ = timezone(timedelta(hours=-3))
+
 def now_str() -> str:
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return datetime.now(ARG_TZ).strftime("%Y-%m-%d %H:%M:%S")
 
 
 # ============================================================================
