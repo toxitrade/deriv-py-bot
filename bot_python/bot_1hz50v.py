@@ -319,9 +319,17 @@ class HMAFlowBot:
     # WebSocket helpers
     # ------------------------------------------------------------------
     async def _send(self, ws, msg: dict) -> dict:
-        await ws.send(json.dumps(msg))
-        raw = await ws.recv()
-        return json.loads(raw)
+        # Usar lock si es el trading_ws
+        lock = self._ws_lock if ws is self.trading_ws else None
+        if lock:
+            async with lock:
+                await ws.send(json.dumps(msg))
+                raw = await ws.recv()
+                return json.loads(raw)
+        else:
+            await ws.send(json.dumps(msg))
+            raw = await ws.recv()
+            return json.loads(raw)
 
     async def connect_public(self) -> None:
         public_ws_url = "wss://api.derivws.com/trading/v1/options/ws/public"
