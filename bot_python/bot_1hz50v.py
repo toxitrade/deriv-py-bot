@@ -392,6 +392,44 @@ class HMAFlowBot:
         except Exception as e:
             self._log("error", f"Error obteniendo saldo: {e}")
 
+    async def fetch_real_trades(self) -> None:
+        """Obtiene trades reales via profit_table y actualiza PnL real."""
+        if not self.trading_ws or not self.token:
+            return
+        try:
+            # Obtener últimos trades reales via profit_table
+            req = {
+                "profit_table": 1,
+                "description": 1,
+                "limit": 20,
+                "sort": "DESC"
+            }
+            resp = await self._send(self.trading_ws, req)
+            profit_data = resp.get("profit_table", {})
+            transactions = profit_data.get("transactions", [])
+            
+            for tx in transactions:
+                contract_id = tx.get("contract_id")
+                profit = tx.get("profit")
+                buy_price = tx.get("buy_price")
+                sell_price = tx.get("sell_price")
+                
+                # Buscar trade en nuestro registro
+                for t in reversed(state.trades):
+                    if t.contract_id == contract_id and t.pnl is None:
+                        t.exit_price = float(sell_price) if sell_price else None
+                        t.pnl = float(profit) if profit is not None else 0.0
+                        t.win = float(profit) > 0 if profit is not None else False
+                        t.exit_time = now_str()
+                        save_trade_to_csv(t)
+                        break
+            
+            # Sincronizar balance real
+            await self.fetch_balance()
+            self._log("info", f"Trades reales sincronizados: {len(transactions)}")
+        except Exception as e:
+            self._log("error", f"Error sincronizando trades reales: {e}")
+
     def reload_config(self) -> None:
         """Recarga la configuración desde config.json."""
         import json
@@ -501,10 +539,10 @@ class HMAFlowBot:
         sys.stdout.write(".")
         sys.stdout.flush()
 
-    # ---- Si hay posición abierta, revisar salida (TP/SL/señal) ----
+    # ---- Si hay posición abierta, revisar salida por duración ----
         if state.position is not None:
-            # Calcular PnL actual basado en movimiento de precio
-            # Salir solo por duración fija (1 min), sin salir por señal ni TP/SL
+            # Salir solo por duración fija (1 min), NO cerrar manualmente
+            # Dejar que Deriv cierre el contrato al vencer naturalmente
             elapsed = time.time() - state.open_entry_time
             duration_seconds = self.duration * 60 if self.duration_unit == "m" else self.duration
             if elapsed < duration_seconds:
@@ -513,53 +551,22 @@ class HMAFlowBot:
 
             side_txt = "LONG" if state.position == "long" else "SHORT"
             self._log("info",
-                      f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason}")
-            # Simulated PnL in PAPER mode
-            pnl = 0.0
-            win = False
-            # En modo binary solo sale por duración, no hay TP ni SL
-            win = False
-            stake_real = state.open_stake if state.open_stake > 0 else self.stake
-            if state.position == "long":
-                win = price > state.open_entry_price
-                pnl = stake_real * 0.80 if win else -stake_real * 0.50
-            else:
-                win = price < state.open_entry_price
-                pnl = stake_real * 0.80 if win else -stake_real * 0.50
-            if state.trades:
-                t = state.trades[-1]
-                t.exit_time = now
-                t.exit_price = price
-                t.pnl = pnl
-                t.win = win
-                save_trade_to_csv(t)
-            self._log("info",
-                      f"  [PAPER PnL] {side_txt} stake={stake_real:.2f} pnl={pnl:+.2f} USD "
-                      f"({'WIN' if win else 'LOSS'})")
-            state.balance += pnl
-            state.daily_pnl += pnl
-            # ---- Martingala: calcular stake para recuperar pérdida ----
-            # Payout real: gana 80% (0.8), pierde 50% (0.5) por cada 10 apostado
-            # Para recuperar pérdida L y ganar el stake base: S = (L + 10) / 0.8
-            if win:
-                state.martingale_step = 0
-                state.loss_acumulado = 0.0  # Reset pérdida acumulada en WIN
-                self._log("info", "  [MARTINGALA] Win, paso resetado a 0")
-            else:
-                state.martingale_step += 1
-                state.loss_acumulado += abs(pnl)  # Acumular pérdida real
-                if state.martingale_step >= self.max_martingale_steps:
-                    state.martingale_step = 0
-                    state.loss_acumulado = 0.0  # Reset al llegar al máximo
-                    self._log("info", f"  [MARTINGALA] Max steps ({self.max_martingale_steps}) alcanzado, reset a 0")
-                else:
-                    self._log("info",
-                              f"  [MARTINGALA] Paso {state.martingale_step}, "
-                              f"pérdida acum: {state.loss_acumulado:.2f}")
-            if state.open_contract_id is not None and self.trading_ws and self.token:
-                asyncio.create_task(self._close_contract(state.open_contract_id))
+                      f"[{now}] EXIT {side_txt} @ {price:.4f} | {exit_reason} (esperando resultado real)")
+
+            # NO cerrar manualmente - dejar que Deriv cierre al vencer
+            # NO calcular PnL PAPER - esperar resultado real
+            # Sincronizar balance real cada 5 trades
+            state.trades_today += 1
+            if state.trades_today % 5 == 0:
+                asyncio.create_task(self.fetch_balance())
+                asyncio.create_task(self.fetch_real_trades())
+
+            # Reset posición - el contrato expirará solo
             self._close_position()
             return
+
+        # ---- Martingala se maneja con resultados reales via fetch_real_trades() ----
+        # NO cerrar manualmente aquí - dejar expirar naturalmente
 
         # ---- Sin posición: buscar entrada (con martingala de recuperación) ----
         # NO abrir nuevo trade si ya hay uno abierto
