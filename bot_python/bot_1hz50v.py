@@ -422,7 +422,7 @@ class HMAFlowBot:
                     "limit": 20,
                     "sort": "DESC"
                 })
-                self._log("debug", f"fetch_real_trades: respuesta recibida: {resp.get('msg_type', 'unknown')}")
+                self._log("debug", f"fetch_real_trades: respuesta completa: {resp}")
                 profit_data = resp.get("profit_table", {})
                 transactions = profit_data.get("transactions", [])
                 self._log("debug", f"fetch_real_trades: {len(transactions)} transacciones recibidas")
@@ -432,7 +432,8 @@ class HMAFlowBot:
                     contract_id = tx.get("contract_id")
                     profit = tx.get("profit")
                     sell_price = tx.get("sell_price")
-                    self._log("debug", f"fetch_real_trades: tx contract_id={contract_id}, profit={profit}, sell_price={sell_price}")
+                    buy_price = tx.get("buy_price")
+                    self._log("debug", f"fetch_real_trades: tx contract_id={contract_id}, profit={profit}, sell_price={sell_price}, buy_price={buy_price}")
                     
                     # Buscar trade en nuestro registro
                     for t in reversed(state.trades):
@@ -443,6 +444,7 @@ class HMAFlowBot:
                             t.exit_time = now_str()
                             save_trade_to_csv(t)
                             updated += 1
+                            self._log("info", f"Trade actualizado: contract_id={contract_id}, pnl={t.pnl}, win={t.win}")
                             break
                 
                 # Sincronizar balance real
