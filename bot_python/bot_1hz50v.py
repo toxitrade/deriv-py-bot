@@ -247,6 +247,7 @@ class BotState:
     last_flow: Optional[float] = None  # valor Flow último tick
     last_price: Optional[float] = None  # último precio recibido
     last_direction: Optional[int] = None  # dirección HMA última vela
+    session_start_balance: Optional[float] = None  # saldo al inicio de la sesión
 
 
 state = BotState()

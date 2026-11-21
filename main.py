@@ -270,8 +270,8 @@ async function api(path, method='GET', body=null){
   return r.json();
 }
 function setAlert(msg, type='info'){ const box = $('alert-box'); box.textContent = msg; box.className = 'alert ' + type; box.style.display = 'block'; setTimeout(()=>{ box.style.display='none'; }, 5000); }
-function formatTime(ts){ if (!ts) return '-'; const d = new Date(ts); return d.toLocaleTimeString('es-AR', {timeZone: 'America/Argentina/Buenos_Aires', hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
-function formatDate(ts){ if (!ts) return '-'; const d = new Date(ts); return d.toLocaleString('es-AR', {timeZone: 'America/Argentina/Buenos_Aires', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
+function formatTime(ts){ if (!ts) return '-'; const d = new Date(new Date(ts).getTime() - 3*60*60*1000); return d.toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
+function formatDate(ts){ if (!ts) return '-'; const d = new Date(new Date(ts).getTime() - 3*60*60*1000); return d.toLocaleString('es-AR', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'}); }
 
 async function loadStatus(){
   const s = await api('/status');
@@ -777,6 +777,7 @@ async def status():
         "ticks_received": getattr(state, 'ticks_received', 0),
         "balance": getattr(state, 'balance', 0),
         "daily_pnl": getattr(state, 'daily_pnl', 0),
+        "session_start_balance": getattr(state, 'session_start_balance', None),
         "last_price": _sanitize(getattr(state, 'last_price', None)),
         "last_hma": _sanitize(getattr(state, 'last_hma', None)),
         "last_flow": _sanitize(getattr(state, 'last_flow', None)),
