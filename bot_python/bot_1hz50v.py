@@ -393,25 +393,35 @@ class HMAFlowBot:
             self._log("error", f"Error obteniendo saldo: {e}")
 
     async def fetch_real_trades(self) -> None:
-        """Obtiene trades reales via profit_table y actualiza PnL real."""
-        if not self.trading_ws or not self.token:
+        """Obtiene trades reales via profit_table usando cliente HTTP separado."""
+        if not self.token:
             return
         try:
-            # Obtener últimos trades reales via profit_table
-            req = {
-                "profit_table": 1,
-                "description": 1,
-                "limit": 20,
-                "sort": "DESC"
-            }
-            resp = await self._send(self.trading_ws, req)
+            # Usar cliente HTTP separado para evitar concurrencia en WS
+            import httpx
+            async with httpx.AsyncClient(timeout=10) as c:
+                # Obtener OTP URL para trading
+                otp_url = self._fetch_otp_url()
+                if not otp_url:
+                    return
+                # Conectar WS temporal para profit_table
+                async with websockets.connect(otp_url) as ws:
+                    req = {
+                        "profit_table": 1,
+                        "description": 1,
+                        "limit": 20,
+                        "sort": "DESC"
+                    }
+                    await ws.send(json.dumps(req))
+                    raw = await ws.recv()
+                    resp = json.loads(raw)
+            
             profit_data = resp.get("profit_table", {})
             transactions = profit_data.get("transactions", [])
             
             for tx in transactions:
                 contract_id = tx.get("contract_id")
                 profit = tx.get("profit")
-                buy_price = tx.get("buy_price")
                 sell_price = tx.get("sell_price")
                 
                 # Buscar trade en nuestro registro
