@@ -589,6 +589,11 @@ class HMAFlowBot:
                         else:
                             self._log("info", f"  [MARTINGALA] Paso {state.martingale_step}, stake x{2**state.martingale_step:.0f}")
 
+            # Acumular daily_pnl
+            state.daily_pnl += pnl_real
+            state.last_trade_exit_time = time.time()
+            self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
+
             # Reset posición - el contrato expiró
             self._close_position()
             return
