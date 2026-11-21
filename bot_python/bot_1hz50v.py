@@ -445,7 +445,9 @@ class HMAFlowBot:
             self._log("debug", "get_contract_profit RETORNO 0: validación inicial falló")
             return 0.0
         try:
+            self._log("debug", "get_contract_profit: intentando lock")
             async with self._ws_lock:
+                self._log("debug", "get_contract_profit: lock adquirido, enviando profit_table")
                 req = {
                     "profit_table": 1,
                     "description": 1,
@@ -453,6 +455,7 @@ class HMAFlowBot:
                     "sort": "DESC"
                 }
                 resp = await self._send(self.trading_ws, req)
+                self._log("debug", f"get_contract_profit: respuesta recibida msg_type={resp.get('msg_type')}")
                 profit_data = resp.get("profit_table", {})
                 transactions = profit_data.get("transactions", [])
                 self._log("debug", f"profit_table: {len(transactions)} transacciones, buscando contract_id={contract_id}")
