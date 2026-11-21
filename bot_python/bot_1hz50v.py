@@ -567,11 +567,10 @@ class HMAFlowBot:
 
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
             # NO calcular PnL PAPER - esperar resultado real
-            # Sincronizar balance real cada 5 trades
+            # Sincronizar balance y trades reales en cada EXIT
             state.trades_today += 1
-            if state.trades_today % 5 == 0:
-                asyncio.create_task(self.fetch_balance())
-                asyncio.create_task(self.fetch_real_trades())
+            asyncio.create_task(self.fetch_balance())
+            asyncio.create_task(self.fetch_real_trades())
 
             # Reset posición - el contrato expirará solo
             self._close_position()
