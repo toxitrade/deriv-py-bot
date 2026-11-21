@@ -383,6 +383,9 @@ class HMAFlowBot:
         self.trading_ws_url = otp_url
         self._log("info", "WebSocket de trading autenticado conectado")
         await self.fetch_balance()
+        if state.session_start_balance is None:
+            state.session_start_balance = state.balance
+            self._log("info", f"Saldo inicial de sesión: {state.session_start_balance:.2f} USD")
 
     async def fetch_balance(self) -> None:
         """Obtiene el saldo real de la cuenta de Deriv."""
