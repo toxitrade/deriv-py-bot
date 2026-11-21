@@ -700,16 +700,16 @@ class HMAFlowBot:
         price_above_hma = price > hma_current
         price_below_hma = price < hma_current
         
-        # 3. Flow fuerte (threshold estricto para precisión)
-        flow_strong_up = f > thr and hma_slope > 0
-        flow_strong_down = f < -thr and hma_slope < 0
+        # 3. Flow fuerte (threshold moderado)
+        flow_strong_up = f > (thr * 0.7) and hma_slope >= 0
+        flow_strong_down = f < -(thr * 0.7) and hma_slope <= 0
         
         # 4. Volatilidad: evitar operar en laterales (HMA plano)
         hma_flat = abs(hma_slope) < (price * 0.0001)  # slope < 0.01%
         
         # 5. Filtro adicional: precio debe estar lejos del HMA (no en zona neutral)
         price_hma_dist = abs(price - hma_current) / price
-        price_too_close_hma = price_hma_dist < 0.0002  # < 0.02%
+        price_too_close_hma = price_hma_dist < 0.00015  # < 0.015%
         
         # Martingala simple: stake = base * 2^step, limitado a max_stake
         stake_efectivo = round(min(self.stake * (2 ** state.martingale_step), self.max_stake), 2)
