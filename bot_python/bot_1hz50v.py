@@ -485,12 +485,78 @@ class HMAFlowBot:
             self._log("error", f"Fallo al obtener OTP: {e}")
             return None
 
+    async def get_contracts_for(self) -> dict:
+        """Obtiene contratos disponibles para el símbolo actual."""
+        req = {
+            "contracts_for": self.symbol,
+            "currency": "USD",
+        }
+        resp = await self._send(self.trading_ws, req)
+        return resp
+
+    async def get_proposal(self, contract_type: str, stake: float) -> dict:
+        """Obtiene propuesta (payout, profit) para un contrato específico."""
+        req = {
+            "proposal": 1,
+            "amount": stake,
+            "basis": "stake",
+            "contract_type": contract_type,
+            "currency": "USD",
+            "duration": self.duration,
+            "duration_unit": self.duration_unit,
+            "underlying_symbol": self.symbol,
+        }
+        resp = await self._send(self.trading_ws, req)
+        return resp
+
+    async def validate_stake(self, contract_type: str, stake: float) -> tuple:
+        """Valida stake contra límites del contrato. Retorna (stake_valido, min_stake, max_stake, payout)."""
+        try:
+            # Obtener propuesta para ver límites y payout
+            prop = await self.get_proposal(contract_type, stake)
+            if "error" in prop:
+                return False, 0.35, 100000, 0
+            
+            proposal = prop.get("proposal", {})
+            min_stake = float(proposal.get("min_price", 0.35))
+            max_stake = float(proposal.get("max_price", 100000))
+            payout = float(proposal.get("payout", 0))
+            profit = float(proposal.get("profit", 0))
+            
+            # Ajustar stake a límites válidos
+            stake_valido = max(min_stake, min(stake, max_stake))
+            stake_valido = round(stake_valido, 2)
+            
+            return True, min_stake, max_stake, payout, profit, stake_valido
+        except Exception as e:
+            self._log("error", f"Error validando stake: {e}")
+            return False, 0.35, 100000, 0, 0, 0.35
+
     async def buy_contract(self, contract_type: str) -> dict:
+        # Validar stake con proposal
+        stake_calculado = round(self.stake * (2 ** state.martingale_step), 2)
+        stake_calculado = min(stake_calculado, self.max_stake)
+        
+        valid, min_stake, max_stake, payout, profit, stake_valido = await self.validate_stake(
+            contract_type, stake_calculado
+        )
+        
+        if not valid:
+            self._log("error", f"Contrato {contract_type} no disponible")
+            return {"error": "Contract not available"}
+        
+        # Usar stake validado
+        stake_final = stake_valido
+        state.open_stake = stake_final  # Guardar stake real
+        
+        self._log("info", f"  [CONTRACT] {contract_type} stake={stake_final:.2f} "
+              f"(min={min_stake:.2f}, max={max_stake:.2f}, payout={payout:.2f}, profit={profit:.2f})")
+        
         req = {
             "buy": "1",
-            "price": self.stake,
+            "price": stake_final,
             "parameters": {
-                "amount": self.stake,
+                "amount": stake_final,
                 "basis": "stake",
                 "contract_type": contract_type,
                 "currency": "USD",
