@@ -95,8 +95,10 @@ CONFIG = {
     "flow_smooth": env_int("DERIV_FLOW_SMOOTH", 3),
     "flow_threshold": env_float("DERIV_FLOW_THRESHOLD", 0.0),
     # Martingala
-    "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.4),
-    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 10),
+    "martingale_multiplier": env_float("DERIV_MARTINGALE_MULT", 2.0),
+    "max_martingale_steps": env_int("DERIV_MAX_MARTINGALE_STEPS", 5),
+    "max_stake": env_float("DERIV_MAX_STAKE", 100.0),
+    "cooldown_seconds": env_int("DERIV_COOLDOWN_SECONDS", 30),
     "account_id": env_str("DERIV_ACCOUNT_ID", ""),
     "app_id": env_str("DERIV_APP_ID", ""),
     "log_level": env_str("DERIV_LOG_LEVEL", "INFO"),
@@ -238,7 +240,7 @@ class BotState:
     balance: float = 0.0  # saldo obtenido de la cuenta de Deriv
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
-    # Martingala simple: stake base, LOSS x2, WIN reset
+    last_trade_exit_time: float = 0  # timestamp último cierre para cooldown
     open_stake: float = 0.0  # stake real de la operación abierta
     trades: List[TradeRecord] = field(default_factory=list)
     ticks_received: int = 0
@@ -314,6 +316,9 @@ class HMAFlowBot:
         self.flow_threshold = float(cfg["flow_threshold"])
         self.martingale_multiplier = float(cfg["martingale_multiplier"])
         self.max_martingale_steps = int(cfg["max_martingale_steps"])
+        self.max_stake = float(cfg["max_stake"])
+        self.cooldown_seconds = int(cfg["cooldown_seconds"])
+        self.last_trade_time = 0  # timestamp del último trade cerrado
         self.prices: Deque[float] = deque(maxlen=TICK_BUFFER)
         self.public_ws = None
         self.trading_ws = None
@@ -596,21 +601,35 @@ class HMAFlowBot:
         if state.position is not None:
             return
         
-        # Filtro adicional: precio debe confirmar la dirección del HMA
-        # Para CALL: precio > HMA (tendencia alcista confirmada)
-        # Para PUT: precio < HMA (tendencia bajista confirmada)
+        # COOLDOWN: esperar entre trades
+        if time.time() - state.last_trade_exit_time < self.cooldown_seconds:
+            return
+
+        # Filtros de precisión (menos trades, más calidad)
+        # 1. HMA dirección clara
         hma_current = hma_series[-1]
+        hma_prev = hma_series[-2] if len(hma_series) > 1 else hma_current
+        hma_slope = hma_current - hma_prev
+        
+        # 2. Precio confirma dirección HMA
         price_above_hma = price > hma_current
         price_below_hma = price < hma_current
         
-        # Martingala simple: stake = base * 2^step
-        stake_efectivo = round(self.stake * (2 ** state.martingale_step), 2)
+        # 3. Flow fuerte Y pendiente HMA confirma
+        flow_strong_up = f > thr and hma_slope > 0
+        flow_strong_down = f < -thr and hma_slope < 0
         
-        # Señal más selectiva: HMA + Flow + Confirmación precio vs HMA
-        if d == 1 and f > thr and price_above_hma:
-            self._signal(now, price, "BUY (CALL)", "HMA alcista + flow fuerte + precio > HMA", "CALL", stake_efectivo)
-        elif d == -1 and f < -thr and price_below_hma:
-            self._signal(now, price, "SELL (PUT)", "HMA bajista + flow fuerte + precio < HMA", "PUT", stake_efectivo)
+        # 4. Volatilidad: evitar operar en laterales (HMA plano)
+        hma_flat = abs(hma_slope) < (price * 0.0001)  # slope < 0.01%
+        
+        # Martingala simple: stake = base * 2^step, limitado a max_stake
+        stake_efectivo = round(min(self.stake * (2 ** state.martingale_step), self.max_stake), 2)
+        
+        # Señal de alta precisión: Flow + HMA slope + Precio vs HMA
+        if d == 1 and flow_strong_up and price_above_hma and not hma_flat:
+            self._signal(now, price, "BUY (CALL)", "HMA↑ Flow↑ Precio>HMA", "CALL", stake_efectivo)
+        elif d == -1 and flow_strong_down and price_below_hma and not hma_flat:
+            self._signal(now, price, "SELL (PUT)", "HMA↓ Flow↓ Precio<HMA", "PUT", stake_efectivo)
 
     def _signal(self, now: str, price: float, action: str, reason: str,
                 contract_type: Optional[str], stake: float) -> None:
