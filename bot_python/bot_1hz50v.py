@@ -153,7 +153,13 @@ def _wma(values: List[float], period: int) -> List[Optional[float]]:
     wsum = sum(range(1, period + 1))
     for i in range(period - 1, len(values)):
         window = values[i - period + 1 : i + 1]
-        out[i] = sum((j + 1) * v for j, v in enumerate(window)) / wsum
+        # Filtrar nan para que WMA pueda empezar antes
+        valid = [(j + 1) * v for j, v in enumerate(window) 
+                 if not (isinstance(v, float) and math.isnan(v))]
+        if valid:
+            out[i] = sum(valid) / wsum
+        else:
+            out[i] = float("nan")
     return out
 
 
@@ -705,11 +711,12 @@ class HMAFlowBot:
         flow_strong_down = f < -(thr * 0.4) and hma_slope <= 0
         
         # 4. Volatilidad: evitar operar en laterales (HMA plano)
-        hma_flat = abs(hma_slope) < (price * 0.00005)  # slope < 0.005%
+        # slope threshold basado en volatilidad típica, no % del precio
+        hma_flat = abs(hma_slope) < 0.5  # slope < 0.5 pips/tick
         
         # 5. Filtro adicional: precio debe estar lejos del HMA (no en zona neutral)
         price_hma_dist = abs(price - hma_current) / price
-        price_too_close_hma = price_hma_dist < 0.0001  # < 0.01%
+        price_too_close_hma = price_hma_dist < 0.00005  # < 0.005%
         
         # Martingala simple: stake = base * 2^step, limitado a max_stake
         stake_efectivo = round(min(self.stake * (2 ** state.martingale_step), self.max_stake), 2)
