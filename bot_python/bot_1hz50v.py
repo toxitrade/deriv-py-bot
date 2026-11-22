@@ -359,37 +359,46 @@ class HMAFlowBot:
         self.public_ws = await websockets.connect(public_ws_url)
         self._log("info", "WebSocket público conectado")
 
-    async def subscribe_ticks(self) -> None:
-        # 1) Cargar historial de ticks individuales para warmup inmediato
+    async def subscribe_candles(self) -> None:
+        """Cargar historial de velas 1m y suscribirse a velas en tiempo real."""
+        # 1) Cargar historial de velas 1m para warmup
         hist_req = {
             "ticks_history": self.symbol,
             "adjust_start_time": 1,
             "end": "latest",
             "start": 1,
-            "style": "ticks",
-            "count": WARMUP_TICKS + 5,
+            "style": "candles",
+            "granularity": 60,  # 60 segundos = 1 minuto
+            "count": WARMUP_CANDLES + 5,
         }
         resp = await self._send(self.public_ws, hist_req)
-        candles = resp.get("candles") or resp.get("history") or {}
-        prices = candles.get("prices", [])
-        if prices:
-            for p in prices[-WARMUP_TICKS:]:
-                self.prices.append(float(p))
+        candles = resp.get("candles", [])
+        if candles:
+            # candles vienen como: {"epoch": 123, "open": 1.0, "high": 1.1, "low": 0.9, "close": 1.05}
+            for c in candles[-WARMUP_CANDLES:]:
+                self.candles.append({
+                    "epoch": c["epoch"],
+                    "open": float(c["open"]),
+                    "high": float(c["high"]),
+                    "low": float(c["low"]),
+                    "close": float(c["close"]),
+                })
             self._log(
                 "info",
-                f"Historial cargado: {len(self.prices)} precios de {self.symbol} "
-                f"(último={self.prices[-1]:.4f})",
+                f"Historial cargado: {len(self.candles)} velas 1m de {self.symbol} "
+                f"(última close={self.candles[-1]['close']:.4f})",
             )
         else:
-            self._log("warn", "No se pudo cargar historial de precios")
+            self._log("warn", "No se pudo cargar historial de velas")
 
-        # 2) Suscribirse a ticks en tiempo real
+        # 2) Suscribirse a velas 1m en tiempo real
         req = {
-            "ticks": self.symbol,
+            "candles": self.symbol,
             "subscribe": 1,
+            "granularity": 60,
         }
         await self._send(self.public_ws, req)
-        self._log("info", f"Suscrito a ticks en tiempo real de {self.symbol}")
+        self._log("info", f"Suscrito a velas 1m en tiempo real de {self.symbol}")
 
     async def connect_trading(self) -> None:
         if not self.token:
@@ -681,24 +690,26 @@ class HMAFlowBot:
     # ------------------------------------------------------------------
     # Strategy: on_tick
     # ------------------------------------------------------------------
-    async def on_tick(self, price: float) -> None:
-        self.prices.append(price)
-        state.ticks_received += 1
-        state.last_tick_time = now_str()
-        state.last_price = price
+    async def on_candle(self, candle: dict) -> None:
+        """Procesar vela 1m cerrada."""
+        self.candles.append(candle)
+        state.candles_received += 1
+        state.last_candle_time = now_str()
+        state.last_price = candle["close"]  # usar close como precio de referencia
 
-        if len(self.prices) < WARMUP_TICKS:
+        if len(self.candles) < WARMUP_CANDLES:
             return
 
-        plist = list(self.prices)
-        hma_series = hma(plist, self.hma_period)
+        # Extraer series de precios de cierre para indicadores
+        close_prices = [c["close"] for c in self.candles]
+        hma_series = hma(close_prices, self.hma_period)
         direction = hma_direction(hma_series)
-        flow = mladen_flow(plist, self.flow_period, self.flow_smooth)
+        flow = mladen_flow(close_prices, self.flow_period, self.flow_smooth)
 
         d = direction[-1]
         f = flow[-1]
         if d is None or f is None:
-            self._log("debug", f"Warmup: prices={len(self.prices)}, d={d}, f={f}")
+            self._log("debug", f"Warmup: candles={len(self.candles)}, d={d}, f={f}")
             return
 
         state.last_hma = hma_series[-1]
@@ -952,10 +963,10 @@ class HMAFlowBot:
                     except asyncio.TimeoutError:
                         continue
                     msg = json.loads(raw)
-                    if msg.get("msg_type") == "tick":
-                        tick = msg.get("tick", {})
-                        price = float(tick.get("quote"))
-                        await self.on_tick(price)
+                    if msg.get("msg_type") == "candle":
+                        candle = msg.get("candle", {})
+                        if candle.get("is_final"):  # solo procesar velas cerradas
+                            await self.on_candle(candle)
                     elif msg.get("msg_type") == "error":
                         self._log("error", f"[public] {msg['error']}")
             except asyncio.CancelledError:
