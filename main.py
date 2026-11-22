@@ -151,7 +151,7 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
 </style>
 </head>
 <body>
-<h1>1HZ50V HMA + Mladen Flow Bot</h1>
+<h1>1HZ50V HMA + Mladen Flow Bot</title>
 <div id="alert-box" class="alert"></div>
 
 <div class="status-row">
@@ -169,7 +169,7 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
     <button id="btn-stop" class="btn-danger" onclick="stopBot()">Detener Bot</button>
   </div>
   
-  <!-- Stats principales en el mismo card -->
+  <!-- Stats principales -->
   <div class="grid" id="stats" style="margin-top:1rem">
     <div class="stat"><div class="label">Saldo</div><div class="value" id="stat-balance">--</div></div>
     <div class="stat"><div class="label">PnL Diario</div><div class="value" id="stat-pnl">--</div></div>
@@ -177,7 +177,7 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
     <div class="stat"><div class="label">Ticks</div><div class="value" id="stat-ticks">--</div></div>
   </div>
   
-  <!-- Info de sesión debajo de botones -->
+  <!-- Info de sesión -->
   <div class="grid" id="session-info" style="margin-top:1rem;display:none">
     <div class="stat"><div class="label">Inicio del Bot</div><div class="value" id="session-start">--</div></div>
     <div class="stat"><div class="label">Wins / Losses</div><div class="value" id="session-wl">-- / --</div></div>
@@ -186,30 +186,6 @@ button{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weig
     <div class="stat"><div class="label">Max Win in Row</div><div class="value" id="session-maxwin">--</div></div>
     <div class="stat"><div class="label">Max Drawdown</div><div class="value" id="session-maxdd">$--</div></div>
   </div>
-</div>
-
-<div class="card">
-  <h2>Configuración</h2>
-  <div class="row"><div><label>Modo</label><select id="sel-mode"><option value="binary">Binary (CALL/PUT)</option><option value="multiplier">Multiplier (MULTUP/MULTDOWN)</option></select></div>
-    <div><label>Símbolo</label><select id="sel-symbol"></select></div>
-  </div>
-  <div class="row"><div><label>Stake Base (USD)</label><input id="sel-stake" type="number" step="0.1" value="10"></div>
-    <div><label>HMA Period</label><input id="sel-hma" type="number" value="30"></div>
-    <div><label>Flow Period</label><input id="sel-flow-p" type="number" value="14"></div>
-    <div><label>Flow Smooth</label><input id="sel-flow-s" type="number" value="3"></div>
-    <div><label>Flow Threshold</label><input id="sel-flow-t" type="number" step="0.01" value="0.3"></div>
-  </div>
-  <div class="row" id="binary-opts">
-    <div><label>Duración (min)</label><input id="sel-duration" type="number" value="1"></div>
-    <div><label>Martingala Mult</label><input id="sel-mart-mult" type="number" step="0.1" value="2.4"></div>
-    <div><label>Max Martingala Steps</label><input id="sel-max-mart" type="number" value="10"></div>
-  </div>
-  <div class="row" id="multiplier-opts" style="display:none">
-    <div><label>Multiplier</label><input id="sel-multiplier" type="number" value="100"></div>
-    <div><label>TP %</label><input id="sel-tp" type="number" step="0.0001" value="0.001"></div>
-    <div><label>SL %</label><input id="sel-sl" type="number" step="0.0001" value="0.001"></div>
-  </div>
-  <div class="row"><button class="btn-secondary" onclick="saveConfig()">Guardar Config</button></div>
 </div>
 
 <div class="card">
@@ -342,52 +318,6 @@ async function loadStatus(){
     tr.innerHTML = `<td>${formatDate(t.entry_time)}</td><td>${t.side}</td><td>${t.entry_price?.toFixed(4) || '--'}</td><td>${t.exit_price?.toFixed(4) || '--'}</td><td>${t.stake?.toFixed(2) || '--'}</td><td>${pnl}</td><td>${win}</td>`;
     tbody.appendChild(tr);
   });
-
-  const isMult = s.mode === 'multiplier';
-  $('binary-opts').style.display = isMult ? 'none' : 'flex';
-  $('multiplier-opts').style.display = isMult ? 'flex' : 'none';
-}
-async function loadConfig(){
-  const c = await api('/config');
-  $('sel-mode').value = c.mode || 'binary';
-  const symbols = ['1HZ50V','R_50','R_100','R_25','R_10','1HZ10V','1HZ25V','1HZ75V','1HZ100V'];
-  const selSym = $('sel-symbol'); selSym.innerHTML = '';
-  symbols.forEach(sym => { const o = document.createElement('option'); o.value = sym; o.textContent = sym; if (sym === c.symbol) o.selected = true; selSym.appendChild(o); });
-  $('sel-stake').value = c.stake || 10;
-  $('sel-hma').value = c.hma_period || 30;
-  $('sel-flow-p').value = c.flow_period || 14;
-  $('sel-flow-s').value = c.flow_smooth || 3;
-  $('sel-flow-t').value = c.flow_threshold || 0.3;
-  $('sel-duration').value = c.duration || 1;
-  $('sel-mart-mult').value = c.martingale_multiplier || 2.4;
-  $('sel-max-mart').value = c.max_martingale_steps || 10;
-  $('sel-multiplier').value = c.multiplier || 100;
-  $('sel-tp').value = c.tp_pct || 0.001;
-  $('sel-sl').value = c.sl_pct || 0.001;
-}
-async function saveConfig(){
-  const payload = {
-    mode: $('sel-mode').value,
-    symbol: $('sel-symbol').value,
-    stake: parseFloat($('sel-stake').value) || 10,
-  };
-  if ($('sel-mode').value === 'multiplier'){
-    payload.multiplier = parseInt($('sel-multiplier').value) || 100;
-    payload.tp_pct = parseFloat($('sel-tp').value) || 0.001;
-    payload.sl_pct = parseFloat($('sel-sl').value) || 0.001;
-  } else {
-    payload.duration = 1;
-    payload.duration_unit = 'm';
-    payload.martingale_multiplier = parseFloat($('sel-mart-mult').value) || 2.4;
-    payload.max_martingale_steps = parseInt($('sel-max-mart').value) || 10;
-  }
-  payload.hma_period = parseInt($('sel-hma').value) || 30;
-  payload.flow_period = parseInt($('sel-flow-p').value) || 14;
-  payload.flow_smooth = parseInt($('sel-flow-s').value) || 3;
-  payload.flow_threshold = parseFloat($('sel-flow-t').value) || 0.3;
-  await api('/config', 'POST', payload);
-  setAlert('Configuración guardada', 'success');
-  await loadConfig();
 }
 async function startBot(){ const r = await api('/start', 'POST'); setAlert(r.status === 'started' ? 'Bot iniciado' : r.status === 'already_running' ? 'Ya estaba corriendo' : 'Iniciado', r.status === 'already_running' ? 'info' : 'success'); await loadStatus(); }
 async function stopBot(){ const r = await api('/stop', 'POST'); setAlert('Bot detenido', 'info'); await loadStatus(); }
@@ -407,7 +337,7 @@ setInterval(loadStatus, 5000);
 setInterval(loadSignals, 5000);
 setInterval(loadLogs, 10000);
 $('btn-refresh-log').onclick = loadLogs;
-loadStatus(); loadConfig(); loadSignals(); loadLogs();
+loadStatus(); loadSignals(); loadLogs();
 </script>
 </body>
 </html>"""
