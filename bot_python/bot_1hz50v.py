@@ -444,44 +444,42 @@ class HMAFlowBot:
             self._log("debug", "sync_from_deriv: sin ws o token")
             return
         try:
-            self._log("debug", "sync_from_deriv: intentando lock")
-            async with self._ws_lock:
-                self._log("debug", "sync_from_deriv: lock adquirido, enviando profit_table")
-                # 1. Obtener profit_table (últimos trades cerrados)
-                req = {"profit_table": 1, "description": 1, "limit": 20, "sort": "DESC"}
-                resp = await self._send(self.trading_ws, req)
-                profit_data = resp.get("profit_table", {})
-                transactions = profit_data.get("transactions", [])
+            self._log("debug", "sync_from_deriv: enviando profit_table (sin lock)")
+            # 1. Obtener profit_table (últimos trades cerrados)
+            req = {"profit_table": 1, "description": 1, "limit": 20, "sort": "DESC"}
+            resp = await self._send(self.trading_ws, req)
+            profit_data = resp.get("profit_table", {})
+            transactions = profit_data.get("transactions", [])
+            
+            # Actualizar trades locales con datos reales de Deriv
+            for tx in transactions:
+                contract_id = tx.get("contract_id")
+                profit = tx.get("profit")
+                buy_price = tx.get("buy_price")
+                sell_price = tx.get("sell_price")
+                contract_type = tx.get("contract_type")
+                entry_time = tx.get("entry_tick_time") or tx.get("entry_time")
+                exit_time = tx.get("exit_tick_time") or tx.get("exit_time")
                 
-                # Actualizar trades locales con datos reales de Deriv
-                for tx in transactions:
-                    contract_id = tx.get("contract_id")
-                    profit = tx.get("profit")
-                    buy_price = tx.get("buy_price")
-                    sell_price = tx.get("sell_price")
-                    contract_type = tx.get("contract_type")
-                    entry_time = tx.get("entry_tick_time") or tx.get("entry_time")
-                    exit_time = tx.get("exit_tick_time") or tx.get("exit_time")
-                    
-                    if contract_id and profit is not None:
-                        # Buscar trade local
-                        for t in state.trades:
-                            if t.contract_id == contract_id and t.pnl is None:
-                                t.exit_price = float(sell_price) if sell_price else None
-                                t.pnl = float(profit)
-                                t.win = float(profit) > 0
-                                if exit_time:
-                                    t.exit_time = exit_time
-                                save_trade_to_csv(t)
-                                self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
-                                break
-                
-                # 2. Obtener balance real
-                await self.fetch_balance()
-                
-                # 3. Actualizar martingala y daily_pnl basado en trades sincronizados
-                self._update_state_from_trades()
-                
+                if contract_id and profit is not None:
+                    # Buscar trade local
+                    for t in state.trades:
+                        if t.contract_id == contract_id and t.pnl is None:
+                            t.exit_price = float(sell_price) if sell_price else None
+                            t.pnl = float(profit)
+                            t.win = float(profit) > 0
+                            if exit_time:
+                                t.exit_time = exit_time
+                            save_trade_to_csv(t)
+                            self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
+                            break
+            
+            # 2. Obtener balance real
+            await self.fetch_balance()
+            
+            # 3. Actualizar martingala y daily_pnl basado en trades sincronizados
+            self._update_state_from_trades()
+            
         except Exception as e:
             self._log("error", f"Error sync_from_deriv: {e}")
 
