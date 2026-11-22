@@ -327,7 +327,7 @@ class HMAFlowBot:
         self.cooldown_seconds = int(cfg["cooldown_seconds"])
         self.last_trade_time = 0  # timestamp del último trade cerrado
         self.consecutive_losses = 0  # pérdidas consecutivas para pausa
-        self.prices: Deque[float] = deque(maxlen=TICK_BUFFER)
+        self.candles: Deque[dict] = deque(maxlen=MAX_CANDLES)
         self.public_ws = None
         self.trading_ws = None
         self.trading_ws_url = None
