@@ -437,16 +437,70 @@ class HMAFlowBot:
         except Exception as e:
             self._log("error", f"Error sincronizando balance: {e}")
 
-    async def get_contract_profit(self, contract_id: int, balance_before: float = None) -> float:
-        """Obtiene PnL real: diferencia de balance (método principal y confiable)."""
-        if balance_before is not None:
-            current_balance = state.balance
-            pnl = current_balance - balance_before
-            self._log("info", f"  [REAL PnL] balance diff: {pnl:+.2f} USD (contract_id={contract_id})")
-            return pnl
+    async def sync_from_deriv(self) -> None:
+        """Sincroniza todo desde Deriv API: profit_table (trades) + balance."""
+        if not self.trading_ws or not self.token:
+            return
+        try:
+            async with self._ws_lock:
+                # 1. Obtener profit_table (últimos trades cerrados)
+                req = {"profit_table": 1, "description": 1, "limit": 20, "sort": "DESC"}
+                resp = await self._send(self.trading_ws, req)
+                profit_data = resp.get("profit_table", {})
+                transactions = profit_data.get("transactions", [])
+                
+                # Actualizar trades locales con datos reales de Deriv
+                for tx in transactions:
+                    contract_id = tx.get("contract_id")
+                    profit = tx.get("profit")
+                    buy_price = tx.get("buy_price")
+                    sell_price = tx.get("sell_price")
+                    contract_type = tx.get("contract_type")
+                    entry_time = tx.get("entry_tick_time") or tx.get("entry_time")
+                    exit_time = tx.get("exit_tick_time") or tx.get("exit_time")
+                    
+                    if contract_id and profit is not None:
+                        # Buscar trade local
+                        for t in state.trades:
+                            if t.contract_id == contract_id and t.pnl is None:
+                                t.exit_price = float(sell_price) if sell_price else None
+                                t.pnl = float(profit)
+                                t.win = float(profit) > 0
+                                if exit_time:
+                                    t.exit_time = exit_time
+                                save_trade_to_csv(t)
+                                self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
+                                break
+                
+                # 2. Obtener balance real
+                await self.fetch_balance()
+                
+                # 3. Actualizar martingala y daily_pnl basado en trades sincronizados
+                self._update_state_from_trades()
+                
+        except Exception as e:
+            self._log("error", f"Error sync_from_deriv: {e}")
+
+    def _update_state_from_trades(self) -> None:
+        """Actualiza martingala y daily_pnl basado en trades cerrados reales."""
+        # Recalcular daily_pnl sumando PnL de trades cerrados
+        total_pnl = sum(t.pnl for t in state.trades if t.pnl is not None)
+        state.daily_pnl = total_pnl
         
-        # Solo si no hay balance_before, intentar profit_table (raro)
-        return 0.0
+        # Martingala: revisar último trade cerrado
+        closed_trades = [t for t in state.trades if t.pnl is not None]
+        if closed_trades:
+            last = closed_trades[-1]
+            if last.win:
+                state.martingale_step = 0
+                self.consecutive_losses = 0
+            else:
+                state.martingale_step = min(state.martingale_step + 1, self.max_martingale_steps)
+                self.consecutive_losses += 1
+                if state.martingale_step >= self.max_martingale_steps:
+                    state.martingale_step = 0
+        
+        self._log("info", f"  [STATE SYNC] daily_pnl={state.daily_pnl:+.2f} martingale_step={state.martingale_step}")
 
     def reload_config(self) -> None:
         """Recarga la configuración desde config.json."""
@@ -640,13 +694,8 @@ class HMAFlowBot:
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
             # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
-            balance_before = state.balance
-            self._log("debug", f"EXIT: llamando get_contract_profit contract_id={state.open_contract_id} balance_before={balance_before}")
-            await self.fetch_balance()
-            
-            # Obtener profit real del contrato que acaba de expirar via profit_table
-            pnl_real = await self.get_contract_profit(state.open_contract_id, balance_before)
-            self._log("debug", f"EXIT: pnl_real={pnl_real}")
+            # Obtener datos reales de Deriv: profit_table + balance
+            await self.sync_from_deriv()
             
             # Actualizar el último trade con PnL REAL del contrato
             if state.trades:
