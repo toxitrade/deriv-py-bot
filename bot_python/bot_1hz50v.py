@@ -504,6 +504,37 @@ class HMAFlowBot:
         
         self._log("info", f"  [STATE SYNC] daily_pnl={state.daily_pnl:+.2f} martingale_step={state.martingale_step}")
 
+    async def update_trades_from_profit_table(self) -> None:
+        """Actualiza trades individuales desde profit_table (async, no bloquea)."""
+        if not self.trading_ws or not self.token:
+            return
+        try:
+            req = {"profit_table": 1, "description": 1, "limit": 20, "sort": "DESC"}
+            resp = await self._send(self.trading_ws, req)
+            profit_data = resp.get("profit_table", {})
+            transactions = profit_data.get("transactions", [])
+            
+            for tx in transactions:
+                contract_id = tx.get("contract_id")
+                profit = tx.get("profit")
+                sell_price = tx.get("sell_price")
+                contract_type = tx.get("contract_type")
+                exit_time = tx.get("exit_tick_time") or tx.get("exit_time")
+                
+                if contract_id and profit is not None:
+                    for t in state.trades:
+                        if t.contract_id == contract_id and t.pnl is None:
+                            t.exit_price = float(sell_price) if sell_price else None
+                            t.pnl = float(profit)
+                            t.win = float(profit) > 0
+                            if exit_time:
+                                t.exit_time = exit_time
+                            save_trade_to_csv(t)
+                            self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
+                            break
+        except Exception as e:
+            self._log("debug", f"update_trades_from_profit_table error: {e}")
+
     def reload_config(self) -> None:
         """Recarga la configuración desde config.json."""
         import json
