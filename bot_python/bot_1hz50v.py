@@ -696,8 +696,40 @@ class HMAFlowBot:
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
             # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
-            # Obtener datos reales de Deriv: profit_table + balance
-            await self.sync_from_deriv()
+            # PnL real = diferencia de balance (fuente principal)
+            balance_before = state.balance
+            await self.fetch_balance()
+            pnl_real = state.balance - balance_before
+            
+            # Actualizar último trade con PnL real
+            if state.trades:
+                last_trade = state.trades[-1]
+                if last_trade.pnl is None:
+                    last_trade.exit_time = now
+                    last_trade.exit_price = price
+                    last_trade.pnl = pnl_real
+                    last_trade.win = pnl_real > 0
+                    save_trade_to_csv(last_trade)
+                    self._log("info", f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
+            
+            # Actualizar martingala y daily_pnl
+            state.daily_pnl += pnl_real
+            if pnl_real > 0:
+                state.martingale_step = 0
+                self.consecutive_losses = 0
+            else:
+                state.martingale_step += 1
+                self.consecutive_losses += 1
+                if state.martingale_step >= self.max_martingale_steps:
+                    state.martingale_step = 0
+            
+            state.last_trade_exit_time = time.time()
+            self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
+            
+            # Async: actualizar trades desde profit_table (no bloquea)
+            asyncio.create_task(self.update_trades_from_profit_table())
+            
+            self._close_position()
             return
             
             # Actualizar el último trade con PnL REAL del contrato
