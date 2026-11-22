@@ -111,7 +111,8 @@ OTP_BASE = "https://api.derivws.com"                              # REST para OT
 APP_ID = env_str("DERIV_APP_ID", "")                             # Requerido para PAT
 TICK_BUFFER = 500
 RECONNECT_BASE_DELAY = 5  # segundos
-WARMUP_TICKS = 15
+MAX_CANDLES = 5000
+WARMUP_CANDLES = 150
 
 
 # ============================================================================
