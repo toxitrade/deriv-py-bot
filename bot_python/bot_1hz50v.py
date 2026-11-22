@@ -698,6 +698,7 @@ class HMAFlowBot:
             state.trades_today += 1
             # Obtener datos reales de Deriv: profit_table + balance
             await self.sync_from_deriv()
+            return
             
             # Actualizar el último trade con PnL REAL del contrato
             if state.trades:
