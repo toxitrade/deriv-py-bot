@@ -439,10 +439,14 @@ class HMAFlowBot:
 
     async def sync_from_deriv(self) -> None:
         """Sincroniza todo desde Deriv API: profit_table (trades) + balance."""
+        self._log("debug", "sync_from_deriv INICIO")
         if not self.trading_ws or not self.token:
+            self._log("debug", "sync_from_deriv: sin ws o token")
             return
         try:
+            self._log("debug", "sync_from_deriv: intentando lock")
             async with self._ws_lock:
+                self._log("debug", "sync_from_deriv: lock adquirido, enviando profit_table")
                 # 1. Obtener profit_table (últimos trades cerrados)
                 req = {"profit_table": 1, "description": 1, "limit": 20, "sort": "DESC"}
                 resp = await self._send(self.trading_ws, req)
