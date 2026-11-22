@@ -438,47 +438,14 @@ class HMAFlowBot:
             self._log("error", f"Error sincronizando balance: {e}")
 
     async def get_contract_profit(self, contract_id: int, balance_before: float = None) -> float:
-        """Obtiene el profit real de un contrato específico via profit_table.
-        Si no se encuentra, usa diferencia de balance como fallback."""
-        self._log("debug", f"get_contract_profit INICIO: contract_id={contract_id}, balance_before={balance_before}, ws={self.trading_ws is not None}, token={self.token is not None}")
-        if not self.trading_ws or not self.token or not contract_id:
-            self._log("debug", "get_contract_profit RETORNO 0: validación inicial falló")
-            return 0.0
-        try:
-            self._log("debug", "get_contract_profit: intentando lock")
-            async with self._ws_lock:
-                self._log("debug", "get_contract_profit: lock adquirido, enviando profit_table")
-                req = {
-                    "profit_table": 1,
-                    "description": 1,
-                    "limit": 20,
-                    "sort": "DESC"
-                }
-                resp = await self._send(self.trading_ws, req)
-                self._log("debug", f"get_contract_profit: respuesta recibida msg_type={resp.get('msg_type')}")
-                profit_data = resp.get("profit_table", {})
-                transactions = profit_data.get("transactions", [])
-                self._log("debug", f"profit_table: {len(transactions)} transacciones, buscando contract_id={contract_id}")
-                
-                for tx in transactions:
-                    tx_id = tx.get("contract_id")
-                    profit = tx.get("profit")
-                    if tx_id == contract_id:
-                        self._log("debug", f"Contrato encontrado: profit={profit}")
-                        if profit is not None:
-                            return float(profit)
-                        break
-                
-                self._log("warning", f"Contrato {contract_id} NO encontrado en profit_table ({len(transactions)} txs)")
-        except Exception as e:
-            self._log("error", f"Error obteniendo profit de contrato {contract_id}: {e}")
-        
-        # Fallback: usar diferencia de balance si está disponible
+        """Obtiene PnL real: diferencia de balance (método principal y confiable)."""
         if balance_before is not None:
             current_balance = state.balance
-            pnl_fallback = current_balance - balance_before
-            self._log("info", f"  [FALLBACK PnL] balance diff: {pnl_fallback:+.2f} USD")
-            return pnl_fallback
+            pnl = current_balance - balance_before
+            self._log("info", f"  [REAL PnL] balance diff: {pnl:+.2f} USD (contract_id={contract_id})")
+            return pnl
+        
+        # Solo si no hay balance_before, intentar profit_table (raro)
         return 0.0
 
     def reload_config(self) -> None:
