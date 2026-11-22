@@ -953,7 +953,7 @@ class HMAFlowBot:
         while state.running:
             try:
                 await self.connect_public()
-                await self.subscribe_ticks()
+                await self.subscribe_candles()
                 await self.connect_trading()
                 reconnect_delay = RECONNECT_BASE_DELAY
 
