@@ -150502,3 +150502,1278 @@
 2026-11-23 03:14:00 | DEBUG    | [2026-11-23 00:14:00] Price=229211.7200 HMA=228480.5311 Dir=1 Flow=0.9217 Slope=41.7026
 2026-11-23 03:14:00 | DEBUG    | Pause active: 180s remaining
 
+[2026-11-23 00:15:01] 2026-11-23 03:14:56 | INFO     | Log level set to DEBUG
+2026-11-23 03:14:56 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:14:56 | INFO     | WebSocket público conectado
+2026-11-23 03:14:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=229113.0700)
+2026-11-23 03:14:57 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:14:57 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:14:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:14:58 | INFO     | Saldo de cuenta obtenido: 3528.78 USD
+2026-11-23 03:14:58 | INFO     | Saldo inicial de sesión: 3528.78 USD
+2026-11-23 03:14:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:14:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:14:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:00 | DEBUG    | Finalizing candle: {'epoch': 1795403640, 'open': 229094.07, 'high': 229127.86, 'low': 229094.07, 'close': 229124.27}
+2026-11-23 03:15:00 | DEBUG    | [2026-11-23 00:15:00] Price=229124.2700 HMA=67424.1292 Dir=1 Flow=0.7079 Slope=32249.6854
+2026-11-23 03:15:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=32249.6854 dist=0.705731
+2026-11-23 03:15:00 | INFO     | [2026-11-23 00:15:00] SELL (PUT) @ 229124.2700 | stake=0.35 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:15:00 | INFO     |   [CONTRACT] PUT stake=0.35 (min=0.35, max=100000.00, payout=0.64, profit=0.00)
+2026-11-23 03:15:00 | INFO     |   [TRADE] id=21527169959 type=PUT buy_price=0.35 tx=41234261459
+2026-11-23 03:15:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+
+[2026-11-23 00:16:08] 2026-11-23 03:14:56 | INFO     | Log level set to DEBUG
+2026-11-23 03:14:56 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:14:56 | INFO     | WebSocket público conectado
+2026-11-23 03:14:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=229113.0700)
+2026-11-23 03:14:57 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:14:57 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:14:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:14:58 | INFO     | Saldo de cuenta obtenido: 3528.78 USD
+2026-11-23 03:14:58 | INFO     | Saldo inicial de sesión: 3528.78 USD
+2026-11-23 03:14:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:14:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:14:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:00 | DEBUG    | Finalizing candle: {'epoch': 1795403640, 'open': 229094.07, 'high': 229127.86, 'low': 229094.07, 'close': 229124.27}
+2026-11-23 03:15:00 | DEBUG    | [2026-11-23 00:15:00] Price=229124.2700 HMA=67424.1292 Dir=1 Flow=0.7079 Slope=32249.6854
+2026-11-23 03:15:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=32249.6854 dist=0.705731
+2026-11-23 03:15:00 | INFO     | [2026-11-23 00:15:00] SELL (PUT) @ 229124.2700 | stake=0.35 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:15:00 | INFO     |   [CONTRACT] PUT stake=0.35 (min=0.35, max=100000.00, payout=0.64, profit=0.00)
+2026-11-23 03:15:00 | INFO     |   [TRADE] id=21527169959 type=PUT buy_price=0.35 tx=41234261459
+2026-11-23 03:15:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:00 | DEBUG    | Finalizing candle: {'epoch': 1795403700, 'open': 229104.04, 'high': 229287.32, 'low': 229061.28, 'close': 229287.32}
+2026-11-23 03:16:00 | DEBUG    | [2026-11-23 00:16:00] Price=229287.3200 HMA=96749.4128 Dir=1 Flow=0.8203 Slope=29325.2836
+2026-11-23 03:16:00 | INFO     | [2026-11-23 00:16:00] EXIT SHORT @ 229287.3200 | duración 1m completada (esperando resultado real)
+2026-11-23 03:16:02 | INFO     | Saldo de cuenta obtenido: 3528.43 USD
+2026-11-23 03:16:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:16:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+
+[2026-11-23 00:17:09] 2026-11-23 03:14:56 | INFO     | Log level set to DEBUG
+2026-11-23 03:14:56 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:14:56 | INFO     | WebSocket público conectado
+2026-11-23 03:14:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=229113.0700)
+2026-11-23 03:14:57 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:14:57 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:14:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:14:58 | INFO     | Saldo de cuenta obtenido: 3528.78 USD
+2026-11-23 03:14:58 | INFO     | Saldo inicial de sesión: 3528.78 USD
+2026-11-23 03:14:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:14:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:14:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:00 | DEBUG    | Finalizing candle: {'epoch': 1795403640, 'open': 229094.07, 'high': 229127.86, 'low': 229094.07, 'close': 229124.27}
+2026-11-23 03:15:00 | DEBUG    | [2026-11-23 00:15:00] Price=229124.2700 HMA=67424.1292 Dir=1 Flow=0.7079 Slope=32249.6854
+2026-11-23 03:15:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=32249.6854 dist=0.705731
+2026-11-23 03:15:00 | INFO     | [2026-11-23 00:15:00] SELL (PUT) @ 229124.2700 | stake=0.35 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:15:00 | INFO     |   [CONTRACT] PUT stake=0.35 (min=0.35, max=100000.00, payout=0.64, profit=0.00)
+2026-11-23 03:15:00 | INFO     |   [TRADE] id=21527169959 type=PUT buy_price=0.35 tx=41234261459
+2026-11-23 03:15:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:00 | DEBUG    | Finalizing candle: {'epoch': 1795403700, 'open': 229104.04, 'high': 229287.32, 'low': 229061.28, 'close': 229287.32}
+2026-11-23 03:16:00 | DEBUG    | [2026-11-23 00:16:00] Price=229287.3200 HMA=96749.4128 Dir=1 Flow=0.8203 Slope=29325.2836
+2026-11-23 03:16:00 | INFO     | [2026-11-23 00:16:00] EXIT SHORT @ 229287.3200 | duración 1m completada (esperando resultado real)
+2026-11-23 03:16:02 | INFO     | Saldo de cuenta obtenido: 3528.43 USD
+2026-11-23 03:16:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:16:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:57 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:17:02 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:17:02 | INFO     | WebSocket público conectado
+2026-11-23 03:17:02 | INFO     | Historial cargado: 302 velas 1m de 1HZ50V (última close=229475.9700)
+2026-11-23 03:17:02 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:17:03 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:17:03 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:17:03 | INFO     | Saldo de cuenta obtenido: 3528.43 USD
+2026-11-23 03:17:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+
+[2026-11-23 00:18:10] 2026-11-23 03:15:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:15:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:00 | DEBUG    | Finalizing candle: {'epoch': 1795403700, 'open': 229104.04, 'high': 229287.32, 'low': 229061.28, 'close': 229287.32}
+2026-11-23 03:16:00 | DEBUG    | [2026-11-23 00:16:00] Price=229287.3200 HMA=96749.4128 Dir=1 Flow=0.8203 Slope=29325.2836
+2026-11-23 03:16:00 | INFO     | [2026-11-23 00:16:00] EXIT SHORT @ 229287.3200 | duración 1m completada (esperando resultado real)
+2026-11-23 03:16:02 | INFO     | Saldo de cuenta obtenido: 3528.43 USD
+2026-11-23 03:16:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:16:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:57 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:17:02 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:17:02 | INFO     | WebSocket público conectado
+2026-11-23 03:17:02 | INFO     | Historial cargado: 302 velas 1m de 1HZ50V (última close=229475.9700)
+2026-11-23 03:17:02 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:17:03 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:17:03 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:17:03 | INFO     | Saldo de cuenta obtenido: 3528.43 USD
+2026-11-23 03:17:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:00 | DEBUG    | Finalizing candle: {'epoch': 1795403820, 'open': 229458.19, 'high': 229669.09, 'low': 229407.78, 'close': 229597.97}
+2026-11-23 03:18:00 | DEBUG    | [2026-11-23 00:18:00] Price=229597.9700 HMA=228660.3701 Dir=1 Flow=0.9608 Slope=49.6495
+2026-11-23 03:18:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=49.6495 dist=0.004084
+2026-11-23 03:18:00 | INFO     | [2026-11-23 00:18:00] SELL (PUT) @ 229597.9700 | stake=0.70 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:18:00 | INFO     |   [CONTRACT] PUT stake=0.70 (min=0.35, max=100000.00, payout=1.27, profit=0.00)
+2026-11-23 03:18:00 | INFO     |   [TRADE] id=21527342759 type=PUT buy_price=0.7 tx=41234584319
+2026-11-23 03:18:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+
+[2026-11-23 00:19:12] 2026-11-23 03:16:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"703ec98a-5422-4
+2026-11-23 03:16:57 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:17:02 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:17:02 | INFO     | WebSocket público conectado
+2026-11-23 03:17:02 | INFO     | Historial cargado: 302 velas 1m de 1HZ50V (última close=229475.9700)
+2026-11-23 03:17:02 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:17:03 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:17:03 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:17:03 | INFO     | Saldo de cuenta obtenido: 3528.43 USD
+2026-11-23 03:17:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:00 | DEBUG    | Finalizing candle: {'epoch': 1795403820, 'open': 229458.19, 'high': 229669.09, 'low': 229407.78, 'close': 229597.97}
+2026-11-23 03:18:00 | DEBUG    | [2026-11-23 00:18:00] Price=229597.9700 HMA=228660.3701 Dir=1 Flow=0.9608 Slope=49.6495
+2026-11-23 03:18:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=49.6495 dist=0.004084
+2026-11-23 03:18:00 | INFO     | [2026-11-23 00:18:00] SELL (PUT) @ 229597.9700 | stake=0.70 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:18:00 | INFO     |   [CONTRACT] PUT stake=0.70 (min=0.35, max=100000.00, payout=1.27, profit=0.00)
+2026-11-23 03:18:00 | INFO     |   [TRADE] id=21527342759 type=PUT buy_price=0.7 tx=41234584319
+2026-11-23 03:18:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:00 | DEBUG    | Finalizing candle: {'epoch': 1795403880, 'open': 229571.28, 'high': 229618.19, 'low': 229470.37, 'close': 229557.79}
+2026-11-23 03:19:00 | DEBUG    | [2026-11-23 00:19:00] Price=229557.7900 HMA=228711.2941 Dir=1 Flow=0.9255 Slope=50.9240
+2026-11-23 03:19:00 | INFO     | [2026-11-23 00:19:00] EXIT SHORT @ 229557.7900 | duración 1m completada (esperando resultado real)
+2026-11-23 03:19:02 | INFO     | Saldo de cuenta obtenido: 3527.73 USD
+2026-11-23 03:19:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:19:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:02 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:19:07 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:19:08 | INFO     | WebSocket público conectado
+2026-11-23 03:19:08 | INFO     | Historial cargado: 454 velas 1m de 1HZ50V (última close=229503.2500)
+2026-11-23 03:19:08 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:19:08 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:19:09 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:19:09 | INFO     | Saldo de cuenta obtenido: 3527.73 USD
+2026-11-23 03:19:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+
+[2026-11-23 00:20:14] 2026-11-23 03:17:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:17:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:00 | DEBUG    | Finalizing candle: {'epoch': 1795403820, 'open': 229458.19, 'high': 229669.09, 'low': 229407.78, 'close': 229597.97}
+2026-11-23 03:18:00 | DEBUG    | [2026-11-23 00:18:00] Price=229597.9700 HMA=228660.3701 Dir=1 Flow=0.9608 Slope=49.6495
+2026-11-23 03:18:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=49.6495 dist=0.004084
+2026-11-23 03:18:00 | INFO     | [2026-11-23 00:18:00] SELL (PUT) @ 229597.9700 | stake=0.70 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:18:00 | INFO     |   [CONTRACT] PUT stake=0.70 (min=0.35, max=100000.00, payout=1.27, profit=0.00)
+2026-11-23 03:18:00 | INFO     |   [TRADE] id=21527342759 type=PUT buy_price=0.7 tx=41234584319
+2026-11-23 03:18:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:00 | DEBUG    | Finalizing candle: {'epoch': 1795403880, 'open': 229571.28, 'high': 229618.19, 'low': 229470.37, 'close': 229557.79}
+2026-11-23 03:19:00 | DEBUG    | [2026-11-23 00:19:00] Price=229557.7900 HMA=228711.2941 Dir=1 Flow=0.9255 Slope=50.9240
+2026-11-23 03:19:00 | INFO     | [2026-11-23 00:19:00] EXIT SHORT @ 229557.7900 | duración 1m completada (esperando resultado real)
+2026-11-23 03:19:02 | INFO     | Saldo de cuenta obtenido: 3527.73 USD
+2026-11-23 03:19:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:19:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:02 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:19:07 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:19:08 | INFO     | WebSocket público conectado
+2026-11-23 03:19:08 | INFO     | Historial cargado: 454 velas 1m de 1HZ50V (última close=229503.2500)
+2026-11-23 03:19:08 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:19:08 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:19:09 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:19:09 | INFO     | Saldo de cuenta obtenido: 3527.73 USD
+2026-11-23 03:19:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:00 | DEBUG    | Finalizing candle: {'epoch': 1795403940, 'open': 229536.38, 'high': 229670.31, 'low': 229474.36, 'close': 229586.62}
+2026-11-23 03:20:00 | DEBUG    | [2026-11-23 00:20:00] Price=229586.6200 HMA=228762.4085 Dir=1 Flow=0.8798 Slope=52.7013
+2026-11-23 03:20:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=52.7013 dist=0.003590
+2026-11-23 03:20:00 | INFO     | [2026-11-23 00:20:00] SELL (PUT) @ 229586.6200 | stake=1.40 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:20:00 | INFO     |   [CONTRACT] PUT stake=1.40 (min=0.35, max=100000.00, payout=2.54, profit=0.00)
+2026-11-23 03:20:00 | INFO     |   [TRADE] id=21527462199 type=PUT buy_price=1.4 tx=41234809019
+2026-11-23 03:20:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+
+[2026-11-23 00:21:16] 2026-11-23 03:18:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:18:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:00 | DEBUG    | Finalizing candle: {'epoch': 1795403880, 'open': 229571.28, 'high': 229618.19, 'low': 229470.37, 'close': 229557.79}
+2026-11-23 03:19:00 | DEBUG    | [2026-11-23 00:19:00] Price=229557.7900 HMA=228711.2941 Dir=1 Flow=0.9255 Slope=50.9240
+2026-11-23 03:19:00 | INFO     | [2026-11-23 00:19:00] EXIT SHORT @ 229557.7900 | duración 1m completada (esperando resultado real)
+2026-11-23 03:19:02 | INFO     | Saldo de cuenta obtenido: 3527.73 USD
+2026-11-23 03:19:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:19:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"567640b7-1ae7-4
+2026-11-23 03:19:02 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:19:07 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:19:08 | INFO     | WebSocket público conectado
+2026-11-23 03:19:08 | INFO     | Historial cargado: 454 velas 1m de 1HZ50V (última close=229503.2500)
+2026-11-23 03:19:08 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:19:08 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:19:09 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:19:09 | INFO     | Saldo de cuenta obtenido: 3527.73 USD
+2026-11-23 03:19:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:00 | DEBUG    | Finalizing candle: {'epoch': 1795403940, 'open': 229536.38, 'high': 229670.31, 'low': 229474.36, 'close': 229586.62}
+2026-11-23 03:20:00 | DEBUG    | [2026-11-23 00:20:00] Price=229586.6200 HMA=228762.4085 Dir=1 Flow=0.8798 Slope=52.7013
+2026-11-23 03:20:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=52.7013 dist=0.003590
+2026-11-23 03:20:00 | INFO     | [2026-11-23 00:20:00] SELL (PUT) @ 229586.6200 | stake=1.40 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:20:00 | INFO     |   [CONTRACT] PUT stake=1.40 (min=0.35, max=100000.00, payout=2.54, profit=0.00)
+2026-11-23 03:20:00 | INFO     |   [TRADE] id=21527462199 type=PUT buy_price=1.4 tx=41234809019
+2026-11-23 03:20:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:00 | DEBUG    | Finalizing candle: {'epoch': 1795404000, 'open': 229591.79, 'high': 229687.86, 'low': 229509.67, 'close': 229645.16}
+2026-11-23 03:21:00 | DEBUG    | [2026-11-23 00:21:00] Price=229645.1600 HMA=228816.1012 Dir=1 Flow=0.9465 Slope=53.6926
+2026-11-23 03:21:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:08 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:21:13 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:21:13 | INFO     | WebSocket público conectado
+2026-11-23 03:21:14 | INFO     | Historial cargado: 606 velas 1m de 1HZ50V (última close=229683.2600)
+2026-11-23 03:21:14 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:21:14 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:21:15 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:21:15 | INFO     | Saldo de cuenta obtenido: 3526.33 USD
+2026-11-23 03:21:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+
+[2026-11-23 00:22:22] 2026-11-23 03:19:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:19:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:00 | DEBUG    | Finalizing candle: {'epoch': 1795403940, 'open': 229536.38, 'high': 229670.31, 'low': 229474.36, 'close': 229586.62}
+2026-11-23 03:20:00 | DEBUG    | [2026-11-23 00:20:00] Price=229586.6200 HMA=228762.4085 Dir=1 Flow=0.8798 Slope=52.7013
+2026-11-23 03:20:00 | DEBUG    | Signal check: d=1 flow_up=True flow_down=False price_above=True price_below=False hma_flat=False price_close=False slope=52.7013 dist=0.003590
+2026-11-23 03:20:00 | INFO     | [2026-11-23 00:20:00] SELL (PUT) @ 229586.6200 | stake=1.40 | HMA↑ Flow↑ Precio>HMA Dist>0.02%
+2026-11-23 03:20:00 | INFO     |   [CONTRACT] PUT stake=1.40 (min=0.35, max=100000.00, payout=2.54, profit=0.00)
+2026-11-23 03:20:00 | INFO     |   [TRADE] id=21527462199 type=PUT buy_price=1.4 tx=41234809019
+2026-11-23 03:20:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:20:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:00 | DEBUG    | Finalizing candle: {'epoch': 1795404000, 'open': 229591.79, 'high': 229687.86, 'low': 229509.67, 'close': 229645.16}
+2026-11-23 03:21:00 | DEBUG    | [2026-11-23 00:21:00] Price=229645.1600 HMA=228816.1012 Dir=1 Flow=0.9465 Slope=53.6926
+2026-11-23 03:21:01 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"5ef8cb22-421f-4
+2026-11-23 03:21:08 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:21:13 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:21:13 | INFO     | WebSocket público conectado
+2026-11-23 03:21:14 | INFO     | Historial cargado: 606 velas 1m de 1HZ50V (última close=229683.2600)
+2026-11-23 03:21:14 | INFO     | Suscrito a ticks en tiempo real de 1HZ50V
+2026-11-23 03:21:14 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:21:15 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:21:15 | INFO     | Saldo de cuenta obtenido: 3526.33 USD
+2026-11-23 03:21:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:22 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:23 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:24 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:25 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:26 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:27 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:28 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:29 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:30 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:31 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:32 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:33 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:34 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:35 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:36 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:37 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:38 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:39 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:40 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:41 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:42 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:43 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:44 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:45 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:46 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:47 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:48 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:49 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:50 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:51 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:52 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:53 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:54 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:55 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:56 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:57 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:58 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:21:59 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:00 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:00 | DEBUG    | Finalizing candle: {'epoch': 1795404060, 'open': 229680.46, 'high': 229779.01, 'low': 229671.47, 'close': 229749.5}
+2026-11-23 03:22:00 | DEBUG    | [2026-11-23 00:22:00] Price=229749.5000 HMA=228872.1150 Dir=1 Flow=1.0000 Slope=56.4579
+2026-11-23 03:22:00 | INFO     | [2026-11-23 00:22:00] EXIT SHORT @ 229749.5000 | duración 1m completada (esperando resultado real)
+2026-11-23 03:22:02 | INFO     | Saldo de cuenta obtenido: 3526.33 USD
+2026-11-23 03:22:02 | INFO     |   [DAILY PnL] total=+0.00 USD
+2026-11-23 03:22:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:02 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:03 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:04 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:05 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:06 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:07 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:08 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:09 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:10 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:11 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:12 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:13 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:14 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:15 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:16 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:17 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:18 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:19 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:20 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+2026-11-23 03:22:21 | DEBUG    | Received msg: {"echo_req":{"ticks":"1HZ50V","subscribe":1},"msg_type":"tick","subscription":{"id":"9ea23088-5db7-4
+

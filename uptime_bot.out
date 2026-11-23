@@ -2522,3 +2522,19 @@
 [2026-11-23 00:12:58] LOGS descargados: 200 líneas
 [2026-11-23 00:14:00] OK 200 {"status":"ok","running":true,"mode":"binary"}
 [2026-11-23 00:14:00] LOGS descargados: 200 líneas
+[2026-11-23 00:15:01] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:15:01] LOGS descargados: 20 líneas
+[2026-11-23 00:16:01] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:16:08] LOGS descargados: 92 líneas
+[2026-11-23 00:17:09] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:17:09] LOGS descargados: 155 líneas
+[2026-11-23 00:18:10] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:18:10] LOGS descargados: 200 líneas
+[2026-11-23 00:19:11] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:19:12] LOGS descargados: 200 líneas
+[2026-11-23 00:20:13] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:20:14] LOGS descargados: 200 líneas
+[2026-11-23 00:21:16] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:21:16] LOGS descargados: 200 líneas
+[2026-11-23 00:22:17] ERROR <urlopen error [Errno 101] Network is unreachable>
+[2026-11-23 00:22:22] LOGS descargados: 200 líneas

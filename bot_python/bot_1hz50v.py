@@ -765,8 +765,8 @@ class HMAFlowBot:
             # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
             
-            # Wait a moment for contract to settle, then sync via profit_table
-            await asyncio.sleep(2)
+            # Wait for contract to settle, then sync via profit_table
+            await asyncio.sleep(5)  # wait for Deriv to finalize contract
             await self.update_trades_from_profit_table()
             await self.fetch_balance()
             
@@ -777,6 +777,9 @@ class HMAFlowBot:
                 if last_trade.pnl is not None:
                     pnl_real = last_trade.pnl
                     self._log("info", f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
+                else:
+                    # Fallback: use balance diff if profit_table not updated yet
+                    self._log("warning", f"  [PnL] profit_table not updated yet, trade pnl still null")
             
             # Actualizar martingala y daily_pnl
             state.daily_pnl += pnl_real
