@@ -2538,3 +2538,469 @@
 [2026-11-23 00:21:16] LOGS descargados: 200 líneas
 [2026-11-23 00:22:17] ERROR <urlopen error [Errno 101] Network is unreachable>
 [2026-11-23 00:22:22] LOGS descargados: 200 líneas
+[2026-11-23 00:23:23] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:23:25] LOGS descargados: 200 líneas
+[2026-11-23 00:24:26] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:24:27] LOGS descargados: 74 líneas
+[2026-11-23 00:25:27] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:25:28] LOGS descargados: 142 líneas
+[2026-11-23 00:26:28] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:26:29] LOGS descargados: 200 líneas
+[2026-11-23 00:27:29] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:27:30] LOGS descargados: 200 líneas
+[2026-11-23 00:28:30] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:28:31] LOGS descargados: 200 líneas
+[2026-11-23 00:29:31] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:29:33] LOGS descargados: 200 líneas
+[2026-11-23 00:30:33] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:30:34] LOGS descargados: 200 líneas
+[2026-11-23 00:31:35] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:31:35] LOGS descargados: 200 líneas
+[2026-11-23 00:32:36] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:32:36] LOGS descargados: 200 líneas
+[2026-11-23 00:33:37] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:33:37] LOGS descargados: 200 líneas
+[2026-11-23 00:34:38] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:34:38] LOGS descargados: 200 líneas
+[2026-11-23 00:35:39] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:35:40] LOGS descargados: 200 líneas
+[2026-11-23 00:36:40] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:36:40] LOGS descargados: 200 líneas
+[2026-11-23 00:37:41] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:37:42] LOGS descargados: 200 líneas
+[2026-11-23 00:38:43] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:38:43] LOGS descargados: 200 líneas
+[2026-11-23 00:39:44] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:39:45] LOGS descargados: 200 líneas
+[2026-11-23 00:40:45] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:40:47] LOGS descargados: 200 líneas
+[2026-11-23 00:41:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:41:48] LOGS descargados: 200 líneas
+[2026-11-23 00:42:49] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:42:49] LOGS descargados: 200 líneas
+[2026-11-23 00:43:50] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:43:51] LOGS descargados: 200 líneas
+[2026-11-23 00:44:51] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:44:52] LOGS descargados: 200 líneas
+[2026-11-23 00:45:53] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:45:54] LOGS descargados: 200 líneas
+[2026-11-23 00:46:55] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:46:55] LOGS descargados: 200 líneas
+[2026-11-23 00:47:56] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:47:57] LOGS descargados: 200 líneas
+[2026-11-23 00:48:58] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:48:59] LOGS descargados: 200 líneas
+[2026-11-23 00:50:00] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:50:05] LOGS descargados: 200 líneas
+[2026-11-23 00:51:06] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:51:07] LOGS descargados: 200 líneas
+[2026-11-23 00:52:07] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:52:08] LOGS descargados: 200 líneas
+[2026-11-23 00:53:08] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:53:09] LOGS descargados: 200 líneas
+[2026-11-23 00:54:09] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:54:09] LOGS descargados: 200 líneas
+[2026-11-23 00:55:10] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:55:10] LOGS descargados: 200 líneas
+[2026-11-23 00:56:12] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:56:12] LOGS descargados: 200 líneas
+[2026-11-23 00:57:13] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:57:14] LOGS descargados: 200 líneas
+[2026-11-23 00:58:14] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:58:15] LOGS descargados: 200 líneas
+[2026-11-23 00:59:16] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 00:59:18] LOGS descargados: 200 líneas
+[2026-11-23 01:00:20] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:00:21] LOGS descargados: 200 líneas
+[2026-11-23 01:01:21] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:01:22] LOGS descargados: 200 líneas
+[2026-11-23 01:02:22] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:02:23] LOGS descargados: 200 líneas
+[2026-11-23 01:03:23] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:03:24] LOGS descargados: 200 líneas
+[2026-11-23 01:04:25] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:04:26] LOGS descargados: 200 líneas
+[2026-11-23 01:05:28] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:05:29] LOGS descargados: 200 líneas
+[2026-11-23 01:06:30] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:06:31] LOGS descargados: 200 líneas
+[2026-11-23 01:07:33] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:07:34] LOGS descargados: 200 líneas
+[2026-11-23 01:08:35] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:08:38] LOGS descargados: 200 líneas
+[2026-11-23 01:09:39] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:09:40] LOGS descargados: 200 líneas
+[2026-11-23 01:10:41] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:10:42] LOGS descargados: 200 líneas
+[2026-11-23 01:11:43] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:11:44] LOGS descargados: 200 líneas
+[2026-11-23 01:12:46] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:12:50] LOGS descargados: 200 líneas
+[2026-11-23 01:13:51] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:13:53] LOGS descargados: 200 líneas
+[2026-11-23 01:14:55] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:14:56] LOGS descargados: 200 líneas
+[2026-11-23 01:15:58] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:16:01] LOGS descargados: 200 líneas
+[2026-11-23 01:17:02] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:17:03] LOGS descargados: 200 líneas
+[2026-11-23 01:18:04] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:18:05] LOGS descargados: 200 líneas
+[2026-11-23 01:19:06] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:19:06] LOGS descargados: 200 líneas
+[2026-11-23 01:20:07] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:20:08] LOGS descargados: 200 líneas
+[2026-11-23 01:21:08] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:21:09] LOGS descargados: 200 líneas
+[2026-11-23 01:22:12] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:22:18] LOGS descargados: 200 líneas
+[2026-11-23 01:23:19] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:23:19] LOGS descargados: 200 líneas
+[2026-11-23 01:24:20] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:24:21] LOGS descargados: 200 líneas
+[2026-11-23 01:25:21] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:25:22] LOGS descargados: 200 líneas
+[2026-11-23 01:26:23] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:26:24] LOGS descargados: 200 líneas
+[2026-11-23 01:27:24] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:27:25] LOGS descargados: 200 líneas
+[2026-11-23 01:28:26] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:28:27] LOGS descargados: 200 líneas
+[2026-11-23 01:29:27] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:29:28] LOGS descargados: 200 líneas
+[2026-11-23 01:30:29] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:30:29] LOGS descargados: 200 líneas
+[2026-11-23 01:31:30] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:31:31] LOGS descargados: 200 líneas
+[2026-11-23 01:32:31] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:32:32] LOGS descargados: 200 líneas
+[2026-11-23 01:33:32] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:33:33] LOGS descargados: 200 líneas
+[2026-11-23 01:34:33] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:34:34] LOGS descargados: 200 líneas
+[2026-11-23 01:35:40] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:35:55] LOGS descargados: 200 líneas
+[2026-11-23 01:36:56] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:36:56] LOGS descargados: 200 líneas
+[2026-11-23 01:37:59] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:38:01] LOGS descargados: 200 líneas
+[2026-11-23 01:39:04] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:39:05] LOGS descargados: 200 líneas
+[2026-11-23 01:40:06] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:40:07] LOGS descargados: 200 líneas
+[2026-11-23 01:41:08] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:41:09] LOGS descargados: 200 líneas
+[2026-11-23 01:42:09] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:42:10] LOGS descargados: 200 líneas
+[2026-11-23 01:43:11] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:43:12] LOGS descargados: 200 líneas
+[2026-11-23 01:44:12] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:44:13] LOGS descargados: 200 líneas
+[2026-11-23 01:45:14] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:45:15] LOGS descargados: 200 líneas
+[2026-11-23 01:46:15] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:46:16] LOGS descargados: 200 líneas
+[2026-11-23 01:47:16] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:47:16] LOGS descargados: 200 líneas
+[2026-11-23 01:48:18] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:48:19] LOGS descargados: 200 líneas
+[2026-11-23 01:49:20] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:49:20] LOGS descargados: 200 líneas
+[2026-11-23 01:50:22] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:50:23] LOGS descargados: 200 líneas
+[2026-11-23 01:51:24] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:51:24] LOGS descargados: 200 líneas
+[2026-11-23 01:52:27] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:52:27] LOGS descargados: 200 líneas
+[2026-11-23 01:53:31] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:53:34] LOGS descargados: 200 líneas
+[2026-11-23 01:54:35] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:54:36] LOGS descargados: 200 líneas
+[2026-11-23 01:55:44] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:56:02] LOGS ERROR <urlopen error [Errno 104] Connection reset by peer>
+[2026-11-23 01:57:03] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:57:03] LOGS descargados: 200 líneas
+[2026-11-23 01:58:03] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:58:04] LOGS descargados: 200 líneas
+[2026-11-23 01:59:06] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 01:59:07] LOGS descargados: 200 líneas
+[2026-11-23 02:00:13] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:00:16] LOGS descargados: 200 líneas
+[2026-11-23 02:01:17] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:01:17] LOGS descargados: 200 líneas
+[2026-11-23 02:02:19] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:02:21] LOGS descargados: 200 líneas
+[2026-11-23 02:03:21] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:03:22] LOGS descargados: 200 líneas
+[2026-11-23 02:04:22] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:04:23] LOGS descargados: 200 líneas
+[2026-11-23 02:05:24] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:05:25] LOGS descargados: 200 líneas
+[2026-11-23 02:06:25] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:06:25] LOGS descargados: 200 líneas
+[2026-11-23 02:07:27] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:07:29] LOGS descargados: 200 líneas
+[2026-11-23 02:08:29] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:08:30] LOGS descargados: 200 líneas
+[2026-11-23 02:09:32] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:09:34] LOGS descargados: 200 líneas
+[2026-11-23 02:10:34] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:10:36] LOGS descargados: 200 líneas
+[2026-11-23 02:11:36] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:11:37] LOGS descargados: 200 líneas
+[2026-11-23 02:12:37] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:12:38] LOGS descargados: 200 líneas
+[2026-11-23 02:13:39] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:13:40] LOGS descargados: 200 líneas
+[2026-11-23 02:14:43] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:14:44] LOGS descargados: 200 líneas
+[2026-11-23 02:15:45] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:15:46] LOGS descargados: 200 líneas
+[2026-11-23 02:16:46] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:16:47] LOGS descargados: 200 líneas
+[2026-11-23 02:17:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:17:49] LOGS descargados: 200 líneas
+[2026-11-23 02:18:50] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:18:51] LOGS descargados: 200 líneas
+[2026-11-23 02:19:51] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:19:52] LOGS descargados: 200 líneas
+[2026-11-23 02:20:53] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:20:53] LOGS descargados: 200 líneas
+[2026-11-23 02:21:54] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:21:54] LOGS descargados: 200 líneas
+[2026-11-23 02:22:55] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:22:58] LOGS descargados: 200 líneas
+[2026-11-23 02:23:58] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:23:59] LOGS descargados: 200 líneas
+[2026-11-23 02:25:00] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:25:01] LOGS descargados: 200 líneas
+[2026-11-23 02:26:02] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:26:02] LOGS descargados: 200 líneas
+[2026-11-23 02:27:06] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:27:07] LOGS descargados: 200 líneas
+[2026-11-23 02:28:07] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:28:08] LOGS descargados: 200 líneas
+[2026-11-23 02:29:08] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:29:09] LOGS descargados: 200 líneas
+[2026-11-23 02:30:10] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:30:11] LOGS descargados: 200 líneas
+[2026-11-23 02:31:11] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:31:12] LOGS descargados: 200 líneas
+[2026-11-23 02:32:13] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:32:16] LOGS descargados: 200 líneas
+[2026-11-23 02:33:16] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:33:17] LOGS descargados: 200 líneas
+[2026-11-23 02:34:18] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:34:19] LOGS descargados: 200 líneas
+[2026-11-23 02:35:22] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:35:23] LOGS descargados: 200 líneas
+[2026-11-23 02:36:24] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:36:24] LOGS descargados: 200 líneas
+[2026-11-23 02:37:26] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:37:27] LOGS descargados: 200 líneas
+[2026-11-23 02:38:28] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:38:29] LOGS descargados: 200 líneas
+[2026-11-23 02:39:33] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:39:36] LOGS descargados: 200 líneas
+[2026-11-23 02:40:37] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:40:37] LOGS descargados: 200 líneas
+[2026-11-23 02:41:38] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:41:38] LOGS descargados: 200 líneas
+[2026-11-23 02:42:41] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:42:42] LOGS descargados: 200 líneas
+[2026-11-23 02:43:43] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:43:43] LOGS descargados: 200 líneas
+[2026-11-23 02:44:44] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:44:45] LOGS descargados: 200 líneas
+[2026-11-23 02:45:45] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:45:45] LOGS descargados: 200 líneas
+[2026-11-23 02:46:46] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:46:47] LOGS descargados: 200 líneas
+[2026-11-23 02:47:47] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:47:47] LOGS descargados: 200 líneas
+[2026-11-23 02:48:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:48:48] LOGS descargados: 200 líneas
+[2026-11-23 02:49:49] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:49:49] LOGS descargados: 200 líneas
+[2026-11-23 02:50:49] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:50:50] LOGS descargados: 200 líneas
+[2026-11-23 02:51:50] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:51:51] LOGS descargados: 200 líneas
+[2026-11-23 02:52:51] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:52:51] LOGS descargados: 200 líneas
+[2026-11-23 02:53:53] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:53:55] LOGS descargados: 200 líneas
+[2026-11-23 02:54:55] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:54:55] LOGS descargados: 200 líneas
+[2026-11-23 02:55:56] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:55:57] LOGS descargados: 200 líneas
+[2026-11-23 02:56:58] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:56:58] LOGS descargados: 200 líneas
+[2026-11-23 02:58:04] ERROR <urlopen error [Errno 104] Connection reset by peer>
+[2026-11-23 02:58:06] LOGS descargados: 200 líneas
+[2026-11-23 02:59:09] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 02:59:09] LOGS descargados: 200 líneas
+[2026-11-23 03:00:10] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:00:11] LOGS descargados: 200 líneas
+[2026-11-23 03:01:12] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:01:13] LOGS descargados: 200 líneas
+[2026-11-23 03:02:13] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:02:13] LOGS descargados: 200 líneas
+[2026-11-23 03:03:14] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:03:14] LOGS descargados: 200 líneas
+[2026-11-23 03:04:15] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:04:17] LOGS descargados: 200 líneas
+[2026-11-23 03:05:17] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:05:18] LOGS descargados: 200 líneas
+[2026-11-23 03:06:18] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:06:18] LOGS descargados: 200 líneas
+[2026-11-23 03:07:19] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:07:19] LOGS descargados: 200 líneas
+[2026-11-23 03:08:19] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:08:20] LOGS descargados: 200 líneas
+[2026-11-23 03:09:21] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:09:21] LOGS descargados: 200 líneas
+[2026-11-23 03:10:22] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:10:23] LOGS descargados: 200 líneas
+[2026-11-23 03:11:28] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:11:31] LOGS descargados: 200 líneas
+[2026-11-23 03:12:32] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:12:32] LOGS descargados: 200 líneas
+[2026-11-23 03:13:34] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:13:34] LOGS descargados: 200 líneas
+[2026-11-23 03:14:35] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:14:36] LOGS descargados: 200 líneas
+[2026-11-23 03:15:37] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:15:38] LOGS descargados: 200 líneas
+[2026-11-23 03:16:39] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:16:39] LOGS descargados: 200 líneas
+[2026-11-23 03:17:40] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:17:40] LOGS descargados: 200 líneas
+[2026-11-23 03:18:42] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:18:42] LOGS descargados: 200 líneas
+[2026-11-23 03:19:42] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:19:43] LOGS descargados: 200 líneas
+[2026-11-23 03:20:45] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:20:47] LOGS descargados: 200 líneas
+[2026-11-23 03:21:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:21:48] LOGS descargados: 200 líneas
+[2026-11-23 03:22:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:22:49] LOGS descargados: 200 líneas
+[2026-11-23 03:23:49] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:23:50] LOGS descargados: 200 líneas
+[2026-11-23 03:24:50] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:24:53] LOGS descargados: 200 líneas
+[2026-11-23 03:25:53] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:25:54] LOGS descargados: 200 líneas
+[2026-11-23 03:26:55] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:26:55] LOGS descargados: 200 líneas
+[2026-11-23 03:27:56] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:27:56] LOGS descargados: 200 líneas
+[2026-11-23 03:28:57] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:28:57] LOGS descargados: 200 líneas
+[2026-11-23 03:29:58] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:29:58] LOGS descargados: 200 líneas
+[2026-11-23 03:30:58] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:30:59] LOGS descargados: 200 líneas
+[2026-11-23 03:31:59] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:32:01] LOGS descargados: 200 líneas
+[2026-11-23 03:33:01] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:33:02] LOGS descargados: 200 líneas
+[2026-11-23 03:34:03] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:34:04] LOGS descargados: 200 líneas
+[2026-11-23 03:35:04] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:35:05] LOGS descargados: 200 líneas
+[2026-11-23 03:36:06] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:36:07] LOGS descargados: 200 líneas
+[2026-11-23 03:37:07] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:37:07] LOGS descargados: 200 líneas
+[2026-11-23 03:38:08] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:38:08] LOGS descargados: 200 líneas
+[2026-11-23 03:39:09] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:39:10] LOGS descargados: 200 líneas
+[2026-11-23 03:40:10] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:40:10] LOGS descargados: 200 líneas
+[2026-11-23 03:41:11] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:41:11] LOGS descargados: 200 líneas
+[2026-11-23 03:42:12] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:42:12] LOGS descargados: 200 líneas
+[2026-11-23 03:43:12] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:43:13] LOGS descargados: 200 líneas
+[2026-11-23 03:44:13] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:44:14] LOGS descargados: 200 líneas
+[2026-11-23 03:45:14] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:45:14] LOGS descargados: 200 líneas
+[2026-11-23 03:46:15] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:46:15] LOGS descargados: 200 líneas
+[2026-11-23 03:47:16] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:47:16] LOGS descargados: 200 líneas
+[2026-11-23 03:48:17] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:48:17] LOGS descargados: 200 líneas
+[2026-11-23 03:49:18] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:49:19] LOGS descargados: 200 líneas
+[2026-11-23 03:50:19] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:50:19] LOGS descargados: 200 líneas
+[2026-11-23 03:51:20] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:51:20] LOGS descargados: 200 líneas
+[2026-11-23 03:52:21] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:52:21] LOGS descargados: 200 líneas
+[2026-11-23 03:53:21] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:53:22] LOGS descargados: 200 líneas
+[2026-11-23 03:54:22] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:54:23] LOGS descargados: 200 líneas
+[2026-11-23 03:55:23] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:55:25] LOGS descargados: 200 líneas
+[2026-11-23 03:56:25] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:56:25] LOGS descargados: 200 líneas
+[2026-11-23 03:57:26] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:57:26] LOGS descargados: 200 líneas
+[2026-11-23 03:58:27] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:58:28] LOGS descargados: 200 líneas
+[2026-11-23 03:59:28] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 03:59:29] LOGS descargados: 200 líneas
+[2026-11-23 04:00:29] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:00:30] LOGS descargados: 200 líneas
+[2026-11-23 04:01:30] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:01:31] LOGS descargados: 200 líneas
+[2026-11-23 04:02:32] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:02:32] LOGS descargados: 200 líneas
+[2026-11-23 04:03:32] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:03:33] LOGS descargados: 200 líneas
+[2026-11-23 04:04:34] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:04:34] LOGS descargados: 200 líneas
+[2026-11-23 04:05:34] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:05:35] LOGS descargados: 200 líneas
+[2026-11-23 04:06:35] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:06:35] LOGS descargados: 200 líneas
+[2026-11-23 04:07:36] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:07:36] LOGS descargados: 200 líneas
+[2026-11-23 04:08:37] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:08:39] LOGS descargados: 200 líneas
+[2026-11-23 04:09:40] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:09:40] LOGS descargados: 200 líneas
+[2026-11-23 04:10:41] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:10:41] LOGS descargados: 200 líneas
+[2026-11-23 04:11:41] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:11:42] LOGS descargados: 200 líneas
+[2026-11-23 04:12:43] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:12:43] LOGS descargados: 200 líneas
+[2026-11-23 04:13:43] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:13:44] LOGS descargados: 200 líneas
+[2026-11-23 04:14:44] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:14:45] LOGS descargados: 200 líneas
+[2026-11-23 04:15:46] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:15:48] LOGS descargados: 200 líneas
+[2026-11-23 04:16:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:16:48] LOGS descargados: 200 líneas
+[2026-11-23 04:17:48] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:17:49] LOGS descargados: 200 líneas
+[2026-11-23 04:18:49] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:18:49] LOGS descargados: 200 líneas
+[2026-11-23 04:19:50] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:19:51] LOGS descargados: 200 líneas
+[2026-11-23 04:20:52] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:20:53] LOGS descargados: 200 líneas
+[2026-11-23 04:21:53] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:21:54] LOGS descargados: 200 líneas
+[2026-11-23 04:22:54] OK 200 {"status":"ok","running":true,"mode":"binary"}
+[2026-11-23 04:22:54] LOGS descargados: 200 líneas
