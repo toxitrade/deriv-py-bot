@@ -118,9 +118,9 @@ WARMUP_CANDLES = 150
 # ============================================================================
 # LOGGING
 # ============================================================================
-def setup_logging() -> logging.Logger:
+def setup_logging(level: str = "INFO") -> logging.Logger:
     logger = logging.getLogger("1hz50v_bot")
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(getattr(logging, level.upper(), logging.DEBUG))
     logger.handlers.clear()
 
     fmt = logging.Formatter(
@@ -141,6 +141,7 @@ def setup_logging() -> logging.Logger:
     return logger
 
 
+# Initial setup with default level (will be overridden in bot __init__)
 log = setup_logging()
 
 
@@ -334,6 +335,12 @@ class HMAFlowBot:
         self.public_ws = None
         self.trading_ws = None
         self.trading_ws_url = None
+        
+        # Reconfigurar logging con nivel del config
+        global log
+        log_level = cfg.get("log_level", "INFO")
+        log = setup_logging(log_level)
+        self._log("info", f"Log level set to {log_level}")
 
     # ------------------------------------------------------------------
     # Logging helper

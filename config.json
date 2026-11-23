@@ -13,5 +13,6 @@
   "martingale_multiplier": 2.0,
   "max_martingale_steps": 3,
   "max_stake": 50.0,
-  "cooldown_seconds": 30
+  "cooldown_seconds": 30,
+  "log_level": "DEBUG"
 }
