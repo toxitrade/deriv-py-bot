@@ -764,20 +764,18 @@ class HMAFlowBot:
             # NO cerrar manualmente - dejar que Deriv cierre al vencer
             # Sincronizar balance y obtener profit real del contrato via profit_table
             state.trades_today += 1
-            # PnL real = diferencia de balance (fuente principal)
-            balance_before = state.balance
-            await self.fetch_balance()
-            pnl_real = state.balance - balance_before
             
-            # Actualizar último trade con PnL real
+            # Wait a moment for contract to settle, then sync via profit_table
+            await asyncio.sleep(2)
+            await self.update_trades_from_profit_table()
+            await self.fetch_balance()
+            
+            # Get PnL from the closed trade (updated by profit_table sync)
+            pnl_real = 0.0
             if state.trades:
                 last_trade = state.trades[-1]
-                if last_trade.pnl is None:
-                    last_trade.exit_time = now
-                    last_trade.exit_price = price
-                    last_trade.pnl = pnl_real
-                    last_trade.win = pnl_real > 0
-                    save_trade_to_csv(last_trade)
+                if last_trade.pnl is not None:
+                    pnl_real = last_trade.pnl
                     self._log("info", f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
             
             # Actualizar martingala y daily_pnl
@@ -793,9 +791,6 @@ class HMAFlowBot:
             
             state.last_trade_exit_time = time.time()
             self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
-            
-            # Async: actualizar trades desde profit_table (no bloquea)
-            asyncio.create_task(self.update_trades_from_profit_table())
             
             self._close_position()
             return
