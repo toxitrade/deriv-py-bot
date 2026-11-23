@@ -712,6 +712,7 @@ class HMAFlowBot:
         state.last_price = candle["close"]  # usar close como precio de referencia
 
         if len(self.candles) < WARMUP_CANDLES:
+            self._log("debug", f"Warmup: {len(self.candles)}/{WARMUP_CANDLES} candles")
             return
 
         # Extraer series de precios de cierre para indicadores
@@ -736,6 +737,8 @@ class HMAFlowBot:
         sys.stdout.flush()
 
         price = candle["close"]
+
+        self._log("debug", f"[{now}] Price={price:.4f} HMA={hma_series[-1]:.4f} Dir={d} Flow={f:.4f} Slope={hma_series[-1]-hma_series[-2]:.4f}")
 
         # ---- Si hay posición abierta, revisar salida por duración ----
         if state.position is not None:
@@ -800,11 +803,13 @@ class HMAFlowBot:
         
         # COOLDOWN: esperar entre trades (solo si ya hubo trades)
         if state.trades_today > 0 and time.time() - state.last_trade_exit_time < self.cooldown_seconds:
+            self._log("debug", f"Cooldown active: {self.cooldown_seconds - (time.time() - state.last_trade_exit_time):.0f}s remaining")
             return
         
         # PAUSA PROTECTORA: si 3 losses consecutivas, pausa 5 min
         if self.consecutive_losses >= 3:
             if time.time() - state.last_trade_exit_time < 300:  # 5 min
+                self._log("debug", f"Pause active: {300 - (time.time() - state.last_trade_exit_time):.0f}s remaining")
                 return
             else:
                 self.consecutive_losses = 0  # Reset tras pausa
@@ -834,6 +839,12 @@ class HMAFlowBot:
         # Martingala simple: stake = base * 2^step, limitado a max_stake
         stake_efectivo = round(min(self.stake * (2 ** state.martingale_step), self.max_stake), 2)
         
+        # Debug logging for signal conditions
+        self._log("debug", f"Signal check: d={d} flow_up={flow_strong_up} flow_down={flow_strong_down} "
+                         f"price_above={price_above_hma} price_below={price_below_hma} "
+                         f"hma_flat={hma_flat} price_close={price_too_close_hma} "
+                         f"slope={hma_slope:.4f} dist={price_hma_dist:.6f}")
+
         # Señal de alta precisión: Flow + HMA slope + Precio vs HMA + distancia HMA
         # INVERTIDO: HMA up -> PUT, HMA down -> CALL (estrategia contrarian probada en backtest)
         if d == 1 and flow_strong_up and price_above_hma and not hma_flat and not price_too_close_hma:
@@ -949,6 +960,7 @@ class HMAFlowBot:
                 while state.running:
                     try:
                         raw = await asyncio.wait_for(self.public_ws.recv(), timeout=60)
+                        self._log("debug", f"Received msg: {raw[:100]}")
                     except asyncio.TimeoutError:
                         # Send ping to check connection
                         try:
@@ -960,7 +972,9 @@ class HMAFlowBot:
                     msg = json.loads(raw)
                     if msg.get("msg_type") == "candle":
                         candle = msg.get("candle", {})
+                        self._log("debug", f"Candle received: {candle}")
                         if candle.get("is_final"):  # solo procesar velas cerradas
+                            self._log("info", f"Processing final candle: {candle}")
                             await self.on_candle(candle)
                     elif msg.get("msg_type") == "error":
                         self._log("error", f"[public] {msg['error']}")
