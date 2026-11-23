@@ -952,13 +952,15 @@ class HMAFlowBot:
                 await self.connect_trading()
                 reconnect_delay = RECONNECT_BASE_DELAY
 
-                # Keepalive task
+                # Keepalive task - ping both WS every 15 seconds
                 async def keepalive():
-                    while state.running and self.public_ws and not self.public_ws.closed:
+                    while state.running:
                         try:
-                            await asyncio.sleep(30)
+                            await asyncio.sleep(15)
                             if self.public_ws and not self.public_ws.closed:
                                 await self.public_ws.ping()
+                            if self.trading_ws and not self.trading_ws.closed:
+                                await self.trading_ws.ping()
                         except Exception:
                             break
 
@@ -966,7 +968,7 @@ class HMAFlowBot:
 
                 while state.running:
                     try:
-                        raw = await asyncio.wait_for(self.public_ws.recv(), timeout=60)
+                        raw = await asyncio.wait_for(self.public_ws.recv(), timeout=45)
                         self._log("debug", f"Received msg: {raw[:100]}")
                     except asyncio.TimeoutError:
                         # Send ping to check connection
