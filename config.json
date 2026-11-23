@@ -2,7 +2,7 @@
   "DERIV_BOT_MODE": "binary",
   "DERIV_TOKEN": "config_from_env",
   "DERIV_SYMBOL": "1HZ50V",
-  "DERIV_STAKE": 0.35,
+  "DERIV_STAKE": 0.50,
   "DERIV_DEMO": true,
   "DERIV_DURATION": 1,
   "DERIV_DURATION_UNIT": "m",

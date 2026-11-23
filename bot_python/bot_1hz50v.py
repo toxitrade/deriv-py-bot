@@ -562,6 +562,7 @@ class HMAFlowBot:
                                 t.win = float(profit) > 0
                                 if exit_time:
                                     t.exit_time = exit_time
+                                t._pnl_applied = False
                                 save_trade_to_csv(t)
                                 self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
                                 updated = True
@@ -734,6 +735,28 @@ class HMAFlowBot:
             self._log("debug", f"Warmup: {len(self.candles)}/{WARMUP_CANDLES} candles")
             return
 
+        # Sincronizar trades pendientes desde profit_table en cada ciclo
+        # (dar múltiples oportunidades a Deriv de publicar el resultado real)
+        pending = [t for t in state.trades if t.pnl is None and t.contract_id]
+        if pending:
+            await self.update_trades_from_profit_table()
+            await self.fetch_balance()
+            still_pending = [t for t in state.trades if t.pnl is None and t.contract_id]
+            if not still_pending:
+                # Todos los trades pendientes se resolvieron, actualizar martingale/daily_pnl
+                for t in state.trades:
+                    if t.pnl is not None and getattr(t, '_pnl_applied', False) is False:
+                        state.daily_pnl += t.pnl
+                        if t.pnl > 0:
+                            state.martingale_step = 0
+                            self.consecutive_losses = 0
+                        else:
+                            state.martingale_step += 1
+                            self.consecutive_losses += 1
+                        t._pnl_applied = True
+                state.last_trade_exit_time = time.time()
+                self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
+
         # Extraer series de precios de cierre para indicadores
         close_prices = [c["close"] for c in self.candles]
         hma_series = hma(close_prices, self.hma_period)
@@ -809,7 +832,8 @@ class HMAFlowBot:
                 self.consecutive_losses += 1
                 if state.martingale_step >= self.max_martingale_steps:
                     state.martingale_step = 0
-            
+            last_trade._pnl_applied = True
+
             state.last_trade_exit_time = time.time()
             self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
             
