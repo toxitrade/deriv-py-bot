@@ -9,7 +9,7 @@ services:
     autoDeploy: "no"
     envVars:
       - key: DERIV_STAKE
-        value: 10.0
+        value: 0.50
       - key: DERIV_DEMO
         value: true
       - key: DERIV_HMA_PERIOD
