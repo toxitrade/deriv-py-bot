@@ -384,7 +384,7 @@ def _build_config() -> dict:
         "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.3")),
         "account_id": os.environ.get("DERIV_ACCOUNT_ID", ""),
         "app_id": os.environ.get("DERIV_APP_ID", ""),
-        "log_level": os.environ.get("DERIV_LOG_LEVEL", "INFO"),
+        "log_level": _get_env("DERIV_LOG_LEVEL", "INFO"),
         "log_file": _get_env("DERIV_LOG_FILE", "bot_1hz50v.log" if mode == "binary" else "multiplier_bot.log"),
         "token": os.environ.get("DERIV_TOKEN", ""),
     }
@@ -523,7 +523,7 @@ def _build_config() -> dict:
         "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.3")),
         "account_id": os.environ.get("DERIV_ACCOUNT_ID", ""),
         "app_id": os.environ.get("DERIV_APP_ID", ""),
-        "log_level": os.environ.get("DERIV_LOG_LEVEL", "INFO"),
+        "log_level": _get_env("DERIV_LOG_LEVEL", "INFO"),
         "log_file": _get_env("DERIV_LOG_FILE", "bot_1hz50v.log" if mode == "binary" else "multiplier_bot.log"),
         "token": os.environ.get("DERIV_TOKEN", ""),
     }
