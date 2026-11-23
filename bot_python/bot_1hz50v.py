@@ -246,6 +246,7 @@ class BotState:
     open_side: Optional[str] = None
     daily_pnl: float = 0.0
     balance: float = 0.0  # saldo obtenido de la cuenta de Deriv
+    balance_before_entry: float = 0.0  # saldo justo antes de entrar al trade actual
     trades_today: int = 0
     martingale_step: int = 0  # paso actual de martingala (0 = apuesta base)
     last_trade_exit_time: float = 0  # timestamp último cierre para cooldown
@@ -813,14 +814,23 @@ class HMAFlowBot:
                     pnl_real = last_trade.pnl
                     self._log("info", f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
                 else:
-                    # Fallback: use balance diff if profit_table not updated yet
-                    # We need to track balance before/after - but we already fetched balance
-                    # For now just log warning and wait for next cycle
-                    self._log("warning", f"  [PnL] profit_table not updated yet, trade pnl still null")
-                    # Don't update martingale/daily_pnl yet - wait for profit_table
-                    self._log("info", f"  [PnL] Deferring martingale/PnL update until profit_table sync")
-                    self._close_position()
-                    return
+                    # Fallback: diff de balance entre antes y después del trade
+                    await self.fetch_balance()
+                    after = state.balance
+                    before = state.balance_before_entry or after
+                    pnl_real = round(after - before, 2)
+                    if pnl_real != 0:
+                        last_trade.pnl = pnl_real
+                        last_trade.win = pnl_real > 0
+                        last_trade.exit_price = last_trade.entry_price + pnl_real if last_trade.side == "CALL" else last_trade.entry_price - pnl_real
+                        last_trade.exit_time = now_str()
+                        last_trade._pnl_applied = False
+                        self._log("info", f"  [BALANCE DIFF PnL] {side_txt} stake={state.open_stake:.2f} before={before:.2f} after={after:.2f} pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
+                    else:
+                        self._log("warning", f"  [PnL] profit_table no respondió y balance sin cambios, trade pnl aún null")
+                        self._log("info", f"  [PnL] Deferring martingale/PnL update until profit_table sync")
+                        self._close_position()
+                        return
             
             # Actualizar martingala y daily_pnl
             state.daily_pnl += pnl_real
@@ -944,6 +954,9 @@ class HMAFlowBot:
             state.trades_today += 1
             if state.trades:
                 state.trades[-1].contract_id = contract_id
+            # Guardar balance antes del trade para diff de PnL si profit_table falla
+            await self.fetch_balance()
+            state.balance_before_entry = state.balance
             self._log("info",
                       f"  [TRADE] id={contract_id} type={contract_type} "
                       f"buy_price={buy.get('buy_price')} "
