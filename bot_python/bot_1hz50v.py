@@ -376,7 +376,7 @@ class HMAFlowBot:
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_candles(self) -> None:
-        """Cargar historial de velas 1m y suscribirse a velas en tiempo real."""
+        """Cargar historial de velas 1m y suscribirse a ticks en tiempo real (más estable)."""
         # 1) Cargar historial de velas 1m para warmup
         hist_req = {
             "ticks_history": self.symbol,
@@ -407,16 +407,14 @@ class HMAFlowBot:
         else:
             self._log("warn", "No se pudo cargar historial de velas")
 
-        # 2) Suscribirse a velas 1m en tiempo real - usar formato correcto de Deriv API
-        # Para API pública: https://developers.deriv.com/api-reference/#subscribe-to-candles
+        # 2) Suscribirse a TICKS en tiempo real (más estable que candles)
+        # Construiremos velas 1m desde los ticks
         req = {
-            "candles": self.symbol,
-            "subscribe": 1,
-            "granularity": 60,
-            "style": "candles"
+            "ticks": self.symbol,
+            "subscribe": 1
         }
         await self._send(self.public_ws, req)
-        self._log("info", f"Suscrito a velas 1m en tiempo real de {self.symbol}")
+        self._log("info", f"Suscrito a ticks en tiempo real de {self.symbol}")
 
     async def connect_trading(self) -> None:
         if not self.token:
@@ -968,6 +966,10 @@ class HMAFlowBot:
 
                 keepalive_task = asyncio.create_task(keepalive())
 
+                # Tick buffer for building 1m candles
+                current_candle = None
+                last_candle_time = 0
+
                 while state.running:
                     try:
                         raw = await asyncio.wait_for(self.public_ws.recv(), timeout=45)
@@ -981,10 +983,37 @@ class HMAFlowBot:
                             self._log("warning", "Ping failed, connection likely dead")
                             break
                     msg = json.loads(raw)
-                    if msg.get("msg_type") == "candle":
+                    if msg.get("msg_type") == "tick":
+                        tick = msg.get("tick", {})
+                        price = tick.get("quote")
+                        epoch = tick.get("epoch")
+                        if price is not None and epoch is not None:
+                            # Build 1m candles from ticks
+                            candle_time = epoch // 60 * 60  # floor to minute
+                            if candle_time != last_candle_time:
+                                if current_candle is not None:
+                                    # Finalize previous candle
+                                    self._log("debug", f"Finalizing candle: {current_candle}")
+                                    await self.on_candle(current_candle)
+                                # Start new candle
+                                current_candle = {
+                                    "epoch": candle_time,
+                                    "open": price,
+                                    "high": price,
+                                    "low": price,
+                                    "close": price
+                                }
+                                last_candle_time = candle_time
+                            else:
+                                # Update current candle
+                                current_candle["high"] = max(current_candle["high"], price)
+                                current_candle["low"] = min(current_candle["low"], price)
+                                current_candle["close"] = price
+                    elif msg.get("msg_type") == "candle":
+                        # Also handle direct candle messages if they arrive
                         candle = msg.get("candle", {})
                         self._log("debug", f"Candle received: {candle}")
-                        if candle.get("is_final"):  # solo procesar velas cerradas
+                        if candle.get("is_final"):
                             self._log("info", f"Processing final candle: {candle}")
                             await self.on_candle(candle)
                     elif msg.get("msg_type") == "error":

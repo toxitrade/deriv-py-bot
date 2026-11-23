@@ -148627,3 +148627,109 @@
 2026-11-23 02:56:19 | INFO     | WebSocket de trading autenticado conectado
 2026-11-23 02:56:19 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
 
+[2026-11-22 23:58:40] 2026-11-23 02:47:54 | INFO     | Log level set to DEBUG
+2026-11-23 02:47:54 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:47:54 | INFO     | WebSocket público conectado
+2026-11-23 02:47:55 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=227819.8600)
+2026-11-23 02:47:55 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:47:55 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:47:56 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:47:56 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:47:56 | INFO     | Saldo inicial de sesión: 3531.23 USD
+2026-11-23 02:49:55 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 02:50:00 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:50:00 | INFO     | WebSocket público conectado
+2026-11-23 02:50:00 | INFO     | Historial cargado: 300 velas 1m de 1HZ50V (última close=228127.9200)
+2026-11-23 02:50:01 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:50:01 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:50:01 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:50:01 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:52:01 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 02:52:06 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:52:06 | INFO     | WebSocket público conectado
+2026-11-23 02:52:06 | INFO     | Historial cargado: 450 velas 1m de 1HZ50V (última close=228314.4300)
+2026-11-23 02:52:06 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:52:07 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:52:07 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:52:07 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:54:06 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 02:54:11 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:54:12 | INFO     | WebSocket público conectado
+2026-11-23 02:54:12 | INFO     | Historial cargado: 600 velas 1m de 1HZ50V (última close=228292.7800)
+2026-11-23 02:54:12 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:54:12 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:54:13 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:54:13 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:56:12 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 02:56:17 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:56:18 | INFO     | WebSocket público conectado
+2026-11-23 02:56:18 | INFO     | Historial cargado: 750 velas 1m de 1HZ50V (última close=228488.6600)
+2026-11-23 02:56:18 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:56:18 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:56:19 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:56:19 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:58:18 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 02:58:23 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:58:23 | INFO     | WebSocket público conectado
+2026-11-23 02:58:23 | INFO     | Historial cargado: 900 velas 1m de 1HZ50V (última close=228453.9300)
+2026-11-23 02:58:24 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:58:24 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:58:24 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:58:25 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+
+[2026-11-22 23:59:40] 2026-11-23 02:58:55 | INFO     | Log level set to DEBUG
+2026-11-23 02:58:55 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:58:55 | INFO     | WebSocket público conectado
+2026-11-23 02:58:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=228661.2300)
+2026-11-23 02:58:56 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:58:56 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:58:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:58:57 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:58:57 | INFO     | Saldo inicial de sesión: 3531.23 USD
+
+[2026-11-23 00:00:41] 2026-11-23 02:58:55 | INFO     | Log level set to DEBUG
+2026-11-23 02:58:55 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:58:55 | INFO     | WebSocket público conectado
+2026-11-23 02:58:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=228661.2300)
+2026-11-23 02:58:56 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:58:56 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:58:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:58:57 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:58:57 | INFO     | Saldo inicial de sesión: 3531.23 USD
+
+[2026-11-23 00:01:43] 2026-11-23 02:58:55 | INFO     | Log level set to DEBUG
+2026-11-23 02:58:55 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:58:55 | INFO     | WebSocket público conectado
+2026-11-23 02:58:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=228661.2300)
+2026-11-23 02:58:56 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:58:56 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:58:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:58:57 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:58:57 | INFO     | Saldo inicial de sesión: 3531.23 USD
+2026-11-23 03:00:56 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:01:01 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:01:01 | INFO     | WebSocket público conectado
+2026-11-23 03:01:02 | INFO     | Historial cargado: 300 velas 1m de 1HZ50V (última close=228513.1200)
+2026-11-23 03:01:02 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 03:01:02 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:01:03 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:01:03 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+
+[2026-11-23 00:02:43] 2026-11-23 02:58:55 | INFO     | Log level set to DEBUG
+2026-11-23 02:58:55 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 02:58:55 | INFO     | WebSocket público conectado
+2026-11-23 02:58:56 | INFO     | Historial cargado: 150 velas 1m de 1HZ50V (última close=228661.2300)
+2026-11-23 02:58:56 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 02:58:56 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 02:58:57 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 02:58:57 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+2026-11-23 02:58:57 | INFO     | Saldo inicial de sesión: 3531.23 USD
+2026-11-23 03:00:56 | ERROR    | Conexión perdida: no close frame received or sent. Reconectando en 5s...
+2026-11-23 03:01:01 | INFO     | Conectando a WebSocket público (wss://api.derivws.com/trading/v1/options/ws/public)...
+2026-11-23 03:01:01 | INFO     | WebSocket público conectado
+2026-11-23 03:01:02 | INFO     | Historial cargado: 300 velas 1m de 1HZ50V (última close=228513.1200)
+2026-11-23 03:01:02 | INFO     | Suscrito a velas 1m en tiempo real de 1HZ50V
+2026-11-23 03:01:02 | INFO     | Conectando a WebSocket de trading (OTP)...
+2026-11-23 03:01:03 | INFO     | WebSocket de trading autenticado conectado
+2026-11-23 03:01:03 | INFO     | Saldo de cuenta obtenido: 3531.23 USD
+
