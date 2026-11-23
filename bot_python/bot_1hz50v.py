@@ -360,7 +360,12 @@ class HMAFlowBot:
     async def connect_public(self) -> None:
         public_ws_url = "wss://api.derivws.com/trading/v1/options/ws/public"
         self._log("info", f"Conectando a WebSocket público ({public_ws_url})...")
-        self.public_ws = await websockets.connect(public_ws_url)
+        self.public_ws = await websockets.connect(
+            public_ws_url,
+            ping_interval=20,  # enviar ping cada 20s
+            ping_timeout=10,   # timeout de pong 10s
+            close_timeout=10
+        )
         self._log("info", "WebSocket público conectado")
 
     async def subscribe_candles(self) -> None:
@@ -413,7 +418,12 @@ class HMAFlowBot:
             self._log("error", "No se pudo obtener URL de trading vía OTP")
             return
         self._log("info", "Conectando a WebSocket de trading (OTP)...")
-        self.trading_ws = await websockets.connect(otp_url)
+        self.trading_ws = await websockets.connect(
+            otp_url,
+            ping_interval=20,
+            ping_timeout=10,
+            close_timeout=10
+        )
         self.trading_ws_url = otp_url
         self._log("info", "WebSocket de trading autenticado conectado")
         await self.fetch_balance()
@@ -924,11 +934,29 @@ class HMAFlowBot:
                 await self.connect_trading()
                 reconnect_delay = RECONNECT_BASE_DELAY
 
+                # Keepalive task
+                async def keepalive():
+                    while state.running and self.public_ws and not self.public_ws.closed:
+                        try:
+                            await asyncio.sleep(30)
+                            if self.public_ws and not self.public_ws.closed:
+                                await self.public_ws.ping()
+                        except Exception:
+                            break
+
+                keepalive_task = asyncio.create_task(keepalive())
+
                 while state.running:
                     try:
-                        raw = await asyncio.wait_for(self.public_ws.recv(), timeout=30)
+                        raw = await asyncio.wait_for(self.public_ws.recv(), timeout=60)
                     except asyncio.TimeoutError:
-                        continue
+                        # Send ping to check connection
+                        try:
+                            await self.public_ws.ping()
+                            continue
+                        except Exception:
+                            self._log("warning", "Ping failed, connection likely dead")
+                            break
                     msg = json.loads(raw)
                     if msg.get("msg_type") == "candle":
                         candle = msg.get("candle", {})
