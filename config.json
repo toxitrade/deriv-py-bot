@@ -2,7 +2,7 @@
   "mode": "binary",
   "token": "config_from_env",
   "symbol": "1HZ50V",
-  "stake": 10.0,
+  "stake": 0.35,
   "demo": true,
   "duration": 1,
   "duration_unit": "m",
