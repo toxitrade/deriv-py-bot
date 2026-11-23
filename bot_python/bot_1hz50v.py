@@ -407,11 +407,13 @@ class HMAFlowBot:
         else:
             self._log("warn", "No se pudo cargar historial de velas")
 
-        # 2) Suscribirse a velas 1m en tiempo real
+        # 2) Suscribirse a velas 1m en tiempo real - usar formato correcto de Deriv API
+        # Para API pública: https://developers.deriv.com/api-reference/#subscribe-to-candles
         req = {
             "candles": self.symbol,
             "subscribe": 1,
             "granularity": 60,
+            "style": "candles"
         }
         await self._send(self.public_ws, req)
         self._log("info", f"Suscrito a velas 1m en tiempo real de {self.symbol}")
