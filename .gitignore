@@ -7,5 +7,6 @@ out/
 progress.log
 *.log
 *.csv
+*.jsonl
 __pycache__/
 bot_python/.env
