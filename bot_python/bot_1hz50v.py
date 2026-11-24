@@ -833,7 +833,8 @@ class HMAFlowBot:
                         return
             
             # Actualizar martingala y daily_pnl
-            state.daily_pnl += pnl_real
+            # daily_pnl siempre desde saldo real de Deriv (fuente de verdad)
+            state.daily_pnl = round(state.balance - (state.session_start_balance or state.balance), 2)
             if pnl_real > 0:
                 state.martingale_step = 0
                 self.consecutive_losses = 0
