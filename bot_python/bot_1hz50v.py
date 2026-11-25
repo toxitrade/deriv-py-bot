@@ -267,34 +267,6 @@ class BotState:
 state = BotState()
 
 
-# ============================================================================
-# PERSISTENCIA (CSV de trades)
-# ============================================================================
-TRADES_CSV = "trades_1hz50v.csv"
-
-
-def save_trade_to_csv(trade: TradeRecord) -> None:
-    file_exists = os.path.exists(TRADES_CSV)
-    with open(TRADES_CSV, "a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow([
-                "entry_time", "exit_time", "side", "entry_price",
-                "exit_price", "stake", "pnl", "win", "contract_id",
-            ])
-        writer.writerow([
-            trade.entry_time,
-            trade.exit_time or "",
-            trade.side,
-            f"{trade.entry_price:.4f}",
-            f"{trade.exit_price:.4f}" if trade.exit_price is not None else "",
-            trade.stake,
-            f"{trade.pnl:.2f}" if trade.pnl is not None else "",
-            trade.win if trade.win is not None else "",
-            trade.contract_id if trade.contract_id is not None else "",
-        ])
-
-
 # Zona horaria Argentina (GMT-3, sin DST)
 try:
     import zoneinfo
@@ -501,7 +473,6 @@ class HMAFlowBot:
                             t.win = float(profit) > 0
                             if exit_time:
                                 t.exit_time = exit_time
-                            save_trade_to_csv(t)
                             self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
                             break
             
@@ -564,7 +535,6 @@ class HMAFlowBot:
                                 if exit_time:
                                     t.exit_time = exit_time
                                 t._pnl_applied = False
-                                save_trade_to_csv(t)
                                 self._log("info", f"  [DERIV SYNC] {contract_type} contract_id={contract_id} pnl={profit:+.2f} {'WIN' if profit > 0 else 'LOSS'}")
                                 updated = True
                                 break
@@ -984,7 +954,6 @@ class HMAFlowBot:
                         state.trades[-1].pnl = float(profit)
                         state.trades[-1].win = float(profit) > 0
                         state.trades[-1].exit_time = now_str()
-                        save_trade_to_csv(state.trades[-1])
         except Exception as e:
             self._log("error", f"[SELL EXCEPTION] id={contract_id}: {e}")
 
