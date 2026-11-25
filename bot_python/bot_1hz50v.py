@@ -410,6 +410,39 @@ class HMAFlowBot:
         if state.session_start_balance is None:
             state.session_start_balance = state.balance
             self._log("info", f"Saldo inicial de sesión: {state.session_start_balance:.2f} USD")
+        # Sincronizar contratos activos con Deriv tras reconectar (evita trades duplicados)
+        await self._sync_active_contracts()
+
+    async def _sync_active_contracts(self) -> None:
+        """Consulta contratos activos en Deriv y restaura state.position si hay uno abierto."""
+        try:
+            req = {"contracts_for": "active", "subscribe": 0}
+            resp = await self._send(self.trading_ws, req)
+            contracts = resp.get("contracts_for", {}).get("contracts", [])
+            active = [c for c in contracts if c.get("status") == "active"]
+            if active and state.trades:
+                last_trade = state.trades[-1]
+                contract_type = active[0].get("contract_type", "")
+                if contract_type in ("CALL", "PUT"):
+                    state.position = "long" if contract_type == "CALL" else "short"
+                    state.open_side = contract_type
+                    state.open_entry_price = float(last_trade.entry_price)
+                    state.open_entry_time = time.time()
+                    state.open_contract_id = active[0].get("contract_id", last_trade.contract_id)
+                    self._log("info", f"[SYNC] Contrato activo restaurado: {contract_type} id={state.open_contract_id} entry={state.open_entry_price:.4f}")
+                else:
+                    # Si no hay activo pero hay trades sin cerrar, cerrarlos lógicamente
+                    for t in state.trades:
+                        if t.exit_time is None and t.contract_id:
+                            t.exit_time = now_str()
+                            t.exit_price = None
+                            t.pnl = None
+                            t.win = None
+                            self._log("warning", f"[SYNC] Contrato {t.contract_id} ya no activo, marcado para cierre lógico")
+                    state.position = None
+                    state.open_contract_id = None
+        except Exception as e:
+            self._log("warning", f"[SYNC] Error sincronizando contratos activos: {e}")
 
     async def fetch_balance(self) -> None:
         """Obtiene el saldo real de la cuenta de Deriv."""
