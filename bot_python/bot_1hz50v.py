@@ -958,53 +958,48 @@ class HMAFlowBot:
         self._log("info", f"[{now}] {action} @ {price:.4f} | stake={stake:.2f} | {reason}")
 
         if contract_type and self.token and self.trading_ws:
-            asyncio.create_task(self._place_trade(action, contract_type))
+            # Lanzar compra de forma atómica (esperar confirmación antes de seguir)
+            asyncio.create_task(self._place_trade_and_set_state(action, contract_type, stake, price, now))
         elif contract_type and not self.token:
             self._log("info", "  [PAPER] sin token — no se coloca operación")
 
-        if action.startswith("BUY"):
-            state.position = "long"
-            state.open_side = "CALL"
-            state.open_entry_price = price
-            state.open_entry_time = time.time()
-            state.open_stake = stake  # Guardar stake real
-            state.trades.append(TradeRecord(
-                entry_time=now, exit_time=None, side="CALL",
-                entry_price=price, exit_price=None, stake=stake,
-                pnl=None, win=None, contract_id=None,
-            ))
-        elif action.startswith("SELL"):
-            state.position = "short"
-            state.open_side = "PUT"
-            state.open_entry_price = price
-            state.open_entry_time = time.time()
-            state.open_stake = stake  # Guardar stake real
-            state.trades.append(TradeRecord(
-                entry_time=now, exit_time=None, side="PUT",
-                entry_price=price, exit_price=None, stake=stake,
-                pnl=None, win=None, contract_id=None,
-            ))
-
-    async def _place_trade(self, action: str, contract_type: str) -> None:
+    async def _place_trade_and_set_state(self, action: str, contract_type: str,
+                                         stake: float, price: float, now: str) -> None:
+        """Coloca el trade en Deriv y actualiza el estado solo tras confirmación de compra."""
         try:
+            # Re-verificar que no haya contrato activo justo antes de comprar
+            if await self._has_active_contract():
+                self._log("info", "[ANTI-DUPLICATE] Contrato activo detectado justo antes de comprar, abortando entrada")
+                return
             resp = await self.buy_contract(contract_type)
             if "error" in resp:
                 self._log("error", f"[TRADE ERROR] {resp['error']}")
-                state.position = None
                 return
             buy = resp.get("buy", {})
             contract_id = buy.get("contract_id")
+            if not contract_id:
+                self._log("error", f"[TRADE ERROR] No contract_id en respuesta: {resp}")
+                return
+            # Confirmado: Deriv aceptó la compra, ahora sí actualizar estado
             state.open_contract_id = contract_id
             state.trades_today += 1
-            if state.trades:
-                state.trades[-1].contract_id = contract_id
-            # Guardar balance antes del trade para diff de PnL si profit_table falla
             await self.fetch_balance()
             state.balance_before_entry = state.balance
             self._log("info",
                       f"  [TRADE] id={contract_id} type={contract_type} "
-                      f"buy_price={buy.get('buy_price')} "
-                      f"tx={buy.get('transaction_id')}")
+                      f"buy_price={buy.get('buy_price')} tx={buy.get('transaction_id')}")
+            # Registrar trade local
+            side = "CALL" if contract_type == "CALL" else "PUT"
+            state.position = "long" if contract_type == "CALL" else "short"
+            state.open_side = side
+            state.open_entry_price = price
+            state.open_entry_time = time.time()
+            state.open_stake = stake
+            state.trades.append(TradeRecord(
+                entry_time=now, exit_time=None, side=side,
+                entry_price=price, exit_price=None, stake=stake,
+                pnl=None, win=None, contract_id=contract_id,
+            ))
         except Exception as e:
             self._log("error", f"[TRADE EXCEPTION] {e}")
             state.position = None
