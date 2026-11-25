@@ -613,6 +613,17 @@ class HMAFlowBot:
             # Wait before retry (increasing delay)
             if attempt < 4:
                 await asyncio.sleep(3 + attempt * 2)  # 3s, 5s, 7s, 9s
+        
+        # Recalcular daily_pnl desde profit_table de Deriv (fuente de verdad)
+        try:
+            req = {"profit_table": 1, "limit": 50, "sort": "DESC"}
+            resp = await self._send(self.trading_ws, req)
+            profit_data = resp.get("profit_table", {})
+            transactions = profit_data.get("transactions", [])
+            total_profit = sum(float(tx.get("profit", 0)) for tx in transactions if tx.get("profit") is not None)
+            state.daily_pnl = round(total_profit, 2)
+        except Exception as e:
+            self._log("debug", f"update_daily_pnl_from_profit_table error: {e}")
 
     def reload_config(self) -> None:
         """Recarga la configuración desde config.json."""
