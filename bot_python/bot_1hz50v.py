@@ -846,8 +846,11 @@ class HMAFlowBot:
             
             # Wait for contract to settle, then sync via profit_table with retries
             await asyncio.sleep(5)  # wait for Deriv to finalize contract
+            await self.fetch_balance()  # balance real ANTES de calcular daily_pnl
             await self.update_trades_from_profit_table()
-            await self.fetch_balance()
+            
+            # daily_pnl desde saldo real de Deriv (fuente de verdad)
+            state.daily_pnl = round(state.balance - (state.session_start_balance or state.balance), 2)
             
             # Get PnL from the closed trade (updated by profit_table sync)
             pnl_real = 0.0
@@ -858,7 +861,6 @@ class HMAFlowBot:
                     self._log("info", f"  [REAL PnL] {side_txt} stake={state.open_stake:.2f} pnl={pnl_real:+.2f} USD ({'WIN' if pnl_real > 0 else 'LOSS'})")
                 else:
                     # Fallback: diff de balance entre antes y después del trade
-                    await self.fetch_balance()
                     after = state.balance
                     before = state.balance_before_entry or after
                     pnl_real = round(after - before, 2)
@@ -872,8 +874,6 @@ class HMAFlowBot:
                     else:
                         self._log("warning", f"  [PnL] profit_table no respondió y balance sin cambios, trade pnl aún null")
                         self._log("info", f"  [PnL] balance_before_entry={state.balance_before_entry} balance_actual={state.balance}")
-                        # Forzar daily_pnl desde saldo real aunque pnl del trade sea null
-                        state.daily_pnl = round(state.balance - (state.session_start_balance or state.balance), 2)
                         self._log("info", f"  [DAILY PnL] total={state.daily_pnl:+.2f} USD")
                         self._close_position()
                         return
