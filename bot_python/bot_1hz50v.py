@@ -294,6 +294,7 @@ class HMAFlowBot:
         self.duration = int(cfg["duration"])
         self.duration_unit = cfg["duration_unit"]
         self._ws_lock = asyncio.Lock()  # Lock para serializar acceso a trading_ws
+        self._entry_lock = asyncio.Lock()  # Lock para evitar entradas concurrentes
         self.hma_period = int(cfg["hma_period"])
         self.flow_period = int(cfg["flow_period"])
         self.flow_smooth = int(cfg["flow_smooth"])
@@ -951,9 +952,13 @@ class HMAFlowBot:
 
         # Señal de alta precisión: Flow + HMA slope + Precio vs HMA + distancia HMA
         # INVERTIDO: HMA up -> PUT, HMA down -> CALL (estrategia contrarian probada en backtest)
-        # Evitar entrar si ya hay un contrato activo en Deriv (protege contra reinicios del free tier)
+        # Evitar entrar si ya hay posición abierta o contrato activo en Deriv
+        if state.position is not None:
+            self._log("debug", "Ya hay posición abierta, saltando entrada nueva")
+            return
         if await self._has_active_contract():
             self._log("debug", "Ya hay contrato activo en Deriv, saltando entrada nueva")
+            state.position = "long" if state.open_side == "CALL" else "short"
             return
 
         if d == 1 and flow_strong_up and price_above_hma and not hma_flat and not price_too_close_hma:
@@ -965,8 +970,16 @@ class HMAFlowBot:
                 contract_type: Optional[str], stake: float) -> None:
         self._log("info", f"[{now}] {action} @ {price:.4f} | stake={stake:.2f} | {reason}")
 
+        # Setear posición inmediatamente para evitar entradas concurrentes entre ciclos
+        side = "CALL" if contract_type == "CALL" else "PUT"
+        state.position = "long" if contract_type == "CALL" else "short"
+        state.open_side = side
+        state.open_entry_price = price
+        state.open_entry_time = time.time()
+        state.open_stake = stake
+
         if contract_type and self.token and self.trading_ws:
-            # Lanzar compra de forma atómica (esperar confirmación antes de seguir)
+            # Lanzar compra; el estado ya está seteado arriba
             asyncio.create_task(self._place_trade_and_set_state(action, contract_type, stake, price, now))
         elif contract_type and not self.token:
             self._log("info", "  [PAPER] sin token — no se coloca operación")
