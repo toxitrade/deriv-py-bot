@@ -414,35 +414,67 @@ class HMAFlowBot:
         await self._sync_active_contracts()
 
     async def _sync_active_contracts(self) -> None:
-        """Consulta contratos activos en Deriv y restaura state.position si hay uno abierto."""
+            """Consulta contratos activos y profit_table de Deriv para restaurar estado tras reconectar."""
+            try:
+                # 1. Sincronizar contratos activos
+                req = {"contracts_for": "active", "subscribe": 0}
+                resp = await self._send(self.trading_ws, req)
+                contracts = resp.get("contracts_for", {}).get("contracts", [])
+                active = [c for c in contracts if c.get("status") == "active"]
+                if active:
+                    # Tomar el contrato activo más reciente
+                    latest = active[0]
+                    contract_type = latest.get("contract_type", "")
+                    contract_id = latest.get("contract_id")
+                    entry = float(latest.get("entry_tick", latest.get("entry_price", 0)) or 0)
+                    if contract_type in ("CALL", "PUT"):
+                        state.position = "long" if contract_type == "CALL" else "short"
+                        state.open_side = contract_type
+                        state.open_entry_price = entry if entry > 0 else (state.trades[-1].entry_price if state.trades else 0)
+                        state.open_entry_time = time.time()
+                        state.open_contract_id = contract_id
+                        self._log("info", f"[SYNC] Contrato activo restaurado: {contract_type} id={contract_id} entry={state.open_entry_price:.4f}")
+                    # Marcar trades locales sin cerrar cuyo contrato ya no está activo
+                    active_ids = {c.get("contract_id") for c in active}
+                    for t in state.trades:
+                        if t.exit_time is None and t.contract_id and t.contract_id not in active_ids:
+                            t.exit_time = now_str()
+                            self._log("warning", f"[SYNC] Contrato local {t.contract_id} ya no activo en Deriv, cerrado lógicamente")
+                elif state.trades:
+                    # No hay contratos activos: cerrar trades locales pendientes
+                    for t in state.trades:
+                        if t.exit_time is None and t.contract_id:
+                            t.exit_time = now_str()
+                            self._log("warning", f"[SYNC] Sin contratos activos en Deriv; contrato local {t.contract_id} cerrado lógicamente")
+                    state.position = None
+                    state.open_contract_id = None
+
+                # 2. Calcular daily_pnl desde profit_table de Deriv (fuente de verdad)
+                req2 = {"profit_table": 1, "limit": 50, "sort": "DESC"}
+                resp2 = await self._send(self.trading_ws, req2)
+                profit_data = resp2.get("profit_table", {})
+                transactions = profit_data.get("transactions", [])
+                total_profit = 0.0
+                for tx in transactions:
+                    profit = tx.get("profit")
+                    if profit is not None:
+                        total_profit += float(profit)
+                # daily_pnl = ganancia real de Deriv en la sesión (desde profit_table)
+                state.daily_pnl = round(total_profit, 2)
+                self._log("info", f"[SYNC] daily_pnl desde profit_table Deriv: {state.daily_pnl:+.2f} USD")
+
+            except Exception as e:
+                self._log("warning", f"[SYNC] Error sincronizando contratos activos y profit_table: {e}")
+
+    async def _has_active_contract(self) -> bool:
+        """Consulta Deriv si hay contratos activos en este momento."""
         try:
             req = {"contracts_for": "active", "subscribe": 0}
             resp = await self._send(self.trading_ws, req)
             contracts = resp.get("contracts_for", {}).get("contracts", [])
-            active = [c for c in contracts if c.get("status") == "active"]
-            if active and state.trades:
-                last_trade = state.trades[-1]
-                contract_type = active[0].get("contract_type", "")
-                if contract_type in ("CALL", "PUT"):
-                    state.position = "long" if contract_type == "CALL" else "short"
-                    state.open_side = contract_type
-                    state.open_entry_price = float(last_trade.entry_price)
-                    state.open_entry_time = time.time()
-                    state.open_contract_id = active[0].get("contract_id", last_trade.contract_id)
-                    self._log("info", f"[SYNC] Contrato activo restaurado: {contract_type} id={state.open_contract_id} entry={state.open_entry_price:.4f}")
-                else:
-                    # Si no hay activo pero hay trades sin cerrar, cerrarlos lógicamente
-                    for t in state.trades:
-                        if t.exit_time is None and t.contract_id:
-                            t.exit_time = now_str()
-                            t.exit_price = None
-                            t.pnl = None
-                            t.win = None
-                            self._log("warning", f"[SYNC] Contrato {t.contract_id} ya no activo, marcado para cierre lógico")
-                    state.position = None
-                    state.open_contract_id = None
-        except Exception as e:
-            self._log("warning", f"[SYNC] Error sincronizando contratos activos: {e}")
+            return any(c.get("status") == "active" for c in contracts)
+        except Exception:
+            return False
 
     async def fetch_balance(self) -> None:
         """Obtiene el saldo real de la cuenta de Deriv."""
@@ -911,6 +943,11 @@ class HMAFlowBot:
 
         # Señal de alta precisión: Flow + HMA slope + Precio vs HMA + distancia HMA
         # INVERTIDO: HMA up -> PUT, HMA down -> CALL (estrategia contrarian probada en backtest)
+        # Evitar entrar si ya hay un contrato activo en Deriv (protege contra reinicios del free tier)
+        if await self._has_active_contract():
+            self._log("debug", "Ya hay contrato activo en Deriv, saltando entrada nueva")
+            return
+
         if d == 1 and flow_strong_up and price_above_hma and not hma_flat and not price_too_close_hma:
             self._signal(now, price, "SELL (PUT)", "HMA↑ Flow↑ Precio>HMA Dist>0.02%", "PUT", stake_efectivo)
         elif d == -1 and flow_strong_down and price_below_hma and not hma_flat and not price_too_close_hma:
