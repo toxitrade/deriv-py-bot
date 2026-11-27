@@ -1,0 +1,10 @@
+export const ChartMode = 'candles';
+export const ChartTitle = '';
+export const DrawTools = {};
+export const Share = {};
+export const setSmartChartsPublicPath = () => {};
+export const SmartChart = () => null;
+export const StudyLegend = {};
+export const ToolbarWidget = {};
+export const Views = {};
+export default {};
