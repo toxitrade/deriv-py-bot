@@ -1,5 +1,4 @@
 bot_python/
-*.json
 logs/
 *.py
 *.csv
@@ -9,3 +8,6 @@ __pycache__/
 .git
 node_modules/
 .next/
+real_*.json
+config.json
+package-lock.json
