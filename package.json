@@ -54,9 +54,7 @@
     "sonner": "^1.2.0",
     "tailwind-merge": "^2.6.1",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^1.1.2",
-    "@deriv-com/smartcharts-champion": "^1.9.13",
-    "technicalindicators": "^3.1.0"
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
