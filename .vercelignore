@@ -1,0 +1,11 @@
+bot_python/
+*.json
+logs/
+*.py
+*.csv
+*.jsonl
+__pycache__/
+.env
+.git
+node_modules/
+.next/
