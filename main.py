@@ -594,7 +594,7 @@ async def lifespan(app: FastAPI):
 # FASTAPI APP
 # ===========================================================================
 app = FastAPI(title="1HZ50V HMA + Mladen Flow Bot", version="3.0.0", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["https://deriv-py-bot.vercel.app"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 # ---------------------------------------------------------------------------
 # ENDPOINTS
