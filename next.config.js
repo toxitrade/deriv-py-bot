@@ -2,7 +2,6 @@ const path = require('node:path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: { unoptimized: true },
   basePath: process.env.GITHUB_PAGES ? '/deriv-bot-next' : '',
   assetPrefix: process.env.GITHUB_PAGES ? '/deriv-bot-next/' : '',
