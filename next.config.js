@@ -6,6 +6,7 @@ const nextConfig = {
   basePath: process.env.GITHUB_PAGES ? '/deriv-bot-next' : '',
   assetPrefix: process.env.GITHUB_PAGES ? '/deriv-bot-next/' : '',
   transpilePackages: ['@deriv/core'],
+  turbopack: {},
   allowedDevOrigins: ['localhost', '10.42.0.1', '10.42.0.131'],
   typescript: {
     ignoreBuildErrors: true,
