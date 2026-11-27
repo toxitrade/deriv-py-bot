@@ -8,8 +8,9 @@ const nextConfig = {
   transpilePackages: ['@deriv/core'],
   turbopack: {
     alias: {
-      '@deriv-com/smartcharts-champion': path.resolve(__dirname, 'lib/shims/smartcharts-champion.ts'),
-      'technicalindicators': path.resolve(__dirname, 'lib/shims/technicalindicators.ts'),
+      '@deriv-com/smartcharts-champion': path.resolve(__dirname, 'lib/shims/smartcharts-champion/index.js'),
+      '@deriv-com/smartcharts-champion/dist/smartcharts.css': path.resolve(__dirname, 'lib/shims/smartcharts-champion/dist/smartcharts.css'),
+      'technicalindicators': path.resolve(__dirname, 'lib/shims/technicalindicators/index.js'),
     },
   },
   allowedDevOrigins: ['localhost', '10.42.0.1', '10.42.0.131'],
