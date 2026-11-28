@@ -35,15 +35,41 @@ export default function DashboardPage() {
 
   const loadAll = useCallback(async () => {
     try {
-      const [s, m] = await Promise.all([
+      const [s, sig] = await Promise.all([
         fetchApi('/status'),
         fetchApi('/signals'),
       ]);
-      setStatus(s);
-      setMetrics(m);
-      // trades desde signals o status
-      if (s.trades) setTrades(Array.isArray(s.trades) ? s.trades : []);
-      if (m.trades) setTrades(Array.isArray(m.trades) ? m.trades : []);
+      const trades = Array.isArray(s.trades) ? s.trades : [];
+      const closed = trades.filter((t: any) => t.win !== null && t.win !== undefined);
+      const wins = closed.filter((t: any) => t.win === true).length;
+      const losses = closed.filter((t: any) => t.win === false).length;
+      const total = wins + losses;
+      const totalPnL = closed.reduce((acc: number, t: any) => acc + (t.pnl || 0), 0);
+      const last = trades[0];
+      // Normalizar campos del backend de Render a los que lee el dashboard
+      setStatus({
+        bot_running: s.running,
+        current_symbol: s.symbol,
+        balance: s.balance,
+        daily_pnl: s.daily_pnl,
+        session_start_balance: s.session_start_balance,
+        last_signal: {
+          side: (sig?.side || last?.side) || 'N/A',
+          price: sig?.entry_price ?? last?.entry_price,
+          hma: s.last_hma,
+          timestamp: sig?.entry_time ?? last?.entry_time,
+        },
+        trades,
+      });
+      setMetrics({
+        totalTrades: total,
+        wins,
+        losses,
+        winRate: total > 0 ? (wins / total) * 100 : 0,
+        totalPnL,
+        winLossRatio: losses > 0 ? wins / losses : total > 0 ? wins : 0,
+      });
+      setTrades(trades);
     } catch (e: any) {
       setAlert({ msg: `Error cargando: ${e.message}`, type: 'error' });
     }
