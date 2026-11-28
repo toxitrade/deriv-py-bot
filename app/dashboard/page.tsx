@@ -28,7 +28,7 @@ export default function DashboardPage() {
   }, [darkMode]);
 
   const fetchApi = useCallback(async (path: string) => {
-    const res = await fetch(`${RENDER_API}${path}`, { cache: 'no-store' });
+    const res = await fetch(`${RENDER_API}${path}`, { cache: 'no-store', mode: 'cors' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   }, []);
