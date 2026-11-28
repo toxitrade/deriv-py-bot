@@ -8,7 +8,7 @@
   "crons": [
     {
       "path": "/api/uptime",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 * * * *"
     }
   ],
   "routes": [
