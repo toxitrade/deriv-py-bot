@@ -11,3 +11,5 @@ logs/
 *.jsonl
 __pycache__/
 bot_python/.env
+.vercel
+.env*
