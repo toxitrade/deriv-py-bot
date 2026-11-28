@@ -5,6 +5,7 @@ import { ConnectionPanel } from '@/components/bot/connection-panel';
 import { IndicatorDisplay } from '@/components/bot/indicator-display';
 import { SignalStatus } from '@/components/bot/signal-status';
 import { ResultsPanel } from '@/components/bot/results-panel';
+import { MetricsPanel } from '@/components/bot/metrics-panel';
 import { BotChart } from '@/components/bot/bot-chart';
 import { useSignalMarkers } from '@/hooks/use-signal-markers';
 import type { BotState, LogEntry } from '@/hooks/use-bot-state';
@@ -89,6 +90,12 @@ export function TradeTab({ state }: TradeTabProps) {
               positionTimeLeft={execution.positionTimeLeft}
               lastResult={execution.lastResult}
             />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="pt-4">
+            <MetricsPanel />
           </CardContent>
         </Card>
 
