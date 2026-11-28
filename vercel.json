@@ -5,12 +5,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": ".next",
-  "crons": [
-    {
-      "path": "/api/uptime",
-      "schedule": "0 * * * *"
-    }
-  ],
   "routes": [
     {
       "src": "/api/(.*)",
