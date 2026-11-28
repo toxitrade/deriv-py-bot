@@ -345,7 +345,57 @@ loadStatus(); loadSignals(); loadLogs();
 # ===========================================================================
 # CONFIGURACIÓN
 # ===========================================================================
+def _save_config_to_blob(cfg: dict) -> None:
+    """Guarda configuración en Vercel Blob para persistencia compartida."""
+    token = os.environ.get("BLOB_READ_WRITE_TOKEN")
+    if not token:
+        return
+    try:
+        data = json.dumps(cfg).encode("utf-8")
+        req = urllib.request.Request(
+            "https://blob.vercel-storage.com/config.json",
+            data=data,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "x-blob-content-type": "application/json",
+                "x-blob-cache-control": "3600",
+            },
+            method="PUT",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            if resp.status != 200:
+                print(f"Blob config save returned status {resp.status}")
+    except Exception as e:
+        print(f"No se pudo guardar config en Blob: {e}")
+
+
+def _load_config_from_blob() -> dict:
+    """Carga configuración desde Vercel Blob."""
+    token = os.environ.get("BLOB_READ_WRITE_TOKEN")
+    if not token:
+        return {}
+    try:
+        req = urllib.request.Request(
+            "https://blob.vercel-storage.com/config.json",
+            headers={"Authorization": f"Bearer {token}"},
+            method="GET",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            if resp.status == 200:
+                return json.loads(resp.read().decode("utf-8"))
+            return {}
+    except Exception as e:
+        print(f"No se pudo cargar config desde Blob: {e}")
+        return {}
+
+
 def _load_persistent_config() -> dict:
+    # Primero intentar desde Vercel Blob (fuente compartida con frontend)
+    blob_cfg = _load_config_from_blob()
+    if blob_cfg:
+        return blob_cfg
+    # Fallback a config.json local
     if not os.path.exists(CONFIG_FILE):
         return {}
     try:
@@ -354,12 +404,16 @@ def _load_persistent_config() -> dict:
     except Exception:
         return {}
 
+
 def _save_persistent_config(cfg: dict) -> None:
     try:
         with open(CONFIG_FILE, "w", encoding="utf-8") as f:
             json.dump(cfg, f, indent=2, ensure_ascii=False)
     except Exception as e:
         print(f"No se pudo guardar config.json: {e}")
+    # También guardar en Vercel Blob si el token está disponible
+    _save_config_to_blob(cfg)
+
 
 PERSISTENT_CFG = _load_persistent_config()
 
@@ -484,7 +538,179 @@ CONFIG_FILE = "config.json"
 # ===========================================================================
 # CONFIGURACIÓN
 # ===========================================================================
+
+def _get_env(name: str, default: str) -> str:
+    """Prioridad: config.json (guardado desde sitio) > variable de entorno > default."""
+    if name in PERSISTENT_CFG and PERSISTENT_CFG[name] not in (None, ""):
+        return str(PERSISTENT_CFG[name])
+    env_val = os.environ.get(name)
+    if env_val is not None and env_val != "":
+        return env_val
+    return default
+
+def _build_config() -> dict:
+    mode = _get_env("DERIV_BOT_MODE", "binary").lower()
+    common = {
+        "symbol": _get_env("DERIV_SYMBOL", "1HZ50V"),
+        "stake": float(_get_env("DERIV_STAKE", "10.0")),
+        "demo": True,
+        "hma_period": int(_get_env("DERIV_HMA_PERIOD", "30")),
+        "flow_period": int(_get_env("DERIV_FLOW_PERIOD", "14")),
+        "flow_smooth": int(_get_env("DERIV_FLOW_SMOOTH", "3")),
+        "flow_threshold": float(_get_env("DERIV_FLOW_THRESHOLD", "0.3")),
+        "account_id": os.environ.get("DERIV_ACCOUNT_ID", ""),
+        "app_id": os.environ.get("DERIV_APP_ID", ""),
+        "log_level": _get_env("DERIV_LOG_LEVEL", "INFO"),
+        "log_file": _get_env("DERIV_LOG_FILE", "bot_1hz50v.log" if mode == "binary" else "multiplier_bot.log"),
+        "token": os.environ.get("DERIV_TOKEN", ""),
+    }
+    if mode == "multiplier":
+        common.update({
+            "multiplier": int(_get_env("DERIV_MULTIPLIER", "100")),
+            "tp_pct": float(_get_env("DERIV_TP_PCT", "0.001")),
+            "sl_pct": float(_get_env("DERIV_SL_PCT", "0.001")),
+        })
+    else:
+        common.update({
+            "duration": int(_get_env("DERIV_DURATION", "1")),
+            "duration_unit": _get_env("DERIV_DURATION_UNIT", "m"),
+            "martingale_multiplier": float(_get_env("DERIV_MARTINGALE_MULT", "2.0")),
+            "max_martingale_steps": int(_get_env("DERIV_MAX_MARTINGALE_STEPS", "5")),
+            "max_stake": float(_get_env("DERIV_MAX_STAKE", "100.0")),
+            "cooldown_seconds": int(_get_env("DERIV_COOLDOWN_SECONDS", "30")),
+        })
+    return common
+
+# ===========================================================================
+# BOT BACKGROUND TASK
+# ===========================================================================
+BOT_MODE = _get_env("DERIV_BOT_MODE", "binary").lower()
+_bot: Any = None
+_bot_task: Optional[asyncio.Task] = None
+_bot_running = False
+
+async def _run_bot_loop() -> None:
+    """Loop persistente del bot - corre como background task."""
+    global _bot_running, _bot
+    cfg = _build_config()
+    
+    if BOT_MODE == "multiplier":
+        _bot = MultiplierBot(cfg)
+    else:
+        _bot = HMAFlowBot(cfg)
+    
+    _bot_running = True
+    try:
+        while _bot_running:
+            try:
+                await _bot.run()
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                print(f"[BOT] Error en run(): {e}. Reiniciando en 5s...")
+                await asyncio.sleep(5)
+    finally:
+        _bot_running = False
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Iniciar bot automáticamente al arrancar
+    global _bot_task, _bot_running
+    _bot_task = asyncio.create_task(_run_bot_loop())
+    yield
+    # Cleanup al apagar
+    _bot_running = False
+    if _bot_task and not _bot_task.done():
+        _bot_task.cancel()
+        try:
+            await _bot_task
+        except asyncio.CancelledError:
+            pass
+
+# ===========================================================================
+# FASTAPI APP
+# ===========================================================================
+import asyncio
+import json
+import math
+import os
+import sys
+from contextlib import asynccontextmanager
+from typing import Any, Optional
+
+def _sanitize(v: Any) -> Any:
+    """Convierte NaN/Inf a None para JSON válido."""
+    if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+        return None
+    return v
+
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+
+# Asegura que se encuentre el paquete bot_python (mismo directorio)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Importar bots y estados
+from bot_python.bot_1hz50v import HMAFlowBot, state as binary_state
+from bot_python.multiplier_bot import MultiplierBot, state as multiplier_state
+
+CONFIG_FILE = "config.json"
+
+# ===========================================================================
+# CONFIGURACIÓN
+# ===========================================================================
+def _save_config_to_blob(cfg: dict) -> None:
+    """Guarda configuración en Vercel Blob para persistencia compartida."""
+    token = os.environ.get("BLOB_READ_WRITE_TOKEN")
+    if not token:
+        return
+    try:
+        data = json.dumps(cfg).encode("utf-8")
+        req = urllib.request.Request(
+            "https://blob.vercel-storage.com/config.json",
+            data=data,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "x-blob-content-type": "application/json",
+                "x-blob-cache-control": "3600",
+            },
+            method="PUT",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            if resp.status != 200:
+                print(f"Blob config save returned status {resp.status}")
+    except Exception as e:
+        print(f"No se pudo guardar config en Blob: {e}")
+
+
+def _load_config_from_blob() -> dict:
+    """Carga configuración desde Vercel Blob."""
+    token = os.environ.get("BLOB_READ_WRITE_TOKEN")
+    if not token:
+        return {}
+    try:
+        req = urllib.request.Request(
+            "https://blob.vercel-storage.com/config.json",
+            headers={"Authorization": f"Bearer {token}"},
+            method="GET",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            if resp.status == 200:
+                return json.loads(resp.read().decode("utf-8"))
+            return {}
+    except Exception as e:
+        print(f"No se pudo cargar config desde Blob: {e}")
+        return {}
+
+
 def _load_persistent_config() -> dict:
+    # Primero intentar desde Vercel Blob (fuente compartida con frontend)
+    blob_cfg = _load_config_from_blob()
+    if blob_cfg:
+        return blob_cfg
+    # Fallback a config.json local
     if not os.path.exists(CONFIG_FILE):
         return {}
     try:
@@ -493,12 +719,16 @@ def _load_persistent_config() -> dict:
     except Exception:
         return {}
 
+
 def _save_persistent_config(cfg: dict) -> None:
     try:
         with open(CONFIG_FILE, "w", encoding="utf-8") as f:
             json.dump(cfg, f, indent=2, ensure_ascii=False)
     except Exception as e:
         print(f"No se pudo guardar config.json: {e}")
+    # También guardar en Vercel Blob si el token está disponible
+    _save_config_to_blob(cfg)
+
 
 PERSISTENT_CFG = _load_persistent_config()
 
