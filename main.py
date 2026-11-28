@@ -599,11 +599,46 @@ app.add_middleware(CORSMiddleware, allow_origins=["https://deriv-py-bot.vercel.a
 # ---------------------------------------------------------------------------
 # ENDPOINTS
 # ---------------------------------------------------------------------------
-@app.get("/", response_class=HTMLResponse)
-async def root(): return DASHBOARD_HTML
+@app.get("/", response_class=JSONResponse)
+async def root():
+    return {
+        "service": "1HZ50V HMA + Mladen Flow Bot",
+        "version": "3.0.0",
+        "mode": BOT_MODE,
+        "running": _bot_running,
+        "endpoints": {
+            "status": "/status",
+            "signals": "/signals",
+            "config": "/config",
+            "health": "/health",
+            "trade_complete": "/trade-complete",
+        },
+    }
 
-@app.get("/dashboard", response_class=HTMLResponse)
-async def dashboard(): return DASHBOARD_HTML
+
+@app.get("/dashboard", response_class=JSONResponse)
+async def dashboard():
+    return {
+        "message": "Dashboard moved to Vercel: https://deriv-py-bot.vercel.app/bot-status",
+        "api_endpoints": {
+            "status": "/status",
+            "signals": "/signals",
+            "config": "/config",
+        },
+    }
+
+
+@app.post("/trade-complete")
+async def trade_complete(trade: dict):
+    """Webhook opcional: Vercel puede notificar a Render cuando un trade cierra."""
+    try:
+        symbol = trade.get("symbol", "unknown")
+        side = trade.get("side", "unknown")
+        profit = trade.get("profit", 0)
+        print(f"Trade completado via webhook: {symbol} {side} profit={profit}")
+        return {"status": "ok", "received": True}
+    except Exception as e:
+        return JSONResponse({"status": "error", "message": str(e)}, status_code=400)
 
 @app.get("/health")
 async def health():
