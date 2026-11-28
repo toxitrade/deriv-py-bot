@@ -67,7 +67,7 @@ export default function DashboardPage() {
   const [alert, setAlert] = useState<{ msg: string; type: string } | null>(null);
   const [darkMode, setDarkMode] = useState(true);
 
-  const API = '';
+  const RENDER_API = 'https://deriv-py-bot.onrender.com';
 
   const fetchStatus = useCallback(async () => {
     try {
@@ -116,23 +116,26 @@ export default function DashboardPage() {
 
   const fetchLogs = useCallback(async () => {
     try {
-      const res = await fetch('/logs', { cache: 'no-store' });
+      const res = await fetch(`${RENDER_API}/logs`, { cache: 'no-store' });
       if (!res.ok) return;
       const data = await res.json();
       setLogs(data.logs || []);
     } catch {
-      // logs endpoint puede no estar disponible desde Vercel
+      // silent
     }
   }, []);
 
   useEffect(() => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(prefersDark);
-    document.documentElement.classList.toggle('dark', prefersDark);
-    document.documentElement.classList.toggle('light', !prefersDark);
+    const saved = localStorage.getItem('deriv_bot_theme');
+    const initial = saved ? saved === 'dark' : prefersDark;
+    setDarkMode(initial);
+    document.documentElement.classList.toggle('dark', initial);
+    document.documentElement.classList.toggle('light', !initial);
   }, []);
 
   useEffect(() => {
+    localStorage.setItem('deriv_bot_theme', darkMode ? 'dark' : 'light');
     document.documentElement.classList.toggle('dark', darkMode);
     document.documentElement.classList.toggle('light', !darkMode);
   }, [darkMode]);
@@ -153,7 +156,7 @@ export default function DashboardPage() {
 
   const startBot = async () => {
     try {
-      const res = await fetch('/start', { method: 'POST' });
+      const res = await fetch(`${RENDER_API}/start`, { method: 'POST' });
       const data = await res.json();
       setAlert({ msg: data.status === 'started' ? 'Bot iniciado' : 'Bot ya estaba corriendo', type: 'success' });
       await fetchStatus();
@@ -164,7 +167,7 @@ export default function DashboardPage() {
 
   const stopBot = async () => {
     try {
-      const res = await fetch('/stop', { method: 'POST' });
+      const res = await fetch(`${RENDER_API}/stop`, { method: 'POST' });
       const data = await res.json();
       setAlert({ msg: 'Bot detenido', type: 'info' });
       await fetchStatus();
@@ -210,7 +213,7 @@ export default function DashboardPage() {
   const pnlColor = (val: number) => (val >= 0 ? 'text-green-400' : 'text-red-400');
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 font-sys text-sm antialiased transition-colors duration-300">
+    <div className="min-h-screen bg-gray-900 text-gray-100 font-sys text-sm antialiased transition-colors duration-300 overflow-y-auto">
       {/* Header */}
       <header className="bg-gray-800 border-b border-gray-700 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div className="flex items-center gap-2">
