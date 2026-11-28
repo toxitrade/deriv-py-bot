@@ -29,7 +29,6 @@ interface Trade {
   pnl?: number;
   resultado?: string;
   timestamp?: string;
-  contract_type?: string;
 }
 
 interface Metrics {
@@ -66,6 +65,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [alert, setAlert] = useState<{ msg: string; type: string } | null>(null);
+  const [darkMode, setDarkMode] = useState(true);
 
   const API = '';
 
@@ -87,8 +87,8 @@ export default function DashboardPage() {
       if (!res.ok) throw new Error(`Metrics failed ${res.status}`);
       const data = await res.json();
       setMetrics(data);
-    } catch (err: any) {
-      console.error('Metrics error:', err);
+    } catch {
+      // silent
     }
   }, []);
 
@@ -98,8 +98,8 @@ export default function DashboardPage() {
       if (!res.ok) throw new Error(`Config failed ${res.status}`);
       const data = await res.json();
       setConfig(data);
-    } catch (err: any) {
-      console.error('Config error:', err);
+    } catch {
+      // silent
     }
   }, []);
 
@@ -109,14 +109,14 @@ export default function DashboardPage() {
       if (!res.ok) throw new Error(`Trades failed ${res.status}`);
       const data = await res.json();
       setTrades((data.trades || []).slice(0, 50));
-    } catch (err: any) {
-      console.error('Trades error:', err);
+    } catch {
+      // silent
     }
   }, []);
 
   const fetchLogs = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/logs`, { cache: 'no-store' });
+      const res = await fetch('/logs', { cache: 'no-store' });
       if (!res.ok) return;
       const data = await res.json();
       setLogs(data.logs || []);
@@ -124,6 +124,18 @@ export default function DashboardPage() {
       // logs endpoint puede no estar disponible desde Vercel
     }
   }, []);
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setDarkMode(prefersDark);
+    document.documentElement.classList.toggle('dark', prefersDark);
+    document.documentElement.classList.toggle('light', !prefersDark);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    document.documentElement.classList.toggle('light', !darkMode);
+  }, [darkMode]);
 
   useEffect(() => {
     fetchStatus();
@@ -181,6 +193,10 @@ export default function DashboardPage() {
     }
   };
 
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+  };
+
   const formatTime = (ts?: string) => {
     if (!ts) return '-';
     try {
@@ -191,288 +207,326 @@ export default function DashboardPage() {
     }
   };
 
-  const formatDate = (ts?: string) => {
-    if (!ts) return '-';
-    try {
-      const d = new Date(ts);
-      return d.toLocaleString('es-AR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    } catch {
-      return ts;
-    }
-  };
-
-  const pnlColor = (val: number) => (val >= 0 ? 'text-green-500' : 'text-red-500');
+  const pnlColor = (val: number) => (val >= 0 ? 'text-green-400' : 'text-red-400');
 
   return (
-    <div className="p-4 max-w-5xl mx-auto font-sys text-sm">
+    <div className="min-h-screen bg-gray-900 text-gray-100 font-sys text-sm antialiased transition-colors duration-300">
+      {/* Header */}
+      <header className="bg-gray-800 border-b border-gray-700 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded bg-gradient-to-br from-green-500 to-emerald-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-white">B</span>
+          </div>
+          <h1 className="text-lg font-bold tracking-tight">Deriv Bot</h1>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded bg-gray-700 hover:bg-gray-600 text-gray-300 transition-colors"
+            title={darkMode ? 'Modo claro' : 'Modo oscuro'}
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={startBot}
+              disabled={status?.bot_running}
+              className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                status?.bot_running
+                  ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
+                  : 'bg-green-600 text-white hover:bg-green-500'
+              }`}
+            >
+              Iniciar
+            </button>
+            <button
+              onClick={stopBot}
+              disabled={!status?.bot_running}
+              className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                !status?.bot_running
+                  ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
+                  : 'bg-red-600 text-white hover:bg-red-500'
+              }`}
+            >
+              Detener
+            </button>
+          </div>
+        </div>
+      </header>
+
       {alert && (
-        <div
-          className={`p-3 rounded mb-4 ${
-            alert.type === 'success'
-              ? 'bg-green-50 border border-green-200 text-green-800'
-              : alert.type === 'error'
-                ? 'bg-red-50 border border-red-200 text-red-800'
-                : 'bg-blue-50 border border-blue-200 text-blue-800'
-          }`}
-        >
+        <div className="mx-4 mb-3 p-3 rounded-lg border text-sm flex items-center gap-2 ${
+          alert.type === 'success'
+            ? 'bg-green-500/10 border-green-500/50 text-green-400'
+            : alert.type === 'error'
+              ? 'bg-red-500/10 border-red-500/50 text-red-400'
+              : 'bg-blue-500/10 border-blue-500/50 text-blue-400'
+        }">
           {alert.msg}
         </div>
       )}
 
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Dashboard del Bot</h1>
-        <div className="flex gap-2">
-          <button
-            onClick={startBot}
-            disabled={status?.bot_running}
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
-          >
-            Iniciar Bot
-          </button>
-          <button
-            onClick={stopBot}
-            disabled={!status?.bot_running}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
-          >
-            Detener Bot
-          </button>
-        </div>
-      </div>
+      <main className="mx-4 pb-6 space-y-5">
+        {/* Estado */}
+        <section className="bg-gray-800 border border-gray-700 rounded-xl p-4">
+          <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Estado del Bot</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="bg-gray-700/50 rounded p-3">
+              <div className="text-xs text-gray-400">Estado</div>
+              <div className={`font-bold ${status?.bot_running ? 'text-green-400' : 'text-red-400'}`}>
+                {status?.bot_running ? 'ACTIVO' : 'DETENIDO'}
+              </div>
+            </div>
+            <div className="bg-gray-700/50 rounded p-3">
+              <div className="text-xs text-gray-400">Símbolo</div>
+              <div className="font-bold text-blue-300">{status?.current_symbol || 'N/A'}</div>
+            </div>
+            <div className="bg-gray-700/50 rounded p-3">
+              <div className="text-xs text-gray-400">Modo</div>
+              <div className="font-bold text-purple-300">{status?.mode || 'binary'}</div>
+            </div>
+            <div className="bg-gray-700/50 rounded p-3">
+              <div className="text-xs text-gray-400">Balance</div>
+              <div className={`font-bold ${pnlColor(status?.balance || 0)}`}>
+                ${status?.balance?.toFixed(2) ?? '0.00'}
+              </div>
+            </div>
+            <div className="bg-gray-700/50 rounded p-3">
+              <div className="text-xs text-gray-400">PnL Diario</div>
+              <div className={`font-bold ${pnlColor(status?.daily_pnl || 0)}`}>
+                ${status?.daily_pnl?.toFixed(2) ?? '0.00'}
+              </div>
+            </div>
+            <div className="bg-gray-700/50 rounded p-3">
+              <div className="text-xs text-gray-400">Balance Inicial</div>
+              <div className="font-bold text-gray-300">
+                ${status?.session_start_balance?.toFixed(2) ?? '0.00'}
+              </div>
+            </div>
+          </div>
+        </section>
 
-      {loading && <p className="text-center text-muted-foreground">Cargando...</p>}
-
-      {!loading && (
-        <>
-          {/* Estado del bot */}
-          <div className="bg-card p-4 rounded-lg border mb-4">
-            <h2 className="text-lg font-bold mb-2">Estado del Bot</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-3 rounded bg-muted/50">
-                <div className="text-xs text-muted-foreground">Estado</div>
-                <div className={`font-bold ${status?.bot_running ? 'text-green-600' : 'text-red-600'}`}>
-                  {status?.bot_running ? 'Ejecutándose' : 'Detenido'}
+        {/* Señales y Métricas en stack vertical */}
+        <section className="space-y-4">
+          {/* Última señal */}
+          <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
+            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Última Señal</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div>
+                <div className="text-xs text-gray-400">Tipo</div>
+                <div className={`font-bold capitalize ${status?.last_signal?.side === 'CALL' ? 'text-blue-400' : 'text-pink-400'}`}>
+                  {status?.last_signal?.side || 'N/A'}
                 </div>
               </div>
-              <div className="p-3 rounded bg-muted/50">
-                <div className="text-xs text-muted-foreground">Símbolo</div>
-                <div className="font-bold">{status?.current_symbol || 'N/A'}</div>
-              </div>
-              <div className="p-3 rounded bg-muted/50">
-                <div className="text-xs text-muted-foreground">Modo</div>
-                <div className="font-bold">{status?.mode || config?.symbol ? 'binary' : 'N/A'}</div>
-              </div>
-              <div className="p-3 rounded bg-muted/50">
-                <div className="text-xs text-muted-foreground">Balance</div>
-                <div className="font-bold">
-                  {status?.balance !== undefined ? `$${status.balance.toFixed(2)}` : 'N/A'}
+              <div>
+                <div className="text-xs text-gray-400">Precio</div>
+                <div className="font-bold text-gray-200">
+                  {status?.last_signal?.price !== undefined ? status.last_signal.price.toFixed(2) : 'N/A'}
                 </div>
               </div>
-              <div className="p-3 rounded bg-muted/50">
-                <div className="text-xs text-muted-foreground">PnL Diario</div>
-                <div className={`font-bold ${pnlColor(status?.daily_pnl || 0)}`}>
-                  {status?.daily_pnl !== undefined ? `$${status.daily_pnl.toFixed(2)}` : 'N/A'}
+              <div>
+                <div className="text-xs text-gray-400">HMA</div>
+                <div className="font-bold text-gray-200">
+                  {status?.last_signal?.hma !== undefined ? status.last_signal.hma.toFixed(2) : 'N/A'}
                 </div>
               </div>
-              <div className="p-3 rounded bg-muted/50">
-                <div className="text-xs text-muted-foreground">Balance Inicial</div>
-                <div className="font-bold">
-                  {status?.session_start_balance !== undefined ? `$${status.session_start_balance.toFixed(2)}` : 'N/A'}
-                </div>
+              <div>
+                <div className="text-xs text-gray-400">Hora</div>
+                <div className="font-bold text-gray-200">{formatTime(status?.last_signal?.timestamp)}</div>
               </div>
             </div>
           </div>
 
-          {/* Métricas y Señales */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-            <div className="lg:col-span-2">
-              <div className="bg-card p-4 rounded-lg border">
-                <h2 className="text-lg font-bold mb-2">Métricas</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                  <div>
-                    <div className="text-muted-foreground">Trades Totales</div>
-                    <div className="font-bold">{metrics?.totalTrades ?? 0}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Ganados</div>
-                    <div className="font-bold text-green-600">{metrics?.wins ?? 0}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Perdidos</div>
-                    <div className="font-bold text-red-600">{metrics?.losses ?? 0}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Pendientes</div>
-                    <div className="font-bold text-yellow-600">{metrics?.pending ?? 0}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">PnL Total</div>
-                    <div className={`font-bold ${pnlColor(metrics?.totalPnL || 0)}`}>
-                      ${metrics?.totalPnL?.toFixed(2) ?? '0.00'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Win Rate</div>
-                    <div className="font-bold">{metrics?.winRate?.toFixed(1) ?? '--'}%</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Ratio W/L</div>
-                    <div className="font-bold">{metrics?.winLossRatio?.toFixed(2) ?? '--'}</div>
-                  </div>
+          {/* Métricas */}
+          <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
+            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Métricas</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="bg-gray-700/50 rounded p-3">
+                <div className="text-xs text-gray-400">Total Trades</div>
+                <div className="font-bold text-blue-300">{metrics?.totalTrades ?? 0}</div>
+              </div>
+              <div className="bg-gray-700/50 rounded p-3">
+                <div className="text-xs text-gray-400">Ganados</div>
+                <div className="font-bold text-green-400">{metrics?.wins ?? 0}</div>
+              </div>
+              <div className="bg-gray-700/50 rounded p-3">
+                <div className="text-xs text-gray-400">Perdidos</div>
+                <div className="font-bold text-red-400">{metrics?.losses ?? 0}</div>
+              </div>
+              <div className="bg-gray-700/50 rounded p-3">
+                <div className="text-xs text-gray-400">Win Rate</div>
+                <div className="font-bold text-yellow-400">{metrics?.winRate?.toFixed(1) ?? '--'}%</div>
+              </div>
+              <div className="bg-gray-700/50 rounded p-3">
+                <div className="text-xs text-gray-400">PnL Total</div>
+                <div className={`font-bold ${pnlColor(metrics?.totalPnL || 0)}`}>
+                  ${metrics?.totalPnL?.toFixed(2) ?? '0.00'}
                 </div>
               </div>
-
-              <div className="bg-card p-4 rounded-lg border mt-4">
-                <h2 className="text-lg font-bold mb-2">Última Señal</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                  <div>
-                    <div className="text-muted-foreground">Tipo</div>
-                    <div className="font-bold">{status?.last_signal?.side || 'N/A'}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Precio</div>
-                    <div className="font-bold">
-                      {status?.last_signal?.price !== undefined ? status.last_signal.price.toFixed(2) : 'N/A'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">HMA</div>
-                    <div className="font-bold">
-                      {status?.last_signal?.hma !== undefined ? status.last_signal.hma.toFixed(2) : 'N/A'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Hora</div>
-                    <div className="font-bold">{formatTime(status?.last_signal?.timestamp)}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Configuración */}
-            <div className="lg:col-span-1">
-              <div className="bg-card p-4 rounded-lg border">
-                <h2 className="text-lg font-bold mb-2">Configuración</h2>
-                <form onSubmit={saveConfig} className="space-y-3">
-                  <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Símbolo</label>
-                    <input
-                      type="text"
-                      defaultValue={config?.symbol || '1HZ50V'}
-                      onChange={(e) => {
-                        if (config) setConfig({ ...config, symbol: e.target.value });
-                      }}
-                      className="w-full border rounded px-2 py-1 bg-input"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Stake (USD)</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      defaultValue={config?.stake || 0.5}
-                      onChange={(e) => {
-                        if (config) setConfig({ ...config, stake: parseFloat(e.target.value) || 0 });
-                      }}
-                      className="w-full border rounded px-2 py-1 bg-input"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground mb-1">HMA Period</label>
-                    <input
-                      type="number"
-                      defaultValue={config?.hma_period || 150}
-                      onChange={(e) => {
-                        if (config) setConfig({ ...config, hma_period: parseInt(e.target.value) || 150 });
-                      }}
-                      className="w-full border rounded px-2 py-1 bg-input"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Duración (min)</label>
-                    <input
-                      type="number"
-                      defaultValue={config?.duration || 1}
-                      onChange={(e) => {
-                        if (config) setConfig({ ...config, duration: parseInt(e.target.value) || 1 });
-                      }}
-                      className="w-full border rounded px-2 py-1 bg-input"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Guardar Config
-                  </button>
-                </form>
+              <div className="bg-gray-700/50 rounded p-3">
+                <div className="text-xs text-gray-400">Ratio W/L</div>
+                <div className="font-bold text-purple-400">{metrics?.winLossRatio?.toFixed(2) ?? '--'}</div>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Historial de Trades */}
-          <div className="bg-card p-4 rounded-lg border mb-4">
-            <h2 className="text-lg font-bold mb-2">Historial de Trades</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-muted-foreground border-b">
-                    <th className="text-left p-2">Hora</th>
-                    <th className="text-left p-2">Símbolo</th>
-                    <th className="text-left p-2">Tipo</th>
-                    <th className="text-right p-2">Entrada</th>
-                    <th className="text-right p-2">Salida</th>
-                    <th className="text-right p-2">Stake</th>
-                    <th className="text-right p-2">PnL</th>
-                    <th className="text-center p-2">Resultado</th>
+        {/* Configuración */}
+        <section className="bg-gray-800 border border-gray-700 rounded-xl p-4">
+          <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Configuración</h2>
+          <form onSubmit={saveConfig} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Símbolo</label>
+              <input
+                type="text"
+                defaultValue={config?.symbol || '1HZ50V'}
+                onChange={(e) => {
+                  if (config) setConfig({ ...config, symbol: e.target.value });
+                }}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 outline-none transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Stake (USD)</label>
+              <input
+                type="number"
+                step="0.01"
+                defaultValue={config?.stake || 0.5}
+                onChange={(e) => {
+                  if (config) setConfig({ ...config, stake: parseFloat(e.target.value) || 0 });
+                }}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 outline-none transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">HMA Period</label>
+              <input
+                type="number"
+                defaultValue={config?.hma_period || 150}
+                onChange={(e) => {
+                  if (config) setConfig({ ...config, hma_period: parseInt(e.target.value) || 150 });
+                }}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 outline-none transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Duración (min)</label>
+              <input
+                type="number"
+                defaultValue={config?.duration || 1}
+                onChange={(e) => {
+                  if (config) setConfig({ ...config, duration: parseInt(e.target.value) || 1 });
+                }}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 outline-none transition-colors"
+              />
+            </div>
+            <button
+              type="submit"
+              className="col-span-1 sm:col-span-2 px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-500 transition-colors"
+            >
+              Guardar Configuración
+            </button>
+          </form>
+        </section>
+
+        {/* Historial de Trades */}
+        <section className="bg-gray-800 border border-gray-700 rounded-xl p-4">
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Historial de Trades</h2>
+            <span className="text-xs text-gray-500">{trades.length} trades</span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-gray-400 border-b border-gray-700">
+                  <th className="text-left p-2">Hora</th>
+                  <th className="text-left p-2">Símbolo</th>
+                  <th className="text-left p-2">Tipo</th>
+                  <th className="text-right p-2">Entrada</th>
+                  <th className="text-right p-2">Salida</th>
+                  <th className="text-right p-2">Stake</th>
+                  <th className="text-right p-2">PnL</th>
+                  <th className="text-center p-2">Resultado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {trades.length === 0 ? (
+                  <tr>
+                    <td colSpan="8" className="p-4 text-center text-gray-500">
+                      Sin trades registrados
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {trades.length === 0 ? (
-                    <tr>
-                      <td colSpan="8" className="p-4 text-center text-muted-foreground">
-                        Sin trades registrados
+                ) : (
+                  trades.map((t) => (
+                    <tr key={t.id || t.timestamp} className="border-b border-gray-700/50">
+                      <td className="p-2 text-gray-300">{formatTime(t.timestamp)}</td>
+                      <td className="p-2 text-gray-300">{t.symbol || 'N/A'}</td>
+                      <td className="p-2 text-gray-300 capitalize">{t.side || 'N/A'}</td>
+                      <td className="text-right p-2 text-gray-300">
+                        {t.entry !== undefined ? t.entry.toFixed(2) : '-'}
+                      </td>
+                      <td className="text-right p-2 text-gray-300">
+                        {t.exit !== undefined ? t.exit.toFixed(2) : '-'}
+                      </td>
+                      <td className="text-right p-2 text-gray-300">
+                        {t.stake !== undefined ? t.stake.toFixed(2) : '-'}
+                      </td>
+                      <td className={`text-right p-2 font-bold ${pnlColor(t.pnl || 0)}`}>
+                        {t.pnl !== undefined ? `$${t.pnl.toFixed(2)}` : '-'}
+                      </td>
+                      <td className="text-center p-2">
+                        <span
+                          className={`px-2 py-0.5 rounded text-xs font-bold ${
+                            t.resultado === 'WIN'
+                              ? 'bg-green-500/20 text-green-400'
+                              : t.resultado === 'LOSS'
+                                ? 'bg-red-500/20 text-red-400'
+                                : 'bg-gray-600 text-gray-400'
+                          }`}
+                        >
+                          {t.resultado || '--'}
+                        </span>
                       </td>
                     </tr>
-                  ) : (
-                    trades.map((t) => (
-                      <tr key={t.id || t.timestamp} className="border-b">
-                        <td className="p-2">{formatTime(t.timestamp)}</td>
-                        <td className="p-2">{t.symbol || 'N/A'}</td>
-                        <td className="p-2">{t.side || 'N/A'}</td>
-                        <td className="text-right p-2">{t.entry !== undefined ? t.entry.toFixed(2) : '-'}</td>
-                        <td className="text-right p-2">{t.exit !== undefined ? t.exit.toFixed(2) : '-'}</td>
-                        <td className="text-right p-2">{t.stake !== undefined ? t.stake.toFixed(2) : '-'}</td>
-                        <td className={`text-right p-2 font-bold ${pnlColor(t.pnl || 0)}`}>
-                          {t.pnl !== undefined ? `$${t.pnl.toFixed(2)}` : '-'}
-                        </td>
-                        <td className="text-center p-2">
-                          {t.resultado || '--'}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
+        </section>
 
-          {/* Log */}
-          <div className="bg-card p-4 rounded-lg border">
-            <h2 className="text-lg font-bold mb-2">Log del Bot</h2>
-            <div className="h-64 overflow-y-auto font-mono text-xs bg-input p-3 rounded border">
-              {logs.length === 0 ? (
-                <p className="text-muted-foreground">Sin logs disponibles</p>
-              ) : (
-                logs.map((log, i) => (
-                  <div key={i} className="mb-1">
-                    {log}
-                  </div>
-                ))
-              )}
-            </div>
+        {/* Log */}
+        <section className="bg-gray-800 border border-gray-700 rounded-xl p-4">
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Log del Bot</h2>
+            <button
+              onClick={fetchLogs}
+              className="text-xs text-green-400 hover:text-green-300 underline"
+            >
+              Actualizar
+            </button>
           </div>
-        </>
-      )}
+          <div className="h-48 overflow-y-auto font-mono text-xs bg-gray-950 p-3 rounded border border-gray-700">
+            {logs.length === 0 ? (
+              <p className="text-gray-500 italic">Sin logs disponibles</p>
+            ) : (
+              logs.map((log, i) => (
+                <div key={i} className="mb-1 text-gray-300">
+                  {log}
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="mx-4 pt-4 pb-6 border-t border-gray-700 text-center">
+        <p className="text-xs text-gray-500">
+          Deriv Bot • Datos en tiempo real desde Render • {new Date().toLocaleTimeString('es-AR')}
+        </p>
+      </footer>
     </div>
   );
 }
