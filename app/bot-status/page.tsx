@@ -25,9 +25,23 @@ export default function BotStatusPage() {
   const fetchStatus = async () => {
     try {
       const res = await fetch('/api/bot-status', { cache: 'no-store' });
-      if (!res.ok) throw new Error(`Render responded ${res.status}`);
+      if (!res.ok) throw new Error(`Render respondió ${res.status}`);
       const data = await res.json();
-      setStatus(data);
+      // Normalizar campos del backend de Render al tipo BotStatus
+      setStatus({
+        bot_running: data.running,
+        current_symbol: data.symbol,
+        balance: data.balance,
+        daily_pnl: data.daily_pnl,
+        session_start_balance: data.session_start_balance,
+        last_signal: {
+          side: data.last_signal?.side || (data.trades?.[0]?.side) || 'N/A',
+          price: data.last_signal?.price ?? data.trades?.[0]?.entry_price,
+          hma: data.last_hma,
+          timestamp: data.last_signal?.timestamp ?? data.trades?.[0]?.entry_time,
+        },
+        error: data.error,
+      });
     } catch (err: any) {
       setError(err.message);
     } finally {
