@@ -11,7 +11,7 @@ export default function RootPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/bot');
+    router.replace('/dashboard');
   }, [router]);
 
   return null;
